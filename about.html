@@ -226,7 +226,8 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
         <p data-t="about_p1">Apogée & Co est née d'une conviction profonde : chaque client mérite une attention unique, un service sans faille et une discrétion absolue.</p>
         <p data-t="about_p2">De la gestion quotidienne à l'organisation d'événements d'exception, nous sommes votre partenaire de confiance pour tous les moments qui comptent.</p>
       <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--gold-l);line-height:1.7;margin-top:24px;padding-left:18px;border-left:2px solid var(--gold);">"Chaque détail compte. Chaque demande mérite une réponse à la hauteur de vos attentes."</p>
-      <p class="quote" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--gold-l);line-height:1.7;margin-top:24px;padding-left:18px;border-left:2px solid var(--gold);">"Chaque détail compte. Chaque demande mérite une réponse à la hauteur de vos attentes."</p>
+      
+      
       </div>
       <div class="values-grid fade-up">
         <div class="value-item"><div class="value-title" data-t="val1_t">EXCELLENCE</div><div class="value-desc" data-t="val1_d">Chaque prestation réalisée avec le plus haut niveau d'exigence.</div></div>
@@ -252,167 +253,186 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
   
 </div>
 
-  <!-- RECRUTEMENT -->
-  <section id="recrutement" style="background:#0b1120;padding:90px 5vw;">
-    <div style="max-width:860px;margin:0 auto;">
+  
+  <!-- BOUTON RECRUTEMENT FLOTTANT -->
+  <div id="recruit-fab" onclick="openRecruit()" title="Rejoindre l'équipe" style="
+    position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;
+    background:var(--gold);color:var(--navy);
+    writing-mode:vertical-rl;text-orientation:mixed;
+    font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;
+    letter-spacing:0.25em;padding:20px 10px;cursor:pointer;
+    transition:background 0.3s;box-shadow:-3px 0 12px rgba(0,0,0,0.3);
+  " onmouseover="this.style.background='#e8d5a3'" onmouseout="this.style.background='var(--gold)'">
+    REJOINDRE L'ÉQUIPE
+  </div>
 
-      <div style="text-align:center;margin-bottom:56px;" class="fade-up">
-        <span class="pre">REJOINDRE L'ÉQUIPE</span>
-        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--gold-l);letter-spacing:0.05em;margin-top:10px;">Travailler chez Apogée & Co</h2>
+  <!-- OVERLAY -->
+  <div id="recruit-overlay" onclick="closeRecruit()" style="
+    position:fixed;inset:0;background:rgba(8,14,26,0.7);z-index:400;
+    opacity:0;pointer-events:none;transition:opacity 0.35s;backdrop-filter:blur(3px);
+  "></div>
+
+  <!-- PANNEAU LATÉRAL -->
+  <div id="recruit-panel" style="
+    position:fixed;right:0;top:0;bottom:0;width:min(480px,100vw);z-index:401;
+    background:#0e1629;border-left:1px solid rgba(201,168,76,0.25);
+    transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    display:flex;flex-direction:column;overflow:hidden;
+  ">
+    <!-- Header panneau -->
+    <div style="padding:28px 28px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:9px;letter-spacing:0.4em;color:var(--gold);margin-bottom:6px;">APOGÉE & CO</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold-l);">Rejoindre l'équipe</div>
+      </div>
+      <button onclick="closeRecruit()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray)'">✕</button>
+    </div>
+
+    <!-- Corps scrollable -->
+    <div style="flex:1;overflow-y:auto;padding:24px 28px 28px;">
+
+      <!-- Postes disponibles -->
+      <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:14px;font-weight:600;">POSTES DISPONIBLES</div>
+
+      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:30px;">
+        <div class="rp-item">
+          <button class="rp-toggle" onclick="toggleRP(this)">
+            <span class="rp-name">Concierge Prestige</span>
+            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
+            <span class="rp-plus">+</span>
+          </button>
+          <div class="rp-body">
+            <p>Accompagnement haut de gamme au quotidien. Expérience 2 ans minimum, sens du service, maîtrise FR/EN.</p>
+          </div>
+        </div>
+        <div class="rp-item">
+          <button class="rp-toggle" onclick="toggleRP(this)">
+            <span class="rp-name">Chef de Projet Événementiel</span>
+            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
+            <span class="rp-plus">+</span>
+          </button>
+          <div class="rp-body">
+            <p>Organisation d'événements premium. Expérience 3 ans, rigueur, créativité, réseau prestataires.</p>
+          </div>
+        </div>
+        <div class="rp-item">
+          <button class="rp-toggle" onclick="toggleRP(this)">
+            <span class="rp-name">Agent d'Entretien Hôtelier</span>
+            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
+            <span class="rp-plus">+</span>
+          </button>
+          <div class="rp-body">
+            <p>Intervention dans des établissements partenaires. Discrétion, professionnalisme, permis B souhaité.</p>
+          </div>
+        </div>
+        <div class="rp-item">
+          <button class="rp-toggle" onclick="toggleRP(this)">
+            <span class="rp-name">Candidature Spontanée</span>
+            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">Tout profil</span>
+            <span class="rp-plus">+</span>
+          </button>
+          <div class="rp-body">
+            <p>Votre profil ne correspond pas ? Envoyez votre candidature — nous sommes toujours à la recherche de talents.</p>
+          </div>
+        </div>
       </div>
 
-      <!-- POSTES DISPONIBLES -->
-      <div style="margin-bottom:40px;" class="fade-up">
-        <div style="font-size:10px;letter-spacing:0.35em;color:var(--gold);margin-bottom:20px;font-weight:600;">POSTES DISPONIBLES</div>
+      <!-- Formulaire candidature -->
+      <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:16px;font-weight:600;">VOTRE CANDIDATURE</div>
 
-        <!-- Poste 1 -->
-        <div class="recruit-item">
-          <button class="recruit-toggle" onclick="toggleRecruit(this)">
-            <span class="recruit-title">Concierge Prestige</span>
-            <span class="recruit-tag">CDI · Paris</span>
-            <span class="recruit-arrow">+</span>
-          </button>
-          <div class="recruit-body">
-            <p>Nous recherchons un(e) concierge expérimenté(e) pour accompagner notre clientèle haut de gamme au quotidien.</p>
-            <ul>
-              <li>Expérience minimum 2 ans dans un service de conciergerie ou hôtellerie de luxe</li>
-              <li>Excellente présentation et sens du service</li>
-              <li>Maîtrise du français et de l'anglais</li>
-              <li>Disponibilité et réactivité</li>
-            </ul>
-            <a href="index.html#contact" class="recruit-apply">POSTULER →</a>
+      <form id="recruitForm" style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">NOM</label>
+            <input type="text" name="nom" placeholder="Votre nom" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;width:100%;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">EMAIL</label>
+            <input type="email" name="email" placeholder="votre@email.com" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;width:100%;"/>
           </div>
         </div>
-
-        <!-- Poste 2 -->
-        <div class="recruit-item">
-          <button class="recruit-toggle" onclick="toggleRecruit(this)">
-            <span class="recruit-title">Chef de Projet Événementiel</span>
-            <span class="recruit-tag">CDI · Paris</span>
-            <span class="recruit-arrow">+</span>
-          </button>
-          <div class="recruit-body">
-            <p>Rejoignez notre équipe événementielle pour orchestrer des projets d'exception.</p>
-            <ul>
-              <li>Expérience 3 ans minimum en organisation d'événements premium</li>
-              <li>Capacité à gérer plusieurs projets simultanément</li>
-              <li>Créativité, rigueur et sens du détail</li>
-              <li>Réseau de prestataires dans le secteur</li>
-            </ul>
-            <a href="index.html#contact" class="recruit-apply">POSTULER →</a>
-          </div>
-        </div>
-
-        <!-- Poste 3 -->
-        <div class="recruit-item">
-          <button class="recruit-toggle" onclick="toggleRecruit(this)">
-            <span class="recruit-title">Agent d'Entretien Hôtelier</span>
-            <span class="recruit-tag">CDI · Paris & environs</span>
-            <span class="recruit-arrow">+</span>
-          </button>
-          <div class="recruit-body">
-            <p>Nous recrutons des agents d'entretien rigoureux pour intervenir dans des établissements hôteliers partenaires.</p>
-            <ul>
-              <li>Expérience en hôtellerie ou services à domicile</li>
-              <li>Discrétion et professionnalisme</li>
-              <li>Permis B souhaité</li>
-            </ul>
-            <a href="index.html#contact" class="recruit-apply">POSTULER →</a>
-          </div>
-        </div>
-
-        <!-- Candidature spontanée -->
-        <div class="recruit-item">
-          <button class="recruit-toggle" onclick="toggleRecruit(this)">
-            <span class="recruit-title">Candidature Spontanée</span>
-            <span class="recruit-tag">Tout profil</span>
-            <span class="recruit-arrow">+</span>
-          </button>
-          <div class="recruit-body">
-            <p>Votre profil ne correspond pas aux postes ci-dessus ? Envoyez-nous votre candidature spontanée.</p>
-            <p style="margin-top:8px;">Nous sommes toujours à la recherche de talents partageant notre exigence du service et notre passion pour l'excellence.</p>
-            <a href="index.html#contact" class="recruit-apply">ENVOYER MA CANDIDATURE →</a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- FORMULAIRE RAPIDE -->
-      <div class="recruit-form-wrap fade-up">
-        <div style="font-size:10px;letter-spacing:0.35em;color:var(--gold);margin-bottom:20px;font-weight:600;">CANDIDATURE RAPIDE</div>
-        <form id="recruitForm" style="display:flex;flex-direction:column;gap:14px;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <label style="font-size:9px;letter-spacing:0.28em;color:var(--gold);">NOM</label>
-              <input type="text" name="nom" placeholder="Votre nom" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;padding:12px 14px;outline:none;"/>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;">
-              <label style="font-size:9px;letter-spacing:0.28em;color:var(--gold);">EMAIL</label>
-              <input type="email" name="email" placeholder="votre@email.com" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;padding:12px 14px;outline:none;"/>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <label style="font-size:9px;letter-spacing:0.28em;color:var(--gold);">POSTE RECHERCHÉ</label>
-            <select name="poste" style="background:#1a2744;border:1px solid rgba(201,168,76,0.22);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;padding:12px 14px;outline:none;appearance:none;cursor:pointer;">
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">POSTE RECHERCHÉ</label>
+          <div style="position:relative;">
+            <select name="poste" style="width:100%;background:#1a2744;border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 36px 11px 13px;outline:none;appearance:none;cursor:pointer;">
               <option value="">Sélectionnez un poste...</option>
               <option>Concierge Prestige</option>
               <option>Chef de Projet Événementiel</option>
               <option>Agent d'Entretien Hôtelier</option>
               <option>Candidature Spontanée</option>
             </select>
+            <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;font-size:10px;">▾</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <label style="font-size:9px;letter-spacing:0.28em;color:var(--gold);">MESSAGE & MOTIVATION</label>
-            <textarea name="message" rows="4" placeholder="Présentez-vous en quelques lignes..." required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;padding:12px 14px;outline:none;resize:none;"></textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">MESSAGE & MOTIVATION</label>
+          <textarea name="message" rows="3" placeholder="Présentez-vous en quelques lignes..." style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;resize:none;width:100%;"></textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">CV (PDF, DOC — max 5 Mo)</label>
+          <div style="position:relative;">
+            <input type="file" name="cv" accept=".pdf,.doc,.docx" id="cvInput" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;"/>
+            <div id="cvLabel" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);color:var(--gray);font-family:'Montserrat',sans-serif;font-size:11px;padding:14px 13px;text-align:center;pointer-events:none;transition:border-color 0.3s;">
+              📎 &nbsp;Glissez votre CV ou cliquez pour parcourir
+            </div>
           </div>
-          <button type="submit" id="recruitBtn" style="font-size:10px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);border:none;padding:15px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background 0.3s;">ENVOYER MA CANDIDATURE</button>
-          <div id="recruitSuccess" style="display:none;padding:14px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);color:var(--gold-l);font-size:12px;text-align:center;">✓ Candidature envoyée. Nous vous répondrons dans les plus brefs délais.</div>
-        </form>
-      </div>
+        </div>
+        <button type="submit" id="recruitBtn" style="font-size:10px;letter-spacing:0.25em;color:var(--navy);background:var(--gold);border:none;padding:14px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background 0.3s;margin-top:4px;">ENVOYER MA CANDIDATURE</button>
+        <div id="recruitSuccess" style="display:none;padding:13px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold-l);font-size:12px;text-align:center;">✓ Candidature envoyée. Nous vous répondrons rapidement.</div>
+      </form>
 
     </div>
-  </section>
+  </div>
 
   <style>
-  .recruit-item{border-bottom:1px solid rgba(201,168,76,0.1);overflow:hidden;}
-  .recruit-toggle{width:100%;background:transparent;border:none;padding:20px 0;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;font-family:'Montserrat',sans-serif;}
-  .recruit-title{font-size:14px;font-weight:500;color:var(--gold-l);flex:1;letter-spacing:0.04em;}
-  .recruit-tag{font-size:9px;letter-spacing:0.2em;color:var(--gold);border:1px solid rgba(201,168,76,0.3);padding:4px 10px;white-space:nowrap;}
-  .recruit-arrow{font-size:20px;color:var(--gold);font-weight:300;transition:transform 0.3s;width:24px;text-align:center;flex-shrink:0;}
-  .recruit-arrow.open{transform:rotate(45deg);}
-  .recruit-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s;}
-  .recruit-body.open{max-height:400px;padding-bottom:24px;}
-  .recruit-body p{font-size:13px;font-weight:300;color:var(--gray);line-height:1.85;margin-bottom:12px;}
-  .recruit-body ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
-  .recruit-body ul li{font-size:12px;color:var(--text);display:flex;align-items:center;gap:8px;}
-  .recruit-body ul li::before{content:'';width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0;}
-  .recruit-apply{font-size:9px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);padding:10px 20px;text-decoration:none;display:inline-block;transition:background 0.3s;}
-  .recruit-apply:hover{background:var(--gold-l);}
-  .recruit-form-wrap{background:var(--navy2);padding:32px;border:1px solid rgba(201,168,76,0.15);}
+  .rp-item{border-bottom:1px solid rgba(201,168,76,0.08);}
+  .rp-toggle{width:100%;background:transparent;border:none;padding:14px 0;display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'Montserrat',sans-serif;}
+  .rp-name{font-size:13px;font-weight:500;color:var(--text);flex:1;text-align:left;letter-spacing:0.03em;}
+  .rp-plus{font-size:18px;color:var(--gold);font-weight:300;transition:transform 0.3s;width:20px;text-align:center;flex-shrink:0;}
+  .rp-plus.open{transform:rotate(45deg);}
+  .rp-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.3s;}
+  .rp-body.open{max-height:120px;padding-bottom:14px;}
+  .rp-body p{font-size:12px;font-weight:300;color:var(--gray);line-height:1.8;}
+  #cvInput:hover + #cvLabel, #cvInput:focus + #cvLabel{border-color:rgba(201,168,76,0.6);}
   </style>
 
   <script>
-  function toggleRecruit(btn){
-    const body=btn.nextElementSibling;
-    const arrow=btn.querySelector('.recruit-arrow');
-    const isOpen=body.classList.contains('open');
-    // Fermer tous les autres
-    document.querySelectorAll('.recruit-body.open').forEach(b=>{
-      b.classList.remove('open');
-      b.previousElementSibling.querySelector('.recruit-arrow').classList.remove('open');
-    });
-    if(!isOpen){body.classList.add('open');arrow.classList.add('open');}
+  function openRecruit(){
+    document.getElementById('recruit-panel').style.transform='translateX(0)';
+    document.getElementById('recruit-overlay').style.opacity='1';
+    document.getElementById('recruit-overlay').style.pointerEvents='all';
+    document.body.style.overflow='hidden';
   }
+  function closeRecruit(){
+    document.getElementById('recruit-panel').style.transform='translateX(100%)';
+    document.getElementById('recruit-overlay').style.opacity='0';
+    document.getElementById('recruit-overlay').style.pointerEvents='none';
+    document.body.style.overflow='';
+  }
+  function toggleRP(btn){
+    const body=btn.nextElementSibling;
+    const plus=btn.querySelector('.rp-plus');
+    const isOpen=body.classList.contains('open');
+    document.querySelectorAll('.rp-body.open').forEach(b=>{b.classList.remove('open');b.previousElementSibling.querySelector('.rp-plus').classList.remove('open');});
+    if(!isOpen){body.classList.add('open');plus.classList.add('open');}
+  }
+  document.getElementById('cvInput').addEventListener('change',function(){
+    const f=this.files[0];
+    document.getElementById('cvLabel').textContent=f?'📎 '+f.name:'📎 Glissez votre CV ou cliquez pour parcourir';
+  });
   document.getElementById('recruitForm').addEventListener('submit',async function(e){
     e.preventDefault();
     const btn=document.getElementById('recruitBtn');
     btn.textContent='ENVOI EN COURS...';btn.disabled=true;
+    const data=new FormData(this);
+    data.append('_subject','Candidature Apogée & Co');
     try{
-      const res=await fetch('https://formspree.io/f/xlgadzrv',{method:'POST',body:new FormData(this),headers:{Accept:'application/json'}});
-      if(res.ok){this.reset();btn.style.display='none';document.getElementById('recruitSuccess').style.display='block';}
+      const res=await fetch('https://formspree.io/f/xlgadzrv',{method:'POST',body:data,headers:{Accept:'application/json'}});
+      if(res.ok){this.reset();document.getElementById('cvLabel').textContent='📎 Glissez votre CV ou cliquez pour parcourir';btn.style.display='none';document.getElementById('recruitSuccess').style.display='block';}
       else{btn.textContent='ERREUR — RÉESSAYEZ';btn.disabled=false;}
     }catch(err){btn.textContent='ERREUR — RÉESSAYEZ';btn.disabled=false;}
   });
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRecruit();});
   </script>
 <footer>
   <div class="footer-brand">APOGÉE & CO</div>
