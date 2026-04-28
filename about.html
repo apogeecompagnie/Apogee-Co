@@ -254,149 +254,196 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 </div>
 
   
+  
   <!-- BOUTON RECRUTEMENT FLOTTANT -->
-  <div id="recruit-fab" onclick="openRecruit()" title="Rejoindre l'équipe" style="
+  <div id="recruit-fab" onclick="openRecruit()" style="
     position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;
     background:var(--gold);color:var(--navy);
     writing-mode:vertical-rl;text-orientation:mixed;
     font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;
     letter-spacing:0.25em;padding:20px 10px;cursor:pointer;
-    transition:background 0.3s;box-shadow:-3px 0 12px rgba(0,0,0,0.3);
-  " onmouseover="this.style.background='#e8d5a3'" onmouseout="this.style.background='var(--gold)'">
-    REJOINDRE L'ÉQUIPE
+    transition:background 0.3s;box-shadow:-3px 0 12px rgba(0,0,0,0.3);"
+    onmouseover="this.style.background='#e8d5a3'" onmouseout="this.style.background='var(--gold)'">
+    <span id="fab-label">REJOINDRE L'ÉQUIPE</span>
   </div>
 
-  <!-- OVERLAY -->
   <div id="recruit-overlay" onclick="closeRecruit()" style="
-    position:fixed;inset:0;background:rgba(8,14,26,0.7);z-index:400;
-    opacity:0;pointer-events:none;transition:opacity 0.35s;backdrop-filter:blur(3px);
-  "></div>
+    position:fixed;inset:0;background:rgba(8,14,26,0.75);z-index:400;
+    opacity:0;pointer-events:none;transition:opacity 0.35s;backdrop-filter:blur(3px);"></div>
 
-  <!-- PANNEAU LATÉRAL -->
   <div id="recruit-panel" style="
-    position:fixed;right:0;top:0;bottom:0;width:min(480px,100vw);z-index:401;
+    position:fixed;right:0;top:0;bottom:0;width:min(500px,100vw);z-index:401;
     background:#0e1629;border-left:1px solid rgba(201,168,76,0.25);
     transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
-    display:flex;flex-direction:column;overflow:hidden;
-  ">
-    <!-- Header panneau -->
-    <div style="padding:28px 28px 20px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+    display:flex;flex-direction:column;overflow:hidden;">
+
+    <div style="padding:26px 28px 18px;border-bottom:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
       <div>
-        <div style="font-size:9px;letter-spacing:0.4em;color:var(--gold);margin-bottom:6px;">APOGÉE & CO</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold-l);">Rejoindre l'équipe</div>
+        <div style="font-size:9px;letter-spacing:0.4em;color:var(--gold);margin-bottom:5px;">APOGÉE & CO</div>
+        <div id="panel-title-txt" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold-l);">Rejoindre l'équipe</div>
       </div>
-      <button onclick="closeRecruit()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;line-height:1;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray)'">✕</button>
+      <button onclick="closeRecruit()" style="background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:4px;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray)'">✕</button>
     </div>
 
-    <!-- Corps scrollable -->
-    <div style="flex:1;overflow-y:auto;padding:24px 28px 28px;">
+    <div style="flex:1;overflow-y:auto;padding:22px 28px 28px;">
 
       <!-- Postes disponibles -->
-      <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:14px;font-weight:600;">POSTES DISPONIBLES</div>
-
-      <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:30px;">
-        <div class="rp-item">
-          <button class="rp-toggle" onclick="toggleRP(this)">
-            <span class="rp-name">Concierge Prestige</span>
-            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
-            <span class="rp-plus">+</span>
-          </button>
-          <div class="rp-body">
-            <p>Accompagnement haut de gamme au quotidien. Expérience 2 ans minimum, sens du service, maîtrise FR/EN.</p>
-          </div>
-        </div>
-        <div class="rp-item">
-          <button class="rp-toggle" onclick="toggleRP(this)">
-            <span class="rp-name">Chef de Projet Événementiel</span>
-            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
-            <span class="rp-plus">+</span>
-          </button>
-          <div class="rp-body">
-            <p>Organisation d'événements premium. Expérience 3 ans, rigueur, créativité, réseau prestataires.</p>
-          </div>
-        </div>
-        <div class="rp-item">
-          <button class="rp-toggle" onclick="toggleRP(this)">
-            <span class="rp-name">Agent d'Entretien Hôtelier</span>
-            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">CDI · Paris</span>
-            <span class="rp-plus">+</span>
-          </button>
-          <div class="rp-body">
-            <p>Intervention dans des établissements partenaires. Discrétion, professionnalisme, permis B souhaité.</p>
-          </div>
-        </div>
-        <div class="rp-item">
-          <button class="rp-toggle" onclick="toggleRP(this)">
-            <span class="rp-name">Candidature Spontanée</span>
-            <span style="font-size:9px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;">Tout profil</span>
-            <span class="rp-plus">+</span>
-          </button>
-          <div class="rp-body">
-            <p>Votre profil ne correspond pas ? Envoyez votre candidature — nous sommes toujours à la recherche de talents.</p>
-          </div>
-        </div>
+      <div id="rp-pre" style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:12px;font-weight:600;">POSTES DISPONIBLES</div>
+      <div style="display:flex;flex-direction:column;gap:1px;margin-bottom:26px;" id="rp-list">
+        <div class="rp-item"><button class="rp-toggle" onclick="toggleRP(this)"><span class="rp-name" id="rp0">Concierge Prestige</span><span class="rp-badge">CDI · Paris</span><span class="rp-plus">+</span></button><div class="rp-body"><p id="rpd0">Accompagnement haut de gamme. Expérience 2 ans min., sens du service, FR/EN.</p></div></div>
+        <div class="rp-item"><button class="rp-toggle" onclick="toggleRP(this)"><span class="rp-name" id="rp1">Chef de Projet Événementiel</span><span class="rp-badge">CDI · Paris</span><span class="rp-plus">+</span></button><div class="rp-body"><p id="rpd1">Organisation d'événements premium. 3 ans d'expérience, rigueur, créativité.</p></div></div>
+        <div class="rp-item"><button class="rp-toggle" onclick="toggleRP(this)"><span class="rp-name" id="rp2">Agent d'Entretien Hôtelier</span><span class="rp-badge">CDI · Paris</span><span class="rp-plus">+</span></button><div class="rp-body"><p id="rpd2">Intervention établissements partenaires. Discrétion, professionnalisme.</p></div></div>
+        <div class="rp-item"><button class="rp-toggle" onclick="toggleRP(this)"><span class="rp-name" id="rp3">Candidature Spontanée</span><span class="rp-badge">Tout profil</span><span class="rp-plus">+</span></button><div class="rp-body"><p id="rpd3">Votre profil ne correspond pas ? Envoyez votre candidature — nous sommes toujours à la recherche de talents.</p></div></div>
       </div>
 
-      <!-- Formulaire candidature -->
-      <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:16px;font-weight:600;">VOTRE CANDIDATURE</div>
-
-      <form id="recruitForm" style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <!-- Formulaire -->
+      <div id="rp-form-title" style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:14px;font-weight:600;">VOTRE CANDIDATURE</div>
+      <form id="recruitForm" style="display:flex;flex-direction:column;gap:11px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;">
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">NOM</label>
-            <input type="text" name="nom" placeholder="Votre nom" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;width:100%;"/>
+            <label id="lbl-nom" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">NOM</label>
+            <input type="text" name="nom" id="inp-nom" placeholder="Votre nom" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 12px;outline:none;width:100%;"/>
           </div>
           <div style="display:flex;flex-direction:column;gap:5px;">
-            <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">EMAIL</label>
-            <input type="email" name="email" placeholder="votre@email.com" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;width:100%;"/>
+            <label id="lbl-email" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">EMAIL</label>
+            <input type="email" name="email" id="inp-email" placeholder="votre@email.com" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 12px;outline:none;width:100%;"/>
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:5px;">
-          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">POSTE RECHERCHÉ</label>
+          <label id="lbl-tel" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">TÉLÉPHONE</label>
+          <input type="tel" name="telephone" id="inp-tel" placeholder="06 XX XX XX XX" required style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 12px;outline:none;width:100%;"/>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <label id="lbl-poste" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">POSTE RECHERCHÉ</label>
           <div style="position:relative;">
-            <select name="poste" style="width:100%;background:#1a2744;border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 36px 11px 13px;outline:none;appearance:none;cursor:pointer;">
-              <option value="">Sélectionnez un poste...</option>
+            <select name="poste" id="sel-poste" style="width:100%;background:#1a2744;border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 32px 10px 12px;outline:none;appearance:none;cursor:pointer;">
+              <option id="opt-default" value="">Sélectionnez un poste...</option>
               <option>Concierge Prestige</option>
               <option>Chef de Projet Événementiel</option>
               <option>Agent d'Entretien Hôtelier</option>
               <option>Candidature Spontanée</option>
             </select>
-            <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;font-size:10px;">▾</span>
+            <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--gold);pointer-events:none;font-size:10px;">▾</span>
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:5px;">
-          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">MESSAGE & MOTIVATION</label>
-          <textarea name="message" rows="3" placeholder="Présentez-vous en quelques lignes..." style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:11px 13px;outline:none;resize:none;width:100%;"></textarea>
+          <label id="lbl-msg" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">MESSAGE & MOTIVATION</label>
+          <textarea name="message" id="inp-msg" rows="3" placeholder="Présentez-vous en quelques lignes..." style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 12px;outline:none;resize:none;width:100%;"></textarea>
         </div>
         <div style="display:flex;flex-direction:column;gap:5px;">
-          <label style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">CV (PDF, DOC — max 5 Mo)</label>
+          <label id="lbl-cv" style="font-size:8px;letter-spacing:0.25em;color:var(--gold);">CV (PDF / DOC — max 5 Mo)</label>
           <div style="position:relative;">
-            <input type="file" name="cv" accept=".pdf,.doc,.docx" id="cvInput" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;"/>
-            <div id="cvLabel" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);color:var(--gray);font-family:'Montserrat',sans-serif;font-size:11px;padding:14px 13px;text-align:center;pointer-events:none;transition:border-color 0.3s;">
-              📎 &nbsp;Glissez votre CV ou cliquez pour parcourir
-            </div>
+            <input type="file" name="cv" accept=".pdf,.doc,.docx" id="cvInput" style="position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;"/>
+            <div id="cvLabel" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);color:var(--gray);font-family:'Montserrat',sans-serif;font-size:11px;padding:12px;text-align:center;pointer-events:none;">📎 &nbsp;Glissez votre CV ou cliquez</div>
           </div>
         </div>
-        <button type="submit" id="recruitBtn" style="font-size:10px;letter-spacing:0.25em;color:var(--navy);background:var(--gold);border:none;padding:14px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background 0.3s;margin-top:4px;">ENVOYER MA CANDIDATURE</button>
-        <div id="recruitSuccess" style="display:none;padding:13px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold-l);font-size:12px;text-align:center;">✓ Candidature envoyée. Nous vous répondrons rapidement.</div>
+                <p id="rgpd-note-p" style="font-size:10px;font-weight:300;color:var(--gray);line-height:1.6;padding:10px 12px;background:rgba(201,168,76,0.04);border:0.5px solid rgba(201,168,76,0.15);">
+          <span id="rgpd-note-txt">🔒 Vos données sont traitées de façon confidentielle et utilisées uniquement dans le cadre de votre candidature, conformément à notre <a href="politique_rgpd.html" style="color:var(--gold);">politique de confidentialité</a>. Elles ne sont jamais transmises à des tiers.
+        </p>
+        <button type="submit" id="recruitBtn" style="font-size:10px;letter-spacing:0.25em;color:var(--navy);background:var(--gold);border:none;padding:13px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:background 0.3s;margin-top:4px;">ENVOYER MA CANDIDATURE</button>
+        <div id="recruitSuccess" style="display:none;padding:12px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold-l);font-size:12px;text-align:center;">✓ Candidature envoyée. Nous vous répondrons rapidement.</div>
       </form>
-
     </div>
   </div>
 
   <style>
   .rp-item{border-bottom:1px solid rgba(201,168,76,0.08);}
-  .rp-toggle{width:100%;background:transparent;border:none;padding:14px 0;display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'Montserrat',sans-serif;}
+  .rp-toggle{width:100%;background:transparent;border:none;padding:13px 0;display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'Montserrat',sans-serif;}
   .rp-name{font-size:13px;font-weight:500;color:var(--text);flex:1;text-align:left;letter-spacing:0.03em;}
+  .rp-badge{font-size:8.5px;letter-spacing:0.15em;color:var(--gold);border:0.5px solid rgba(201,168,76,0.3);padding:3px 8px;white-space:nowrap;}
   .rp-plus{font-size:18px;color:var(--gold);font-weight:300;transition:transform 0.3s;width:20px;text-align:center;flex-shrink:0;}
   .rp-plus.open{transform:rotate(45deg);}
   .rp-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.3s;}
-  .rp-body.open{max-height:120px;padding-bottom:14px;}
+  .rp-body.open{max-height:120px;padding-bottom:12px;}
   .rp-body p{font-size:12px;font-weight:300;color:var(--gray);line-height:1.8;}
-  #cvInput:hover + #cvLabel, #cvInput:focus + #cvLabel{border-color:rgba(201,168,76,0.6);}
   </style>
 
   <script>
+  // ── Traductions panel recrutement ──────────────────────────────────────
+  const RECRUIT_T = {
+    fr: {
+      fab: "REJOINDRE L'ÉQUIPE",
+      panel_title: "Rejoindre l'équipe",
+      rp_pre: "POSTES DISPONIBLES",
+      form_title: "VOTRE CANDIDATURE",
+      lbl_nom: "NOM", lbl_email: "EMAIL", lbl_tel: "TÉLÉPHONE",
+      lbl_poste: "POSTE RECHERCHÉ", lbl_msg: "MESSAGE & MOTIVATION",
+      lbl_cv: "CV (PDF / DOC — max 5 Mo)",
+      opt_default: "Sélectionnez un poste...",
+      inp_nom: "Votre nom", inp_email: "votre@email.com",
+      inp_tel: "06 XX XX XX XX", inp_msg: "Présentez-vous en quelques lignes...",
+      btn_send: "ENVOYER MA CANDIDATURE", btn_sending: "ENVOI EN COURS...",
+      success: "✓ Candidature envoyée. Nous vous répondrons rapidement.",
+      cv_label: "📎 Glissez votre CV ou cliquez",
+      rgpd_note: "🔒 Vos données sont traitées de façon confidentielle et utilisées uniquement dans le cadre de votre candidature. Elles ne sont jamais transmises à des tiers.",      jobs: ["Concierge Prestige","Chef de Projet Événementiel","Agent d'Entretien Hôtelier","Candidature Spontanée"],
+      job_descs: [
+        "Accompagnement haut de gamme. Expérience 2 ans min., sens du service, FR/EN.",
+        "Organisation d'événements premium. 3 ans d'expérience, rigueur, créativité.",
+        "Intervention établissements partenaires. Discrétion, professionnalisme.",
+        "Votre profil ne correspond pas ? Nous sommes toujours à la recherche de talents."
+      ]
+    },
+    en: {
+      fab: "JOIN THE TEAM",
+      panel_title: "Join the team",
+      rp_pre: "AVAILABLE POSITIONS",
+      form_title: "YOUR APPLICATION",
+      lbl_nom: "NAME", lbl_email: "EMAIL", lbl_tel: "PHONE",
+      lbl_poste: "POSITION APPLIED FOR", lbl_msg: "COVER MESSAGE",
+      lbl_cv: "CV (PDF / DOC — max 5 MB)",
+      opt_default: "Select a position...",
+      inp_nom: "Your name", inp_email: "your@email.com",
+      inp_tel: "+33 6 XX XX XX XX", inp_msg: "Tell us a bit about yourself...",
+      btn_send: "SEND MY APPLICATION", btn_sending: "SENDING...",
+      success: "✓ Application sent. We will get back to you shortly.",
+      cv_label: "📎 Drop your CV here or click to browse",
+      rgpd_note: "🔒 Your data is processed confidentially and used solely in the context of your application, in accordance with our privacy policy. It is never shared with third parties.",
+      jobs: ["Prestige Concierge","Events Project Manager","Hotel Housekeeping Agent","Spontaneous Application"],
+      job_descs: [
+        "High-end client support. Min. 2 years experience, service-oriented, FR/EN.",
+        "Premium event organisation. 3 years experience, rigour, creativity.",
+        "Intervention in partner hotels. Discretion, professionalism.",
+        "Your profile does not match? We are always looking for talented people."
+      ]
+    }
+  };
+
+  function applyRecruitLang(l) {
+    const r = RECRUIT_T[l] || RECRUIT_T.fr;
+    const g = id => document.getElementById(id);
+    if(g('fab-label')) g('fab-label').textContent = r.fab;
+    if(g('panel-title-txt')) g('panel-title-txt').textContent = r.panel_title;
+    if(g('rp-pre')) g('rp-pre').textContent = r.rp_pre;
+    if(g('rp-form-title')) g('rp-form-title').textContent = r.form_title;
+    if(g('lbl-nom')) g('lbl-nom').textContent = r.lbl_nom;
+    if(g('lbl-email')) g('lbl-email').textContent = r.lbl_email;
+    if(g('lbl-tel')) g('lbl-tel').textContent = r.lbl_tel;
+    if(g('lbl-poste')) g('lbl-poste').textContent = r.lbl_poste;
+    if(g('lbl-msg')) g('lbl-msg').textContent = r.lbl_msg;
+    if(g('lbl-cv')) g('lbl-cv').textContent = r.lbl_cv;
+    if(g('opt-default')) g('opt-default').textContent = r.opt_default;
+    if(g('inp-nom')) g('inp-nom').placeholder = r.inp_nom;
+    if(g('inp-email')) g('inp-email').placeholder = r.inp_email;
+    if(g('inp-tel')) g('inp-tel').placeholder = r.inp_tel;
+    if(g('inp-msg')) g('inp-msg').placeholder = r.inp_msg;
+    if(g('cvLabel')) g('cvLabel').textContent = r.cv_label;
+    if(g('rgpd-note-p') && r.rgpd_note) { const a = g('rgpd-note-p').querySelector('a'); const href = a ? a.href : 'politique_rgpd.html'; g('rgpd-note-p').innerHTML = r.rgpd_note + ' <a href="politique_rgpd.html" style="color:var(--gold);">' + (l==='en'?'Privacy policy':'Politique de confidentialité') + '</a>'; }
+    const btn = g('recruitBtn');
+    if(btn && !btn.disabled) btn.textContent = r.btn_send;
+    // Jobs
+    r.jobs.forEach((name, i) => {
+      if(g('rp'+i)) g('rp'+i).textContent = name;
+      if(g('rpd'+i)) g('rpd'+i).textContent = r.job_descs[i];
+    });
+  }
+
+  // Hook into global setLang
+  document.addEventListener('DOMContentLoaded', () => {
+    applyRecruitLang(lang);
+    const orig = window.setLang || function(){};
+    window.setLang = function(l) { orig(l); applyRecruitLang(l); };
+  });
+
   function openRecruit(){
     document.getElementById('recruit-panel').style.transform='translateX(0)';
     document.getElementById('recruit-overlay').style.opacity='1';
@@ -416,24 +463,29 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
     document.querySelectorAll('.rp-body.open').forEach(b=>{b.classList.remove('open');b.previousElementSibling.querySelector('.rp-plus').classList.remove('open');});
     if(!isOpen){body.classList.add('open');plus.classList.add('open');}
   }
-  document.getElementById('cvInput').addEventListener('change',function(){
-    const f=this.files[0];
-    document.getElementById('cvLabel').textContent=f?'📎 '+f.name:'📎 Glissez votre CV ou cliquez pour parcourir';
-  });
-  document.getElementById('recruitForm').addEventListener('submit',async function(e){
-    e.preventDefault();
-    const btn=document.getElementById('recruitBtn');
-    btn.textContent='ENVOI EN COURS...';btn.disabled=true;
-    const data=new FormData(this);
-    data.append('_subject','Candidature Apogée & Co');
-    try{
-      const res=await fetch('https://formspree.io/f/xlgadzrv',{method:'POST',body:data,headers:{Accept:'application/json'}});
-      if(res.ok){this.reset();document.getElementById('cvLabel').textContent='📎 Glissez votre CV ou cliquez pour parcourir';btn.style.display='none';document.getElementById('recruitSuccess').style.display='block';}
-      else{btn.textContent='ERREUR — RÉESSAYEZ';btn.disabled=false;}
-    }catch(err){btn.textContent='ERREUR — RÉESSAYEZ';btn.disabled=false;}
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('cvInput').addEventListener('change',function(){
+      const f=this.files[0];
+      document.getElementById('cvLabel').textContent=f?'📎 '+f.name:(RECRUIT_T[lang]||RECRUIT_T.fr).cv_label;
+    });
+    document.getElementById('recruitForm').addEventListener('submit',async function(e){
+      e.preventDefault();
+      const r=RECRUIT_T[lang]||RECRUIT_T.fr;
+      const btn=document.getElementById('recruitBtn');
+      btn.textContent=r.btn_sending;btn.disabled=true;
+      const data=new FormData(this);
+      data.append('_subject','Candidature Apogée & Co');
+      try{
+        const res=await fetch('https://formspree.io/f/xlgadzrv',{method:'POST',body:data,headers:{Accept:'application/json'}});
+        if(res.ok){this.reset();document.getElementById('cvLabel').textContent=r.cv_label;btn.style.display='none';document.getElementById('recruitSuccess').textContent=r.success;document.getElementById('recruitSuccess').style.display='block';}
+        else{btn.textContent=r.btn_send;btn.disabled=false;}
+      }catch(err){btn.textContent=r.btn_send;btn.disabled=false;}
+    });
   });
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRecruit();});
   </script>
+
+
 <footer>
   <div class="footer-brand">APOGÉE & CO</div>
   <div class="footer-copy" data-t="footer_copy">© 2025 Apogée & Co — SIRET 980 327 670 00017</div>
