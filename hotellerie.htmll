@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hôtellerie — Apogée & Co</title>
+<meta name="description" content="Apogée & Co — Conciergerie, Hôtellerie et Événementiel Prestige.">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+:root{--navy:#0e1629;--navy2:#1a2744;--gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;--cream:#f5f0e8;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:72px;background:rgba(14,22,41,0.97);border-bottom:1px solid rgba(201,168,76,0.2);backdrop-filter:blur(8px);transition:height 0.3s;}
+nav.scrolled{height:60px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{height:42px;width:42px;transition:height 0.3s;}
+nav.scrolled .nav-logo img{height:34px;width:34px;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:0.2em;color:var(--gold);}
+.nav-brand span{display:block;font-size:7.5px;font-family:'Montserrat',sans-serif;letter-spacing:0.3em;color:var(--gray);font-weight:300;margin-top:1px;}
+.nav-links{display:flex;gap:26px;list-style:none;align-items:center;}
+.nav-links a{font-size:10px;letter-spacing:0.2em;color:var(--gray);text-decoration:none;text-transform:uppercase;transition:color 0.3s;position:relative;padding-bottom:2px;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-links a.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-cta{font-size:10px;letter-spacing:0.2em;color:var(--gold);border:1px solid var(--gold);padding:8px 18px;text-decoration:none;transition:all 0.3s;}
+.nav-cta:hover{background:var(--gold);color:var(--navy);}
+.lang-btn{font-size:9px;letter-spacing:0.25em;color:var(--gray);background:transparent;border:1px solid rgba(138,154,184,0.3);padding:7px 12px;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.3s;}
+.lang-btn:hover{color:var(--gold);border-color:rgba(201,168,76,0.4);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{width:22px;height:1.5px;background:var(--gold);transition:all 0.3s;display:block;}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(14,22,41,0.98);padding:24px 6vw;flex-direction:column;gap:16px;z-index:199;border-bottom:1px solid rgba(201,168,76,0.15);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:12px;letter-spacing:0.2em;color:var(--gray);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.07);transition:color 0.3s;}
+.mobile-menu a:hover{color:var(--gold);}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--navy);padding-top:72px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,0.06) 0%,transparent 70%);}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);background-size:60px 60px;}
+.hero-content{text-align:center;position:relative;z-index:2;padding:0 5vw;max-width:880px;}
+.hero-pre{font-size:10px;letter-spacing:0.5em;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:16px;}
+.hero-pre::before,.hero-pre::after{content:'';flex:1;max-width:60px;height:1px;background:var(--gold);opacity:0.4;}
+.hero-logo{width:120px;height:120px;margin:0 auto 32px;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,7vw,78px);font-weight:300;color:var(--gold-l);line-height:1.1;letter-spacing:0.04em;margin-bottom:18px;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:10px;letter-spacing:0.4em;color:var(--gray);margin-bottom:48px;}
+.deco{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:44px;}
+.deco-bar{width:60px;height:1px;background:var(--gold);opacity:0.4;}
+.deco-dia{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{font-size:10px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);padding:14px 30px;text-decoration:none;transition:background 0.3s;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;}
+.btn-primary:hover{background:var(--gold-l);}
+.btn-outline{font-size:10px;letter-spacing:0.28em;color:var(--gold);border:1px solid var(--gold);padding:14px 30px;text-decoration:none;background:transparent;transition:all 0.3s;}
+.btn-outline:hover{background:rgba(201,168,76,0.08);}
+/* PAGE HERO */
+.page-hero{padding:140px 5vw 70px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(201,168,76,0.07) 0%,transparent 70%);border-bottom:1px solid rgba(201,168,76,0.1);}
+.pre{font-size:10px;letter-spacing:0.45em;color:var(--gold);display:block;margin-bottom:14px;}
+.page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,50px);font-weight:300;color:var(--gold-l);letter-spacing:0.05em;}
+section{padding:90px 5vw;}
+.section-header{text-align:center;margin-bottom:60px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);font-weight:300;color:var(--gold-l);letter-spacing:0.05em;line-height:1.2;}
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;max-width:1200px;margin:0 auto;}
+.service-card{background:var(--navy2);padding:46px 36px;position:relative;overflow:hidden;transition:all 0.4s;cursor:pointer;text-decoration:none;display:block;}
+.service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.4s;transform-origin:left;}
+.service-card:hover::before{transform:scaleX(1);}
+.service-card:hover{background:#1e2f55;}
+.service-num{font-family:'Cormorant Garamond',serif;font-size:54px;font-weight:300;color:rgba(201,168,76,0.08);position:absolute;top:16px;right:22px;line-height:1;}
+.service-icon{width:44px;height:44px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.service-icon svg{width:20px;height:20px;fill:none;stroke:var(--gold);stroke-width:1.5;}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--gold-l);letter-spacing:0.08em;margin-bottom:6px;}
+.service-sub{font-size:9px;letter-spacing:0.28em;color:var(--gold);margin-bottom:16px;}
+.service-desc{font-size:13px;font-weight:300;color:var(--gray);line-height:1.8;margin-bottom:22px;}
+.service-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.service-list li{font-size:12px;color:var(--text);letter-spacing:0.06em;display:flex;align-items:center;gap:10px;}
+.service-list li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.service-arrow{margin-top:28px;font-size:10px;letter-spacing:0.25em;color:var(--gold);display:flex;align-items:center;gap:10px;}
+.service-arrow::after{content:'';flex:0 0 28px;height:1px;background:var(--gold);transition:flex 0.3s;}
+.service-card:hover .service-arrow::after{flex:0 0 48px;}
+/* ABOUT */
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.about-text p{font-size:13.5px;font-weight:300;color:var(--gray);line-height:1.95;margin-bottom:18px;}
+.about-text .quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--gold-l);line-height:1.6;margin-bottom:26px;padding-left:18px;border-left:2px solid var(--gold);}
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.value-item{padding:22px;border:1px solid rgba(201,168,76,0.15);}
+.value-title{font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:7px;font-weight:600;}
+.value-desc{font-size:12px;font-weight:300;color:var(--gray);line-height:1.7;}
+/* CONTACT */
+.contact-inner{max-width:620px;margin:0 auto;text-align:center;}
+.contact-form{margin-top:46px;display:flex;flex-direction:column;gap:15px;text-align:left;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+.form-group{display:flex;flex-direction:column;gap:7px;}
+.form-group label{font-size:9px;letter-spacing:0.3em;color:var(--gold);}
+.form-group input,.form-group textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.22);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;padding:13px 15px;outline:none;transition:border-color 0.3s;resize:none;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--gray);opacity:0.7;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-btn{font-size:10px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);border:none;padding:15px;cursor:pointer;width:100%;font-family:'Montserrat',sans-serif;transition:background 0.3s;}
+.form-btn:hover{background:var(--gold-l);}
+.form-success{display:none;padding:15px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.3);color:var(--gold-l);font-size:12px;letter-spacing:0.05em;text-align:center;margin-top:6px;}
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(8,14,26,0.92);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.35s;backdrop-filter:blur(4px);}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.35);max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform 0.35s;}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-header{padding:34px 38px 22px;border-bottom:1px solid rgba(201,168,76,0.15);position:relative;}
+.modal-close{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;transition:color 0.3s;font-family:inherit;}
+.modal-close:hover{color:var(--gold);}
+.modal-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:rgba(201,168,76,0.1);line-height:1;margin-bottom:6px;}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold-l);letter-spacing:0.06em;margin-bottom:5px;}
+.modal-sub{font-size:9px;letter-spacing:0.28em;color:var(--gold);}
+.modal-body{padding:28px 38px 38px;}
+.modal-desc{font-size:13px;font-weight:300;color:var(--gray);line-height:1.9;margin-bottom:24px;font-style:italic;}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px;}
+.modal-info-item{padding:14px;background:rgba(14,22,41,0.6);border:1px solid rgba(201,168,76,0.14);text-align:center;}
+.modal-info-label{font-size:8px;letter-spacing:0.28em;color:var(--gold);margin-bottom:5px;}
+.modal-info-value{font-size:11px;font-weight:500;color:var(--gold-l);}
+.modal-badge{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border:1px solid rgba(201,168,76,0.3);font-size:9px;letter-spacing:0.18em;color:var(--gold);margin-bottom:24px;}
+.modal-section-title{font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:12px;font-weight:600;}
+.modal-prestations{display:flex;flex-direction:column;gap:8px;margin-bottom:22px;}
+.modal-prestation{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:rgba(201,168,76,0.03);border:1px solid rgba(201,168,76,0.09);transition:border-color 0.3s;}
+.modal-prestation:hover{border-color:rgba(201,168,76,0.25);}
+.modal-prestation-dot{color:var(--gold);font-size:14px;flex-shrink:0;}
+.modal-prestation-text{font-size:12.5px;font-weight:400;color:var(--text);line-height:1.5;}
+.modal-prestation-text span{display:block;font-size:11px;color:var(--gray);margin-top:2px;font-weight:300;}
+.modal-cta-btn{display:block;text-align:center;font-size:10px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);padding:14px;cursor:pointer;border:none;width:100%;font-family:'Montserrat',sans-serif;transition:background 0.3s;}
+.modal-cta-btn:hover{background:var(--gold-l);}
+/* SERVICE PAGE */
+.service-page-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.svc-card{background:var(--navy2);padding:36px 32px;border:1px solid rgba(201,168,76,0.1);transition:border-color 0.3s;}
+.svc-card:hover{border-color:rgba(201,168,76,0.3);}
+.svc-card-num{font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:10px;font-weight:600;}
+.svc-card-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--gold-l);margin-bottom:12px;}
+.svc-card-desc{font-size:13px;font-weight:300;color:var(--gray);line-height:1.85;margin-bottom:16px;}
+.svc-card-items{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
+.svc-card-items li{font-size:12px;color:var(--text);display:flex;align-items:center;gap:9px;}
+.svc-card-items li::before{content:'';width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.svc-card-price{font-size:10px;letter-spacing:0.15em;color:var(--gold);border-top:1px solid rgba(201,168,76,0.15);padding-top:14px;}
+/* ABOUT PAGE */
+.timeline{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:28px;padding-bottom:36px;position:relative;}
+.timeline-item::before{content:'';position:absolute;left:19px;top:32px;bottom:0;width:1px;background:rgba(201,168,76,0.2);}
+.timeline-item:last-child::before{display:none;}
+.tl-dot{width:40px;height:40px;min-width:40px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;background:var(--navy2);z-index:1;}
+.tl-dot span{font-size:14px;color:var(--gold);}
+.tl-content h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold-l);margin-bottom:6px;}
+.tl-content p{font-size:13px;font-weight:300;color:var(--gray);line-height:1.8;}
+/* FOOTER */
+footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,0.12);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:0.2em;color:var(--gold);}
+.footer-copy{font-size:10px;letter-spacing:0.12em;color:var(--gray);}
+.footer-links{display:flex;gap:22px;flex-wrap:wrap;}
+.footer-links a{font-size:10px;letter-spacing:0.18em;color:var(--gray);text-decoration:none;transition:color 0.3s;}
+.footer-links a:hover{color:var(--gold);}
+/* COOKIE */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0b1120;border-top:1px solid rgba(201,168,76,0.35);padding:20px 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;transform:translateY(100%);transition:transform 0.4s;}
+.cookie-text{font-size:12px;font-weight:300;color:var(--gray);line-height:1.7;max-width:700px;}
+.cookie-text a{color:var(--gold);}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0;}
+.btn-refuse{font-size:10px;letter-spacing:0.2em;color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,0.4);padding:10px 20px;cursor:pointer;font-family:inherit;transition:all 0.3s;}
+.btn-accept{font-size:10px;letter-spacing:0.2em;color:var(--navy);background:var(--gold);border:none;padding:10px 22px;cursor:pointer;font-family:inherit;transition:background 0.3s;}
+.btn-accept:hover{background:var(--gold-l);}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content>*{animation:fadeUp 0.8s ease forwards;opacity:0;}
+.hero-pre{animation-delay:0.1s}.hero-logo{animation-delay:0.25s}
+.hero-title{animation-delay:0.4s}.hero-sub{animation-delay:0.5s}
+.deco{animation-delay:0.6s}.hero-btns{animation-delay:0.7s}
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+/* ZONE INFO BOX */
+.zone-bar{background:var(--navy2);border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);padding:20px 5vw;display:flex;justify-content:center;gap:60px;flex-wrap:wrap;}
+.zone-item{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--gray);letter-spacing:0.1em;}
+.zone-item strong{color:var(--gold-l);}
+.zone-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;}
+/* RESPONSIVE */
+@media(max-width:900px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}.about-inner{grid-template-columns:1fr;gap:40px;}.values-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;}.modal-info-grid{grid-template-columns:1fr;}}
+</style>
+
+</head>
+<body>
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="Apogée & Co"/><div class="nav-brand">APOGÉE & CO<span>PRESTIGE</span></div></a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-t="nav_home">Accueil</a></li>
+    <li><a href="conciergerie.html" data-t="nav_concierge">Conciergerie</a></li>
+    <li><a href="hotellerie.html" data-t="nav_hotel">Hôtellerie</a></li>
+    <li><a href="evenementiel.html" data-t="nav_event">Événementiel</a></li>
+    <li><a href="about.html" data-t="nav_about">À propos</a></li>
+    <li><a href="index.html#contact" data-t="nav_contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()">EN</button>
+    <a href="index.html#contact" class="nav-cta" data-t="nav_cta">Nous contacter</a>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-t="nav_home">Accueil</a>
+  <a href="conciergerie.html" data-t="nav_concierge">Conciergerie</a>
+  <a href="hotellerie.html" data-t="nav_hotel">Hôtellerie</a>
+  <a href="evenementiel.html" data-t="nav_event">Événementiel</a>
+  <a href="about.html" data-t="nav_about">À propos</a>
+  <a href="index.html#contact" data-t="nav_contact">Contact</a>
+  <button class="lang-btn" onclick="toggleLang()" style="align-self:flex-start;margin-top:8px;">EN</button>
+</div>
+
+<div style="padding-top:72px;">
+  <div class="page-hero">
+    <span class="pre" data-t="page_hotel_pre">PRESTIGE</span>
+    <h1 data-t="page_hotel_title">Nos services</h1>
+    <div class="deco"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
+  </div>
+  </div>
+    <div class="zone-item"><div class="zone-dot"></div><span data-t="devis_label">Tarification</span>&nbsp;—&nbsp;<strong data-t="devis_val">Sur devis personnalisé — Devis gratuit sous 24h</strong></div>
+  </div>
+  <section>
+    <div class="service-page-grid">
+        <div class="svc-card fade-up" style="animation-delay:0.0s">
+          <div class="svc-card-num">01</div>
+          <div class="svc-card-name">Accueil & Réception</div>
+          <p class="svc-card-desc">Accueil des clients de votre établissement selon vos standards. Check-in, check-out, concierge desk.</p>
+          <ul class="svc-card-items"><li>Accueil & check-in personnalisé</li><li>Gestion check-out</li><li>Service concierge</li><li>Accueil FR / EN</li></ul>
+          <div class="svc-card-price">28–45 €/h · Contrat mensuel sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.08s">
+          <div class="svc-card-num">02</div>
+          <div class="svc-card-name">Ménage & Entretien Chambres</div>
+          <p class="svc-card-desc">Nettoyage aux standards hôteliers internationaux avec contrôle qualité.</p>
+          <ul class="svc-card-items"><li>Nettoyage quotidien</li><li>Mise en place linge hôtelier</li><li>Parties communes</li><li>Deep cleaning</li></ul>
+          <div class="svc-card-price">12–22 € / chambre · Contrat sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.16s">
+          <div class="svc-card-num">03</div>
+          <div class="svc-card-name">Restauration & Room Service</div>
+          <p class="svc-card-desc">Petit-déjeuner, room service, buffets. Coordination avec vos équipes cuisine.</p>
+          <ul class="svc-card-items"><li>Service petit-déjeuner</li><li>Room service en chambre</li><li>Buffet & déjeuner groupe</li><li>Coordination traiteurs</li></ul>
+          <div class="svc-card-price">Sur devis selon volume</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.24s">
+          <div class="svc-card-num">04</div>
+          <div class="svc-card-name">Bien-être & Spa en Chambre</div>
+          <p class="svc-card-desc">Massages, soins beauté, yoga matinal. Thérapeutes certifiés se déplaçant dans votre établissement.</p>
+          <ul class="svc-card-items"><li>Massage relaxant / deep tissue</li><li>Soins du visage & beauté</li><li>Séance yoga & méditation</li><li>Aromathérapie</li></ul>
+          <div class="svc-card-price">Sur devis selon protocole</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.32s">
+          <div class="svc-card-num">05</div>
+          <div class="svc-card-name">Blanchisserie Hôtelière</div>
+          <p class="svc-card-desc">Collecte, traitement et restitution du linge : draps, serviettes, peignoirs, uniformes.</p>
+          <ul class="svc-card-items"><li>Collecte & livraison du linge</li><li>Lavage & repassage</li><li>Textiles délicats</li><li>Uniformes personnel</li></ul>
+          <div class="svc-card-price">2,50–5 €/kg · Contrat mensuel sur devis</div>
+        </div></div>
+  </section>
+  <section style="background:var(--navy2);padding:60px 5vw;text-align:center;">
+    <h2 class="section-title fade-up" data-t="contact_title" data-html>Parlons de<br>votre projet</h2>
+    <div class="deco" style="margin:16px auto 28px;"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
+    <a href="index.html#contact" class="btn-primary fade-up" data-t="modal_cta">DEMANDER UN DEVIS PERSONNALISÉ</a>
+  </section>
+</div>
+<footer>
+  <div class="footer-brand">APOGÉE & CO</div>
+  <div class="footer-copy" data-t="footer_copy">© 2025 Apogée & Co — SIRET 980 327 670 00017</div>
+  <div class="footer-links">
+    <a href="index.html" data-t="nav_home">Accueil</a>
+    <a href="mentions_legales.html" data-t="nav_legal">Mentions légales</a>
+    <a href="politique_rgpd.html" data-t="nav_rgpd">Données personnelles</a>
+  </div>
+</footer>
+<div id="cookie-banner">
+  <div class="cookie-text"><span data-t="cookie_text">Nous utilisons des cookies essentiels.</span> <a href="mentions_legales.html" data-t="cookie_more">En savoir plus</a></div>
+  <div class="cookie-btns">
+    <button class="btn-refuse" onclick="refuseCookies()" data-t="cookie_refuse">REFUSER</button>
+    <button class="btn-accept" onclick="acceptCookies()" data-t="cookie_accept">ACCEPTER</button>
+  </div>
+</div>
+<script>
+
+const T={fr:{nav_home:'Accueil',nav_services:'Services',nav_concierge:'Conciergerie',nav_hotel:'Hôtellerie',nav_event:'Événementiel',nav_about:'À propos',nav_contact:'Contact',nav_legal:'Mentions légales',nav_rgpd:'Données personnelles',nav_cta:'Nous contacter',hero_pre:'PRESTIGE · EXCELLENCE · DISCRÉTION',hero_title:"L'art de vivre<br><em>autrement</em>",hero_sub:'CONCIERGERIE · HÔTELLERIE · ÉVÉNEMENTIEL',hero_btn1:'Découvrir nos services',hero_btn2:'Prendre contact',svc_pre:'NOS EXPERTISES',svc_title:"Trois univers,<br>une seule exigence",svc1_name:'Conciergerie',svc1_sub:'CONCIERGERIE · PRESTIGE',svc1_desc:"Un service sur-mesure pour simplifier votre quotidien avec discrétion et efficacité.",svc1_items:['Courses & approvisionnement','Transport & déplacements','Ménage & linge','Assistance administrative','Gestion locative','Petits travaux'],svc2_name:'Hôtellerie',svc2_sub:'SERVICES HÔTELIERS · PRESTIGE',svc2_desc:"Des prestations haut de gamme à destination des établissements hôteliers.",svc2_items:['Accueil & réception clients','Ménage & entretien chambres','Restauration & room service','Bien-être & spa'],svc3_name:'Événementiel',svc3_sub:'ÉVÉNEMENTIEL · PRESTIGE',svc3_desc:"De la conception à la réalisation, vos événements orchestrés à la perfection.",svc3_items:['Mariages & cérémonies','Événements corporate','Soirées privées','Coordination complète'],svc_more:'EN SAVOIR PLUS',about_pre:'NOTRE HISTOIRE',about_title:"L'excellence<br>au service<br>de votre vie",about_quote:'"Nous ne proposons pas simplement des services — nous construisons des expériences qui durent."',about_p1:"Apogée & Co est née d'une conviction profonde : chaque client mérite une attention unique, un service sans faille et une discrétion absolue.",about_p2:"De la gestion quotidienne à l'organisation d'événements d'exception, nous sommes votre partenaire de confiance pour tous les moments qui comptent.",val1_t:'EXCELLENCE',val1_d:"Chaque prestation réalisée avec le plus haut niveau d'exigence.",val2_t:'DISCRÉTION',val2_d:"Votre vie privée est notre priorité absolue.",val3_t:'DISPONIBILITÉ',val3_d:"Un accompagnement 7j/7 pour toutes vos demandes.",val4_t:'SUR-MESURE',val4_d:"Chaque service personnalisé selon vos préférences.",contact_pre:'NOUS CONTACTER',contact_title:"Parlons de<br>votre projet",f_name:'NOM',f_email:'EMAIL',f_phone:'TÉLÉPHONE',f_service:'SERVICE SOUHAITÉ',f_service_ph:'Conciergerie / Hôtellerie / Événementiel',f_msg:'VOTRE MESSAGE',f_msg_ph:"Décrivez votre projet ou votre demande...",f_submit:'ENVOYER LE MESSAGE',f_sending:'ENVOI EN COURS...',f_success:'✓  Message envoyé. Nous vous répondrons rapidement.',f_error:'ERREUR — RÉESSAYEZ',footer_copy:'© 2025 Apogée & Co — SIRET 980 327 670 00017',cookie_text:"Nous utilisons des cookies essentiels.",cookie_more:'En savoir plus',cookie_refuse:'REFUSER',cookie_accept:'ACCEPTER',cookie_customize:'Personnaliser',modal_tarif:'TARIF',modal_zone:'ZONE',modal_delai:'DÉLAI',modal_zone_val:'',modal_tarif_val:'Sur devis personnalisé',modal_badge:'★ EXPÉRIENCE PREMIUM GARANTIE',modal_prestations:'NOS PRESTATIONS',modal_cta:'DEMANDER UN DEVIS PERSONNALISÉ',modal_delai_c:'Intervention sous 48h',modal_delai_h:'Sur planification',modal_delai_e:'Sur planification',page_concierge_pre:'CONCIERGERIE PRESTIGE',page_concierge_title:'Nos services de conciergerie',page_hotel_pre:'HÔTELLERIE PRESTIGE',page_hotel_title:'Nos services hôteliers',page_event_pre:'ÉVÉNEMENTIEL PRESTIGE',page_event_title:'Nos services événementiels',page_about_pre:'APOGÉE & CO',page_about_title:"À propos de nous",zone_label:'',zone_val:'',devis_label:'Tarification',devis_val:'Sur devis personnalisé — Devis gratuit sous 24h',lang_btn:'EN'},en:{nav_home:'Home',nav_services:'Services',nav_concierge:'Concierge',nav_hotel:'Hospitality',nav_event:'Events',nav_about:'About',nav_contact:'Contact',nav_legal:'Legal notice',nav_rgpd:'Privacy policy',nav_cta:'Contact us',hero_pre:'PRESTIGE · EXCELLENCE · DISCRETION',hero_title:"The art of living<br><em>differently</em>",hero_sub:'CONCIERGE · HOSPITALITY · EVENTS',hero_btn1:'Discover our services',hero_btn2:'Get in touch',svc_pre:'OUR EXPERTISE',svc_title:"Three worlds,<br>one standard of excellence",svc1_name:'Concierge',svc1_sub:'CONCIERGE · PRESTIGE',svc1_desc:"A bespoke service to simplify your daily life with absolute discretion.",svc1_items:['Grocery & provisioning','Transportation','Cleaning & laundry','Administrative assistance','Property management','Minor repairs'],svc2_name:'Hospitality',svc2_sub:'HOTEL SERVICES · PRESTIGE',svc2_desc:"Premium hospitality services tailored for hotels and establishments.",svc2_items:['Guest welcome & reception','Room cleaning & housekeeping','Catering & room service','Wellness & spa'],svc3_name:'Events',svc3_sub:'EVENTS · PRESTIGE',svc3_desc:"From concept to execution, your prestigious events orchestrated to perfection.",svc3_items:['Weddings & ceremonies','Corporate events','Private parties','Full coordination'],svc_more:'LEARN MORE',about_pre:'OUR STORY',about_title:"Excellence<br>at the service<br>of your life",about_quote:'"We don\'t simply provide services — we craft experiences that last."',about_p1:"Apogée & Co was born from a deep conviction: every client deserves unique attention, flawless service and absolute discretion.",about_p2:"From daily management to organising exceptional events, we are your trusted partner for all the moments that matter.",val1_t:'EXCELLENCE',val1_d:"Every service delivered with the highest standards.",val2_t:'DISCRETION',val2_d:"Your privacy is our absolute priority in all circumstances.",val3_t:'AVAILABILITY',val3_d:"Round-the-clock support 7 days a week.",val4_t:'BESPOKE',val4_d:"Every service personalised to your preferences.",contact_pre:'CONTACT US',contact_title:"Let's talk about<br>your project",f_name:'NAME',f_email:'EMAIL',f_phone:'PHONE',f_service:'SERVICE REQUESTED',f_service_ph:'Concierge / Hospitality / Events',f_msg:'YOUR MESSAGE',f_msg_ph:"Describe your project or request...",f_submit:'SEND MESSAGE',f_sending:'SENDING...',f_success:'✓  Message sent. We will get back to you shortly.',f_error:'ERROR — PLEASE RETRY',footer_copy:'© 2025 Apogée & Co — SIRET 980 327 670 00017',cookie_text:"We use essential cookies to ensure the site functions properly.",cookie_more:'Learn more',cookie_refuse:'DECLINE',cookie_accept:'ACCEPT',cookie_customize:'Customise',modal_tarif:'PRICE',modal_zone:'AREA',modal_delai:'LEAD TIME',modal_zone_val:'',modal_tarif_val:'Custom quote',modal_badge:'★ PREMIUM EXPERIENCE GUARANTEED',modal_prestations:'OUR SERVICES',modal_cta:'REQUEST A CUSTOM QUOTE',modal_delai_c:'Within 48 hours',modal_delai_h:'Upon scheduling',modal_delai_e:'Upon scheduling',page_concierge_pre:'PRESTIGE CONCIERGE',page_concierge_title:'Our concierge services',page_hotel_pre:'PRESTIGE HOSPITALITY',page_hotel_title:'Our hotel services',page_event_pre:'PRESTIGE EVENTS',page_event_title:'Our event services',page_about_pre:'APOGÉE & CO',page_about_title:"About us",zone_label:'',zone_val:'',devis_label:'Pricing',devis_val:'Custom quote — Free estimate within 24h',lang_btn:'FR'}};
+let lang=localStorage.getItem('apogee_lang')||'fr';
+function t(k){return T[lang][k]||T.fr[k]||k;}
+function setLang(l){lang=l;localStorage.setItem('apogee_lang',l);document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=t(k);else if(el.hasAttribute('data-html'))el.innerHTML=t(k);else el.textContent=t(k);});document.querySelectorAll('[data-t-list]').forEach(el=>{const k=el.getAttribute('data-t-list');const items=t(k);if(Array.isArray(items))el.innerHTML=items.map(i=>`<li>${i}</li>`).join('');});document.querySelectorAll('.lang-btn').forEach(b=>b.textContent=t('lang_btn'));}
+function toggleLang(){setLang(lang==='fr'?'en':'fr');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  setLang(lang);
+  window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>50));
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  if(!localStorage.getItem('cookie_consent_v2'))setTimeout(()=>{const b=document.getElementById('cookie-banner');if(b)b.style.transform='translateY(0)';},1000);
+  const path=window.location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.nav-links a,.mobile-menu a').forEach(a=>{if(a.getAttribute('href')===path||a.getAttribute('href').split('#')[0]===path)a.classList.add('active');});
+});
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+function acceptCookies(){localStorage.setItem('cookie_consent_v2',JSON.stringify({v:'1.0',ts:new Date().toISOString(),a:true}));document.getElementById('cookie-banner').style.transform='translateY(100%)';}
+function refuseCookies(){localStorage.setItem('cookie_consent_v2',JSON.stringify({v:'1.0',ts:new Date().toISOString(),a:false}));document.getElementById('cookie-banner').style.transform='translateY(100%)';}
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow='';}
+function closeOnOverlay(e,id){if(e.target===e.currentTarget)closeModal(id);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')['conciergerie','hotellerie','evenementiel'].forEach(closeModal);});
+</script>
+</body>
+</html>
