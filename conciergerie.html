@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Conciergerie — Apogée & Co</title>
-<meta name="description" content="Apogée & Co — Conciergerie, Hôtellerie et Événementiel Prestige.">
-
+<meta name="description" content="Apogée & Co — Conciergerie Prestige.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 :root{--navy:#0e1629;--navy2:#1a2744;--gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;--cream:#f5f0e8;}
@@ -176,6 +175,176 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 @media(max-width:900px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}.about-inner{grid-template-columns:1fr;gap:40px;}.values-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;}.modal-info-grid{grid-template-columns:1fr;}}
 </style>
 
+<style>
+/* ── PAGE SERVICE — MODÈLE TIMELINE PRESTIGE ── */
+.svc-hero {
+  min-height: 52vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding: 140px 5vw 60px;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+.svc-hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 90% 70% at 50% 60%, rgba(201,168,76,0.08) 0%, transparent 65%);
+}
+.svc-hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+.svc-hero-eyebrow {
+  font-size: 9px; letter-spacing: 0.55em; color: var(--gold);
+  margin-bottom: 18px; position: relative; z-index: 2;
+}
+.svc-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 6vw, 68px); font-weight: 300;
+  color: var(--gold-l); letter-spacing: 0.04em; line-height: 1.05;
+  position: relative; z-index: 2; margin-bottom: 20px;
+}
+.svc-hero-title em { font-style: italic; color: var(--gold); }
+.svc-hero-desc {
+  font-size: 14px; font-weight: 300; color: var(--gray);
+  max-width: 540px; line-height: 1.9; position: relative; z-index: 2;
+  margin-bottom: 32px;
+}
+.svc-hero-cta {
+  font-size: 10px; letter-spacing: 0.28em; color: var(--navy);
+  background: var(--gold); padding: 14px 34px;
+  text-decoration: none; transition: background 0.3s;
+  position: relative; z-index: 2;
+}
+.svc-hero-cta:hover { background: var(--gold-l); }
+
+/* ── TIMELINE PRESTATIONS ── */
+.svc-timeline-section {
+  padding: 100px 5vw;
+  background: #0b1120;
+}
+.svc-timeline-inner {
+  max-width: 900px; margin: 0 auto;
+}
+.svc-tl-header {
+  text-align: center; margin-bottom: 80px;
+}
+.svc-tl-header .pre {
+  font-size: 9px; letter-spacing: 0.5em; color: var(--gold);
+  display: block; margin-bottom: 14px;
+}
+.svc-tl-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 40px); font-weight: 300;
+  color: var(--gold-l); letter-spacing: 0.06em;
+}
+
+.svc-tl-items { display: flex; flex-direction: column; gap: 0; }
+
+.svc-tl-item {
+  display: grid;
+  grid-template-columns: 1fr 52px 1fr;
+  gap: 0;
+  min-height: 120px;
+}
+
+/* Alternance gauche/droite */
+.svc-tl-item:nth-child(odd) .svc-tl-left  { order: 1; text-align: right; padding-right: 40px; }
+.svc-tl-item:nth-child(odd) .svc-tl-center{ order: 2; }
+.svc-tl-item:nth-child(odd) .svc-tl-right { order: 3; padding-left: 40px; opacity: 0; pointer-events: none; }
+
+.svc-tl-item:nth-child(even) .svc-tl-left  { order: 1; opacity: 0; pointer-events: none; }
+.svc-tl-item:nth-child(even) .svc-tl-center{ order: 2; }
+.svc-tl-item:nth-child(even) .svc-tl-right { order: 3; padding-left: 40px; }
+
+.svc-tl-left, .svc-tl-right {
+  padding-top: 8px; padding-bottom: 40px;
+  display: flex; flex-direction: column; justify-content: flex-start;
+}
+.svc-tl-center {
+  display: flex; flex-direction: column; align-items: center;
+  padding-bottom: 0;
+}
+.svc-tl-dot-wrap {
+  display: flex; flex-direction: column; align-items: center; height: 100%;
+}
+.svc-tl-icon {
+  width: 52px; height: 52px;
+  border: 1px solid var(--gold);
+  background: #0b1120;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; z-index: 1;
+  transition: background 0.3s;
+}
+.svc-tl-item:hover .svc-tl-icon { background: rgba(201,168,76,0.08); }
+.svc-tl-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--gold); stroke-width: 1.3; }
+.svc-tl-line {
+  flex: 1; width: 1px; background: rgba(201,168,76,0.18); margin-top: 0;
+}
+.svc-tl-item:last-child .svc-tl-line { display: none; }
+
+.svc-tl-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 400; color: var(--gold-l);
+  letter-spacing: 0.06em; margin-bottom: 10px; line-height: 1.2;
+}
+.svc-tl-desc {
+  font-size: 13px; font-weight: 300; color: var(--gray);
+  line-height: 1.85;
+}
+.svc-tl-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+}
+.svc-tl-item:nth-child(odd) .svc-tl-tags { justify-content: flex-end; }
+.svc-tl-tag {
+  font-size: 9px; letter-spacing: 0.12em; color: var(--gold);
+  border: 0.5px solid rgba(201,168,76,0.3); padding: 4px 11px;
+  transition: border-color 0.3s;
+}
+.svc-tl-item:hover .svc-tl-tag { border-color: rgba(201,168,76,0.6); }
+
+/* ── BANDE DEVIS ── */
+.svc-devis-band {
+  padding: 70px 5vw; text-align: center;
+  background: var(--navy2);
+  border-top: 1px solid rgba(201,168,76,0.1);
+}
+.svc-devis-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 28px); font-weight: 300; font-style: italic;
+  color: var(--gold-l); max-width: 600px; margin: 0 auto 32px;
+  line-height: 1.5;
+}
+.svc-devis-sub {
+  font-size: 11px; letter-spacing: 0.25em; color: var(--gray);
+  margin-bottom: 30px;
+}
+.svc-devis-cta {
+  font-size: 10px; letter-spacing: 0.28em; color: var(--navy);
+  background: var(--gold); padding: 15px 36px;
+  text-decoration: none; transition: background 0.3s; display: inline-block;
+}
+.svc-devis-cta:hover { background: var(--gold-l); }
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  .svc-tl-item {
+    grid-template-columns: 40px 1fr;
+  }
+  .svc-tl-item:nth-child(odd) .svc-tl-left,
+  .svc-tl-item:nth-child(even) .svc-tl-left { display: none; }
+  .svc-tl-item:nth-child(odd) .svc-tl-center,
+  .svc-tl-item:nth-child(even) .svc-tl-center { order: 1; }
+  .svc-tl-item:nth-child(odd) .svc-tl-right,
+  .svc-tl-item:nth-child(even) .svc-tl-right { order: 2; padding-left: 20px; opacity: 1; pointer-events: all; }
+  .svc-tl-item:nth-child(odd) .svc-tl-left  { opacity: 0; }
+  .svc-tl-icon { width: 40px; height: 40px; }
+  .svc-tl-icon svg { width: 16px; height: 16px; }
+}
+</style>
+
 </head>
 <body>
 <nav id="mainNav">
@@ -205,65 +374,190 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 </div>
 
 <div style="padding-top:72px;">
-  <div class="page-hero">
-    <span class="pre" data-t="page_concierge_pre">PRESTIGE</span>
-    <h1 data-t="page_concierge_title">Nos services</h1>
+
+  <!-- HERO -->
+  <div class="svc-hero">
+    <div class="svc-hero-bg"></div>
+    <div class="svc-hero-grid"></div>
+    <div class="svc-hero-eyebrow" id="svc-eyebrow">CONCIERGERIE · PRESTIGE</div>
+    <h1 class="svc-hero-title" id="svc-title">Conciergerie</h1>
+    <p class="svc-hero-desc" id="svc-desc">Un service sur-mesure pensé pour libérer votre temps et simplifier votre quotidien. Chaque demande est traitée avec une discrétion et une exigence absolues.</p>
     <div class="deco"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
+    <a href="index.html#contact" class="svc-hero-cta" data-t="modal_cta">DEMANDER UN DEVIS</a>
   </div>
+
+  <!-- TIMELINE -->
+  <div class="svc-timeline-section">
+    <div class="svc-timeline-inner">
+      <div class="svc-tl-header fade-up">
+        <span class="pre" id="svc-tl-pre">NOS PRESTATIONS</span>
+        <h2 id="svc-tl-title">Ce que nous faisons pour vous</h2>
+      </div>
+      <div class="svc-tl-items">
+        
+      <div class="svc-tl-item fade-up" style="animation-delay:0.0s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-0">Courses & Approvisionnement</div>
+        <div class="svc-tl-desc svc-tl-desc-0">Nous prenons en charge l'intégralité de vos courses — épicerie courante, produits frais, épicerie fine et commandes spéciales. Livraison à domicile selon vos préférences.</div>
+        <div class="svc-tl-tags svc-tl-tags-0"><span class="svc-tl-tag">Livraison domicile</span><span class="svc-tl-tag">Épicerie fine</span><span class="svc-tl-tag">Commandes spéciales</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-0">Courses & Approvisionnement</div>
+        <div class="svc-tl-desc svc-tl-desc-0">Nous prenons en charge l'intégralité de vos courses — épicerie courante, produits frais, épicerie fine et commandes spéciales. Livraison à domicile selon vos préférences.</div>
+        <div class="svc-tl-tags svc-tl-tags-0"><span class="svc-tl-tag">Livraison domicile</span><span class="svc-tl-tag">Épicerie fine</span><span class="svc-tl-tag">Commandes spéciales</span></div></div>
+      </div>
+      <div class="svc-tl-item fade-up" style="animation-delay:0.07s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-1">Transport & Déplacements</div>
+        <div class="svc-tl-desc svc-tl-desc-1">Organisation et coordination de tous vos déplacements : chauffeur privé, navettes aéroport, réservations VTC. Véhicules premium, ponctualité garantie.</div>
+        <div class="svc-tl-tags svc-tl-tags-1"><span class="svc-tl-tag">Chauffeur privé</span><span class="svc-tl-tag">Navette aéroport</span><span class="svc-tl-tag">Véhicules premium</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-4 9a2 2 0 100-4 2 2 0 000 4zm7 0a2 2 0 100-4 2 2 0 000 4M13 5h8l-2 9H13V5z"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-1">Transport & Déplacements</div>
+        <div class="svc-tl-desc svc-tl-desc-1">Organisation et coordination de tous vos déplacements : chauffeur privé, navettes aéroport, réservations VTC. Véhicules premium, ponctualité garantie.</div>
+        <div class="svc-tl-tags svc-tl-tags-1"><span class="svc-tl-tag">Chauffeur privé</span><span class="svc-tl-tag">Navette aéroport</span><span class="svc-tl-tag">Véhicules premium</span></div></div>
+      </div>
+      <div class="svc-tl-item fade-up" style="animation-delay:0.14s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-2">Ménage & Linge</div>
+        <div class="svc-tl-desc svc-tl-desc-2">Entretien régulier ou ponctuel de votre domicile selon des standards professionnels. Repassage, blanchisserie et soin des textiles de luxe.</div>
+        <div class="svc-tl-tags svc-tl-tags-2"><span class="svc-tl-tag">Ménage régulier</span><span class="svc-tl-tag">Repassage</span><span class="svc-tl-tag">Blanchisserie</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-2">Ménage & Linge</div>
+        <div class="svc-tl-desc svc-tl-desc-2">Entretien régulier ou ponctuel de votre domicile selon des standards professionnels. Repassage, blanchisserie et soin des textiles de luxe.</div>
+        <div class="svc-tl-tags svc-tl-tags-2"><span class="svc-tl-tag">Ménage régulier</span><span class="svc-tl-tag">Repassage</span><span class="svc-tl-tag">Blanchisserie</span></div></div>
+      </div>
+      <div class="svc-tl-item fade-up" style="animation-delay:0.21000000000000002s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-3">Assistance Administrative</div>
+        <div class="svc-tl-desc svc-tl-desc-3">Gestion de votre courrier, prises de rendez-vous, démarches administratives — nous libérons votre agenda des tâches chronophages.</div>
+        <div class="svc-tl-tags svc-tl-tags-3"><span class="svc-tl-tag">Gestion courrier</span><span class="svc-tl-tag">Prises de RDV</span><span class="svc-tl-tag">Démarches</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-3">Assistance Administrative</div>
+        <div class="svc-tl-desc svc-tl-desc-3">Gestion de votre courrier, prises de rendez-vous, démarches administratives — nous libérons votre agenda des tâches chronophages.</div>
+        <div class="svc-tl-tags svc-tl-tags-3"><span class="svc-tl-tag">Gestion courrier</span><span class="svc-tl-tag">Prises de RDV</span><span class="svc-tl-tag">Démarches</span></div></div>
+      </div>
+      <div class="svc-tl-item fade-up" style="animation-delay:0.28s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-4">Gestion Locative</div>
+        <div class="svc-tl-desc svc-tl-desc-4">Gestion intégrale de votre bien immobilier : accueil des locataires, états des lieux, remise des clés et coordination des artisans.</div>
+        <div class="svc-tl-tags svc-tl-tags-4"><span class="svc-tl-tag">Accueil locataires</span><span class="svc-tl-tag">États des lieux</span><span class="svc-tl-tag">Coordination</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-4">Gestion Locative</div>
+        <div class="svc-tl-desc svc-tl-desc-4">Gestion intégrale de votre bien immobilier : accueil des locataires, états des lieux, remise des clés et coordination des artisans.</div>
+        <div class="svc-tl-tags svc-tl-tags-4"><span class="svc-tl-tag">Accueil locataires</span><span class="svc-tl-tag">États des lieux</span><span class="svc-tl-tag">Coordination</span></div></div>
+      </div>
+      <div class="svc-tl-item fade-up" style="animation-delay:0.35000000000000003s">
+        <div class="svc-tl-left">
+        <div class="svc-tl-name svc-tl-name-5">Petits Travaux</div>
+        <div class="svc-tl-desc svc-tl-desc-5">Réparations courantes, montage de mobilier, fixations et installations diverses. Nos équipes interviennent rapidement et avec soin.</div>
+        <div class="svc-tl-tags svc-tl-tags-5"><span class="svc-tl-tag">Réparations courantes</span><span class="svc-tl-tag">Montage mobilier</span><span class="svc-tl-tag">Installations</span></div></div>
+        <div class="svc-tl-center">
+          <div class="svc-tl-dot-wrap">
+            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+            <div class="svc-tl-line"></div>
+          </div>
+        </div>
+        <div class="svc-tl-right">
+        <div class="svc-tl-name svc-tl-name-5">Petits Travaux</div>
+        <div class="svc-tl-desc svc-tl-desc-5">Réparations courantes, montage de mobilier, fixations et installations diverses. Nos équipes interviennent rapidement et avec soin.</div>
+        <div class="svc-tl-tags svc-tl-tags-5"><span class="svc-tl-tag">Réparations courantes</span><span class="svc-tl-tag">Montage mobilier</span><span class="svc-tl-tag">Installations</span></div></div>
+      </div>
+      </div>
+    </div>
   </div>
-    <div class="zone-item"><div class="zone-dot"></div><span data-t="devis_label">Tarification</span>&nbsp;—&nbsp;<strong data-t="devis_val">Sur devis personnalisé — Devis gratuit sous 24h</strong></div>
+
+  <!-- DEVIS BAND -->
+  <div class="svc-devis-band">
+    <p class="svc-devis-quote" id="svc-quote">"Chaque détail compte. Chaque demande mérite une réponse à la hauteur de vos attentes."</p>
+    <p class="svc-devis-sub" data-t="modal_badge">★ EXPÉRIENCE PREMIUM GARANTIE</p>
+    <a href="index.html#contact" class="svc-devis-cta" data-t="modal_cta">DEMANDER UN DEVIS PERSONNALISÉ</a>
   </div>
-  <section>
-    <div class="service-page-grid">
-        <div class="svc-card fade-up" style="animation-delay:0.0s">
-          <div class="svc-card-num">01</div>
-          <div class="svc-card-name">Courses & Approvisionnement</div>
-          <p class="svc-card-desc">Prise en charge intégrale de vos courses : épicerie courante, produits frais, épicerie fine, commandes spéciales.</p>
-          <ul class="svc-card-items"><li>Courses alimentaires courantes</li><li>Épicerie fine & produits de luxe</li><li>Livraison à domicile</li><li>Commandes producteurs locaux</li></ul>
-          <div class="svc-card-price">Forfait 35–80 € · Abonnement sur devis</div>
-        </div>
-        <div class="svc-card fade-up" style="animation-delay:0.08s">
-          <div class="svc-card-num">02</div>
-          <div class="svc-card-name">Transport & Déplacements</div>
-          <p class="svc-card-desc">Organisation de tous vos déplacements : VTC, navettes aéroport, chauffeur privé.</p>
-          <ul class="svc-card-items"><li>Réservation VTC & taxi</li><li>Navette aéroport (CDG / Orly)</li><li>Chauffeur privé demi-journée / journée</li><li>Accompagnement médical</li></ul>
-          <div class="svc-card-price">Navette à partir de 60 € · Chauffeur sur devis</div>
-        </div>
-        <div class="svc-card fade-up" style="animation-delay:0.16s">
-          <div class="svc-card-num">03</div>
-          <div class="svc-card-name">Ménage & Linge</div>
-          <p class="svc-card-desc">Entretien de votre domicile aux standards professionnels. Repassage, blanchisserie, textiles délicats.</p>
-          <ul class="svc-card-items"><li>Ménage régulier hebdo / bi-mensuel</li><li>Grand ménage ponctuel</li><li>Repassage & pliage</li><li>Blanchisserie & pressing</li></ul>
-          <div class="svc-card-price">25–35 €/h · Forfait mensuel sur devis</div>
-        </div>
-        <div class="svc-card fade-up" style="animation-delay:0.24s">
-          <div class="svc-card-num">04</div>
-          <div class="svc-card-name">Assistance Administrative</div>
-          <p class="svc-card-desc">Gestion du courrier, prises de RDV, démarches administratives diverses.</p>
-          <ul class="svc-card-items"><li>Gestion & tri du courrier</li><li>Prises de rendez-vous</li><li>Démarches administratives</li><li>Rédaction de courriers</li></ul>
-          <div class="svc-card-price">40 €/h · Forfait mensuel sur devis</div>
-        </div>
-        <div class="svc-card fade-up" style="animation-delay:0.32s">
-          <div class="svc-card-num">05</div>
-          <div class="svc-card-name">Gestion Locative</div>
-          <p class="svc-card-desc">Gestion intégrale de votre bien immobilier.</p>
-          <ul class="svc-card-items"><li>Accueil & remise des clés</li><li>État des lieux entrée & sortie</li><li>Coordination artisans</li><li>Suivi administratif locatif</li></ul>
-          <div class="svc-card-price">45 € / passage · État des lieux 80–150 €</div>
-        </div>
-        <div class="svc-card fade-up" style="animation-delay:0.4s">
-          <div class="svc-card-num">06</div>
-          <div class="svc-card-name">Petits Travaux</div>
-          <p class="svc-card-desc">Réparations courantes, montage, installations — intervention rapide.</p>
-          <ul class="svc-card-items"><li>Montage de meubles</li><li>Réparations courantes</li><li>Fixations & accrochages</li><li>Petite plomberie & électricité</li></ul>
-          <div class="svc-card-price">50–80 € (1h, déplacement inclus)</div>
-        </div></div>
-  </section>
-  <section style="background:var(--navy2);padding:60px 5vw;text-align:center;">
-    <h2 class="section-title fade-up" data-t="contact_title" data-html>Parlons de<br>votre projet</h2>
-    <div class="deco" style="margin:16px auto 28px;"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
-    <a href="index.html#contact" class="btn-primary fade-up" data-t="modal_cta">DEMANDER UN DEVIS PERSONNALISÉ</a>
-  </section>
+
 </div>
+
+<script>
+const PAGE_T = {
+  fr: {
+    hero_eyebrow: 'CONCIERGERIE · PRESTIGE',
+    hero_title: 'Conciergerie',
+    hero_desc: 'Un service sur-mesure pensé pour libérer votre temps et simplifier votre quotidien. Chaque demande est traitée avec une discrétion et une exigence absolues.',
+    tl_pre: 'NOS PRESTATIONS',
+    tl_title: 'Ce que nous faisons pour vous',
+    quote: '"Chaque détail compte. Chaque demande mérite une réponse à la hauteur de vos attentes."',
+    names: ['Courses & Approvisionnement', 'Transport & Déplacements', 'Ménage & Linge', 'Assistance Administrative', 'Gestion Locative', 'Petits Travaux'],
+    descs: ["Nous prenons en charge l'intégralité de vos courses — épicerie courante, produits frais, épicerie fine et commandes spéciales. Livraison à domicile selon vos préférences.", 'Organisation et coordination de tous vos déplacements : chauffeur privé, navettes aéroport, réservations VTC. Véhicules premium, ponctualité garantie.', 'Entretien régulier ou ponctuel de votre domicile selon des standards professionnels. Repassage, blanchisserie et soin des textiles de luxe.', 'Gestion de votre courrier, prises de rendez-vous, démarches administratives — nous libérons votre agenda des tâches chronophages.', 'Gestion intégrale de votre bien immobilier : accueil des locataires, états des lieux, remise des clés et coordination des artisans.', 'Réparations courantes, montage de mobilier, fixations et installations diverses. Nos équipes interviennent rapidement et avec soin.'],
+    tags: [['Livraison domicile', 'Épicerie fine', 'Commandes spéciales'], ['Chauffeur privé', 'Navette aéroport', 'Véhicules premium'], ['Ménage régulier', 'Repassage', 'Blanchisserie'], ['Gestion courrier', 'Prises de RDV', 'Démarches'], ['Accueil locataires', 'États des lieux', 'Coordination'], ['Réparations courantes', 'Montage mobilier', 'Installations']],
+  },
+  en: {
+    hero_eyebrow: 'CONCIERGE · PRESTIGE',
+    hero_title: 'Concierge Services',
+    hero_desc: 'A bespoke service designed to free your time and simplify your daily life. Every request is handled with absolute discretion and the highest standards.',
+    tl_pre: 'OUR SERVICES',
+    tl_title: 'What we do for you',
+    quote: '"Every detail matters. Every request deserves a response that meets your expectations."',
+    names: ['Grocery & Provisioning', 'Transportation', 'Cleaning & Laundry', 'Administrative Assistance', 'Property Management', 'Minor Repairs'],
+    descs: ['We handle all your grocery shopping — everyday staples, fresh produce, fine food and special orders. Home delivery according to your preferences.', 'Organisation of all your journeys: private driver, airport transfers, VTC bookings. Premium vehicles, punctuality guaranteed.', 'Regular or one-time home maintenance to professional standards. Ironing, laundry and care for luxury textiles.', 'Mail management, appointment scheduling, administrative procedures — we free your agenda from time-consuming tasks.', 'Full management of your property: tenant welcome, check-in/out reports, key handover and contractor coordination.', 'Everyday repairs, furniture assembly, fixtures and various installations. Our teams respond quickly and with care.'],
+    tags: [['Home delivery', 'Fine grocery', 'Special orders'], ['Private driver', 'Airport transfer', 'Premium vehicles'], ['Regular cleaning', 'Ironing', 'Laundry'], ['Mail management', 'Scheduling', 'Procedures'], ['Tenant welcome', 'Inventory reports', 'Coordination'], ['Everyday repairs', 'Furniture assembly', 'Installations']],
+  }
+};
+
+function applyPageT(l) {
+  const p = PAGE_T[l] || PAGE_T.fr;
+  document.getElementById('svc-eyebrow').textContent  = p.hero_eyebrow;
+  document.getElementById('svc-title').textContent    = p.hero_title;
+  document.getElementById('svc-desc').textContent     = p.hero_desc;
+  document.getElementById('svc-tl-pre').textContent   = p.tl_pre;
+  document.getElementById('svc-tl-title').textContent = p.tl_title;
+  document.getElementById('svc-quote').textContent    = p.quote;
+  p.names.forEach((n, i) => {
+    document.querySelectorAll('.svc-tl-name-' + i).forEach(el => el.textContent = n);
+    document.querySelectorAll('.svc-tl-desc-' + i).forEach(el => el.textContent = p.descs[i]);
+    document.querySelectorAll('.svc-tl-tags-' + i).forEach(el => {
+      el.innerHTML = p.tags[i].map(t => '<span class="svc-tl-tag">' + t + '</span>').join('');
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyPageT(lang);
+});
+
+// Override setLang to also apply page-specific translations
+const _origSetLang = setLang;
+window.setLang = function(l) {
+  _origSetLang(l);
+  applyPageT(l);
+};
+</script>
 <footer>
   <div class="footer-brand">APOGÉE & CO</div>
   <div class="footer-copy" data-t="footer_copy">© 2025 Apogée & Co — SIRET 980 327 670 00017</div>
