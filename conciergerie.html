@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Événementiel — Apogée & Co</title>
-<meta name="description" content="Apogée & Co — Événementiel Prestige.">
+<title>Conciergerie — Apogée & Co</title>
+<meta name="description" content="Apogée & Co — Conciergerie, Hôtellerie et Événementiel Prestige.">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 :root{--navy:#0e1629;--navy2:#1a2744;--gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;--cream:#f5f0e8;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
 body{font-family:'Montserrat',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:72px;background:rgba(14,22,41,0.97);backdrop-filter:blur(8px);transition:height 0.3s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:72px;background:rgba(14,22,41,0.97);border-bottom:1px solid rgba(201,168,76,0.2);backdrop-filter:blur(8px);transition:height 0.3s;}
 nav.scrolled{height:60px;}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-logo img{height:42px;width:42px;transition:height 0.3s;}
@@ -28,9 +29,9 @@ nav.scrolled .nav-logo img{height:34px;width:34px;}
 .lang-btn:hover{color:var(--gold);border-color:rgba(201,168,76,0.4);}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
 .hamburger span{width:22px;height:1.5px;background:var(--gold);transition:all 0.3s;display:block;}
-.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(14,22,41,0.98);padding:24px 6vw;flex-direction:column;gap:16px;z-index:199;}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:rgba(14,22,41,0.98);padding:24px 6vw;flex-direction:column;gap:16px;z-index:199;border-bottom:1px solid rgba(201,168,76,0.15);}
 .mobile-menu.open{display:flex;}
-.mobile-menu a{font-size:12px;letter-spacing:0.2em;color:var(--gray);text-decoration:none;padding:8px 0;transition:color 0.3s;}
+.mobile-menu a{font-size:12px;letter-spacing:0.2em;color:var(--gray);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.07);transition:color 0.3s;}
 .mobile-menu a:hover{color:var(--gold);}
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--navy);padding-top:72px;}
@@ -38,21 +39,21 @@ nav.scrolled .nav-logo img{height:34px;width:34px;}
 .hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);background-size:60px 60px;}
 .hero-content{text-align:center;position:relative;z-index:2;padding:0 5vw;max-width:880px;}
 .hero-pre{font-size:10px;letter-spacing:0.5em;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:16px;}
-.hero-pre::before,.hero-pre::after{display:none;}
+.hero-pre::before,.hero-pre::after{content:'';flex:1;max-width:60px;height:1px;background:var(--gold);opacity:0.4;}
 .hero-logo{width:120px;height:120px;margin:0 auto 32px;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,7vw,78px);font-weight:300;color:var(--gold-l);line-height:1.1;letter-spacing:0.04em;margin-bottom:18px;}
 .hero-title em{font-style:italic;color:var(--gold);}
 .hero-sub{font-size:10px;letter-spacing:0.4em;color:var(--gray);margin-bottom:48px;}
-.deco{display:none;}
-.deco-bar{display:none;}
-.deco-dia{display:none;}
+.deco{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:44px;}
+.deco-bar{width:60px;height:1px;background:var(--gold);opacity:0.4;}
+.deco-dia{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
 .btn-primary{font-size:10px;letter-spacing:0.28em;color:var(--navy);background:var(--gold);padding:14px 30px;text-decoration:none;transition:background 0.3s;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;}
 .btn-primary:hover{background:var(--gold-l);}
 .btn-outline{font-size:10px;letter-spacing:0.28em;color:var(--gold);border:1px solid var(--gold);padding:14px 30px;text-decoration:none;background:transparent;transition:all 0.3s;}
 .btn-outline:hover{background:rgba(201,168,76,0.08);}
 /* PAGE HERO */
-.page-hero{padding:140px 5vw 70px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(201,168,76,0.07) 0%,transparent 70%);}
+.page-hero{padding:140px 5vw 70px;text-align:center;background:radial-gradient(ellipse 70% 50% at 50% 30%,rgba(201,168,76,0.07) 0%,transparent 70%);border-bottom:1px solid rgba(201,168,76,0.1);}
 .pre{font-size:10px;letter-spacing:0.45em;color:var(--gold);display:block;margin-bottom:14px;}
 .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,50px);font-weight:300;color:var(--gold-l);letter-spacing:0.05em;}
 section{padding:90px 5vw;}
@@ -101,7 +102,7 @@ section{padding:90px 5vw;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal{background:var(--navy2);border:1px solid rgba(201,168,76,0.35);max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform 0.35s;}
 .modal-overlay.open .modal{transform:translateY(0);}
-.modal-header{padding:34px 38px 22px;position:relative;}
+.modal-header{padding:34px 38px 22px;border-bottom:1px solid rgba(201,168,76,0.15);position:relative;}
 .modal-close{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;transition:color 0.3s;font-family:inherit;}
 .modal-close:hover{color:var(--gold);}
 .modal-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:rgba(201,168,76,0.1);line-height:1;margin-bottom:6px;}
@@ -133,7 +134,7 @@ section{padding:90px 5vw;}
 .svc-card-items{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
 .svc-card-items li{font-size:12px;color:var(--text);display:flex;align-items:center;gap:9px;}
 .svc-card-items li::before{content:'';width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0;}
-.svc-card-price{font-size:10px;letter-spacing:0.15em;color:var(--gold);padding-top:14px;}
+.svc-card-price{font-size:10px;letter-spacing:0.15em;color:var(--gold);border-top:1px solid rgba(201,168,76,0.15);padding-top:14px;}
 /* ABOUT PAGE */
 .timeline{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:0;}
 .timeline-item{display:flex;gap:28px;padding-bottom:36px;position:relative;}
@@ -151,7 +152,7 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 .footer-links a{font-size:10px;letter-spacing:0.18em;color:var(--gray);text-decoration:none;transition:color 0.3s;}
 .footer-links a:hover{color:var(--gold);}
 /* COOKIE */
-#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0b1120;padding:20px 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;transform:translateY(100%);transition:transform 0.4s;}
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0b1120;border-top:1px solid rgba(201,168,76,0.35);padding:20px 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;transform:translateY(100%);transition:transform 0.4s;}
 .cookie-text{font-size:12px;font-weight:300;color:var(--gray);line-height:1.7;max-width:700px;}
 .cookie-text a{color:var(--gold);}
 .cookie-btns{display:flex;gap:10px;flex-shrink:0;}
@@ -163,186 +164,16 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 .hero-content>*{animation:fadeUp 0.8s ease forwards;opacity:0;}
 .hero-pre{animation-delay:0.1s}.hero-logo{animation-delay:0.25s}
 .hero-title{animation-delay:0.4s}.hero-sub{animation-delay:0.5s}
-.deco{display:none;}.hero-btns{animation-delay:0.7s}
+.deco{animation-delay:0.6s}.hero-btns{animation-delay:0.7s}
 .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 /* ZONE INFO BOX */
-.zone-bar{background:var(--navy2);padding:20px 5vw;display:flex;justify-content:center;gap:60px;flex-wrap:wrap;}
+.zone-bar{background:var(--navy2);border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);padding:20px 5vw;display:flex;justify-content:center;gap:60px;flex-wrap:wrap;}
 .zone-item{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--gray);letter-spacing:0.1em;}
 .zone-item strong{color:var(--gold-l);}
 .zone-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;}
 /* RESPONSIVE */
 @media(max-width:900px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}.about-inner{grid-template-columns:1fr;gap:40px;}.values-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;}.modal-info-grid{grid-template-columns:1fr;}}
-</style>
-
-<style>
-/* ── PAGE SERVICE — MODÈLE TIMELINE PRESTIGE ── */
-.svc-hero {
-  min-height: 52vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
-  padding: 140px 5vw 60px;
-  position: relative; overflow: hidden;
-  text-align: center;
-}
-.svc-hero-bg {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 90% 70% at 50% 60%, rgba(201,168,76,0.08) 0%, transparent 65%);
-}
-.svc-hero-grid {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-.svc-hero-eyebrow {
-  font-size: 9px; letter-spacing: 0.55em; color: var(--gold);
-  margin-bottom: 18px; position: relative; z-index: 2;
-}
-.svc-hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 6vw, 68px); font-weight: 300;
-  color: var(--gold-l); letter-spacing: 0.04em; line-height: 1.05;
-  position: relative; z-index: 2; margin-bottom: 20px;
-}
-.svc-hero-title em { font-style: italic; color: var(--gold); }
-.svc-hero-desc {
-  font-size: 14px; font-weight: 300; color: var(--gray);
-  max-width: 540px; line-height: 1.9; position: relative; z-index: 2;
-  margin-bottom: 32px;
-}
-.svc-hero-cta {
-  font-size: 10px; letter-spacing: 0.28em; color: var(--navy);
-  background: var(--gold); padding: 14px 34px;
-  text-decoration: none; transition: background 0.3s;
-  position: relative; z-index: 2;
-}
-.svc-hero-cta:hover { background: var(--gold-l); }
-
-/* ── TIMELINE PRESTATIONS ── */
-.svc-timeline-section {
-  padding: 100px 5vw;
-  background: #0b1120;
-}
-.svc-timeline-inner {
-  max-width: 900px; margin: 0 auto;
-}
-.svc-tl-header {
-  text-align: center; margin-bottom: 80px;
-}
-.svc-tl-header .pre {
-  font-size: 9px; letter-spacing: 0.5em; color: var(--gold);
-  display: block; margin-bottom: 14px;
-}
-.svc-tl-header h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 4vw, 40px); font-weight: 300;
-  color: var(--gold-l); letter-spacing: 0.06em;
-}
-
-.svc-tl-items { display: flex; flex-direction: column; gap: 0; }
-
-.svc-tl-item {
-  display: grid;
-  grid-template-columns: 1fr 52px 1fr;
-  gap: 0;
-  min-height: 120px;
-}
-
-/* Alternance gauche/droite */
-.svc-tl-item:nth-child(odd) .svc-tl-left  { order: 1; text-align: right; padding-right: 40px; }
-.svc-tl-item:nth-child(odd) .svc-tl-center{ order: 2; }
-.svc-tl-item:nth-child(odd) .svc-tl-right { order: 3; padding-left: 40px; opacity: 0; pointer-events: none; }
-
-.svc-tl-item:nth-child(even) .svc-tl-left  { order: 1; opacity: 0; pointer-events: none; }
-.svc-tl-item:nth-child(even) .svc-tl-center{ order: 2; }
-.svc-tl-item:nth-child(even) .svc-tl-right { order: 3; padding-left: 40px; }
-
-.svc-tl-left, .svc-tl-right {
-  padding-top: 8px; padding-bottom: 40px;
-  display: flex; flex-direction: column; justify-content: flex-start;
-}
-.svc-tl-center {
-  display: flex; flex-direction: column; align-items: center;
-  padding-bottom: 0;
-}
-.svc-tl-dot-wrap {
-  display: flex; flex-direction: column; align-items: center; height: 100%;
-}
-.svc-tl-icon {
-  width: 52px; height: 52px;
-  border: 1px solid var(--gold);
-  background: #0b1120;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; z-index: 1;
-  transition: background 0.3s;
-}
-.svc-tl-item:hover .svc-tl-icon { background: rgba(201,168,76,0.08); }
-.svc-tl-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--gold); stroke-width: 1.3; }
-.svc-tl-line {
-  flex: 1; width: 1px; background: rgba(201,168,76,0.18); margin-top: 0;
-}
-.svc-tl-item:last-child .svc-tl-line { display: none; }
-
-.svc-tl-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 400; color: var(--gold-l);
-  letter-spacing: 0.06em; margin-bottom: 10px; line-height: 1.2;
-}
-.svc-tl-desc {
-  font-size: 13px; font-weight: 300; color: var(--gray);
-  line-height: 1.85;
-}
-.svc-tl-tags {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
-}
-.svc-tl-item:nth-child(odd) .svc-tl-tags { justify-content: flex-end; }
-.svc-tl-tag {
-  font-size: 9px; letter-spacing: 0.12em; color: var(--gold);
-  border: 0.5px solid rgba(201,168,76,0.3); padding: 4px 11px;
-  transition: border-color 0.3s;
-}
-.svc-tl-item:hover .svc-tl-tag { border-color: rgba(201,168,76,0.6); }
-
-/* ── BANDE DEVIS ── */
-.svc-devis-band {
-  padding: 70px 5vw; text-align: center;
-  background: var(--navy2);
-  
-}
-.svc-devis-quote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(20px, 3vw, 28px); font-weight: 300; font-style: italic;
-  color: var(--gold-l); max-width: 600px; margin: 0 auto 32px;
-  line-height: 1.5;
-}
-.svc-devis-sub {
-  font-size: 11px; letter-spacing: 0.25em; color: var(--gray);
-  margin-bottom: 30px;
-}
-.svc-devis-cta {
-  font-size: 10px; letter-spacing: 0.28em; color: var(--navy);
-  background: var(--gold); padding: 15px 36px;
-  text-decoration: none; transition: background 0.3s; display: inline-block;
-}
-.svc-devis-cta:hover { background: var(--gold-l); }
-
-/* RESPONSIVE */
-@media(max-width:760px){
-  .svc-tl-item {
-    grid-template-columns: 40px 1fr;
-  }
-  .svc-tl-item:nth-child(odd) .svc-tl-left,
-  .svc-tl-item:nth-child(even) .svc-tl-left { display: none; }
-  .svc-tl-item:nth-child(odd) .svc-tl-center,
-  .svc-tl-item:nth-child(even) .svc-tl-center { order: 1; }
-  .svc-tl-item:nth-child(odd) .svc-tl-right,
-  .svc-tl-item:nth-child(even) .svc-tl-right { order: 2; padding-left: 20px; opacity: 1; pointer-events: all; }
-  .svc-tl-item:nth-child(odd) .svc-tl-left  { opacity: 0; }
-  .svc-tl-icon { width: 40px; height: 40px; }
-  .svc-tl-icon svg { width: 16px; height: 16px; }
-}
 </style>
 
 </head>
@@ -374,177 +205,65 @@ footer{background:#080e1a;padding:36px 5vw;border-top:1px solid rgba(201,168,76,
 </div>
 
 <div style="padding-top:72px;">
-
-  <!-- HERO -->
-  <div class="svc-hero">
-    <div class="svc-hero-bg"></div>
-    <div class="svc-hero-grid"></div>
-    <div class="svc-hero-eyebrow" id="svc-eyebrow">ÉVÉNEMENTIEL · PRESTIGE</div>
-    <h1 class="svc-hero-title" id="svc-title">Événementiel</h1>
-    <p class="svc-hero-desc" id="svc-desc">De la première idée au dernier détail, nous orchestrons vos événements avec une exigence absolue. Chaque moment devient une expérience inoubliable.</p>
-    
-    <div style="display:flex;align-items:center;justify-content:center;margin:0 0 28px;">
-      <div style="width:8px;height:8px;background:var(--gold);transform:rotate(45deg);opacity:0.7;"></div>
-    </div>
-    <a href="index.html#contact" class="svc-hero-cta" data-t="modal_cta">DEMANDER UN DEVIS</a>
+  <div class="page-hero">
+    <span class="pre" data-t="page_concierge_pre">PRESTIGE</span>
+    <h1 data-t="page_concierge_title">Nos services</h1>
+    <div class="deco"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
   </div>
-
-  <!-- TIMELINE -->
-  <div class="svc-timeline-section">
-    <div class="svc-timeline-inner">
-      <div class="svc-tl-header fade-up">
-        <span class="pre" id="svc-tl-pre">NOS PRESTATIONS</span>
-        <h2 id="svc-tl-title">L'art de créer des instants uniques</h2>
-      </div>
-      <div class="svc-tl-items">
-        
-      <div class="svc-tl-item fade-up" style="animation-delay:0.0s">
-        <div class="svc-tl-left">
-        <div class="svc-tl-name svc-tl-name-0">Mariages & Cérémonies</div>
-        <div class="svc-tl-desc svc-tl-desc-0">Organisation et coordination complète de votre mariage. Un chef de projet dédié vous accompagne de la recherche des prestataires jusqu'à la coordination le jour J.</div>
-        <div class="svc-tl-tags svc-tl-tags-0"><span class="svc-tl-tag">Chef de projet dédié</span><span class="svc-tl-tag">Coordination jour J</span><span class="svc-tl-tag">Prestataires sélectionnés</span></div></div>
-        <div class="svc-tl-center">
-          <div class="svc-tl-dot-wrap">
-            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2a4 4 0 000 8 4 4 0 000-8zm0 12a4 4 0 000 8 4 4 0 000-8zM2 12a4 4 0 008 0 4 4 0 00-8 0zm12 0a4 4 0 008 0 4 4 0 00-8 0z"/></svg></div>
-            <div class="svc-tl-line"></div>
-          </div>
-        </div>
-        <div class="svc-tl-right">
-        <div class="svc-tl-name svc-tl-name-0">Mariages & Cérémonies</div>
-        <div class="svc-tl-desc svc-tl-desc-0">Organisation et coordination complète de votre mariage. Un chef de projet dédié vous accompagne de la recherche des prestataires jusqu'à la coordination le jour J.</div>
-        <div class="svc-tl-tags svc-tl-tags-0"><span class="svc-tl-tag">Chef de projet dédié</span><span class="svc-tl-tag">Coordination jour J</span><span class="svc-tl-tag">Prestataires sélectionnés</span></div></div>
-      </div>
-      <div class="svc-tl-item fade-up" style="animation-delay:0.07s">
-        <div class="svc-tl-left">
-        <div class="svc-tl-name svc-tl-name-1">Soirées Privées & Anniversaires</div>
-        <div class="svc-tl-desc svc-tl-desc-1">Soirées d'exception sur-mesure : anniversaires, dîners de prestige, cocktails, soirées à thème. Chaque détail pensé pour surprendre et émerveiller.</div>
-        <div class="svc-tl-tags svc-tl-tags-1"><span class="svc-tl-tag">Concept & thème</span><span class="svc-tl-tag">Décoration</span><span class="svc-tl-tag">Traiteur & animation</span></div></div>
-        <div class="svc-tl-center">
-          <div class="svc-tl-dot-wrap">
-            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg></div>
-            <div class="svc-tl-line"></div>
-          </div>
-        </div>
-        <div class="svc-tl-right">
-        <div class="svc-tl-name svc-tl-name-1">Soirées Privées & Anniversaires</div>
-        <div class="svc-tl-desc svc-tl-desc-1">Soirées d'exception sur-mesure : anniversaires, dîners de prestige, cocktails, soirées à thème. Chaque détail pensé pour surprendre et émerveiller.</div>
-        <div class="svc-tl-tags svc-tl-tags-1"><span class="svc-tl-tag">Concept & thème</span><span class="svc-tl-tag">Décoration</span><span class="svc-tl-tag">Traiteur & animation</span></div></div>
-      </div>
-      <div class="svc-tl-item fade-up" style="animation-delay:0.14s">
-        <div class="svc-tl-left">
-        <div class="svc-tl-name svc-tl-name-2">Événements Corporate</div>
-        <div class="svc-tl-desc svc-tl-desc-2">Séminaires, team buildings, conventions et cocktails d'entreprise. Nous concevons vos événements professionnels en accord avec votre image de marque.</div>
-        <div class="svc-tl-tags svc-tl-tags-2"><span class="svc-tl-tag">Séminaires</span><span class="svc-tl-tag">Team building</span><span class="svc-tl-tag">Cocktails & conventions</span></div></div>
-        <div class="svc-tl-center">
-          <div class="svc-tl-dot-wrap">
-            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-            <div class="svc-tl-line"></div>
-          </div>
-        </div>
-        <div class="svc-tl-right">
-        <div class="svc-tl-name svc-tl-name-2">Événements Corporate</div>
-        <div class="svc-tl-desc svc-tl-desc-2">Séminaires, team buildings, conventions et cocktails d'entreprise. Nous concevons vos événements professionnels en accord avec votre image de marque.</div>
-        <div class="svc-tl-tags svc-tl-tags-2"><span class="svc-tl-tag">Séminaires</span><span class="svc-tl-tag">Team building</span><span class="svc-tl-tag">Cocktails & conventions</span></div></div>
-      </div>
-      <div class="svc-tl-item fade-up" style="animation-delay:0.21000000000000002s">
-        <div class="svc-tl-left">
-        <div class="svc-tl-name svc-tl-name-3">Coordination de Prestataires</div>
-        <div class="svc-tl-desc svc-tl-desc-3">Vous disposez de vos propres prestataires ? Nous assurons la coordination complète avant, pendant et après l'événement — votre chef d'orchestre dédié.</div>
-        <div class="svc-tl-tags svc-tl-tags-3"><span class="svc-tl-tag">Briefing prestataires</span><span class="svc-tl-tag">Planning détaillé</span><span class="svc-tl-tag">Gestion imprévus</span></div></div>
-        <div class="svc-tl-center">
-          <div class="svc-tl-dot-wrap">
-            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-            <div class="svc-tl-line"></div>
-          </div>
-        </div>
-        <div class="svc-tl-right">
-        <div class="svc-tl-name svc-tl-name-3">Coordination de Prestataires</div>
-        <div class="svc-tl-desc svc-tl-desc-3">Vous disposez de vos propres prestataires ? Nous assurons la coordination complète avant, pendant et après l'événement — votre chef d'orchestre dédié.</div>
-        <div class="svc-tl-tags svc-tl-tags-3"><span class="svc-tl-tag">Briefing prestataires</span><span class="svc-tl-tag">Planning détaillé</span><span class="svc-tl-tag">Gestion imprévus</span></div></div>
-      </div>
-      <div class="svc-tl-item fade-up" style="animation-delay:0.28s">
-        <div class="svc-tl-left">
-        <div class="svc-tl-name svc-tl-name-4">Décoration & Scénographie</div>
-        <div class="svc-tl-desc svc-tl-desc-4">Décoration florale, mobilier événementiel, éclairage d'ambiance. Nous transformons chaque espace en lieu de réception d'exception.</div>
-        <div class="svc-tl-tags svc-tl-tags-4"><span class="svc-tl-tag">Décoration florale</span><span class="svc-tl-tag">Mobilier & éclairage</span><span class="svc-tl-tag">Scénographie</span></div></div>
-        <div class="svc-tl-center">
-          <div class="svc-tl-dot-wrap">
-            <div class="svc-tl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2a4 4 0 000 8 4 4 0 000-8zm0 12a4 4 0 000 8 4 4 0 000-8zM2 12a4 4 0 008 0 4 4 0 00-8 0zm12 0a4 4 0 008 0 4 4 0 00-8 0z"/></svg></div>
-            <div class="svc-tl-line"></div>
-          </div>
-        </div>
-        <div class="svc-tl-right">
-        <div class="svc-tl-name svc-tl-name-4">Décoration & Scénographie</div>
-        <div class="svc-tl-desc svc-tl-desc-4">Décoration florale, mobilier événementiel, éclairage d'ambiance. Nous transformons chaque espace en lieu de réception d'exception.</div>
-        <div class="svc-tl-tags svc-tl-tags-4"><span class="svc-tl-tag">Décoration florale</span><span class="svc-tl-tag">Mobilier & éclairage</span><span class="svc-tl-tag">Scénographie</span></div></div>
-      </div>
-      </div>
-    </div>
   </div>
-
-  <!-- DEVIS BAND -->
-  <div class="svc-devis-band">
-    <p class="svc-devis-quote" id="svc-quote">"Un événement d'exception commence par une vision — nous la transformons en réalité."</p>
-    <p class="svc-devis-sub" data-t="modal_badge">★ EXPÉRIENCE PREMIUM GARANTIE</p>
-    <a href="index.html#contact" class="svc-devis-cta" data-t="modal_cta">DEMANDER UN DEVIS PERSONNALISÉ</a>
+    <div class="zone-item"><div class="zone-dot"></div><span data-t="devis_label">Tarification</span>&nbsp;—&nbsp;<strong data-t="devis_val">Sur devis personnalisé — Devis gratuit sous 24h</strong></div>
   </div>
-
+  <section>
+    <div class="service-page-grid">
+        <div class="svc-card fade-up" style="animation-delay:0.0s">
+          <div class="svc-card-num">01</div>
+          <div class="svc-card-name">Courses & Approvisionnement</div>
+          <p class="svc-card-desc">Prise en charge intégrale de vos courses : épicerie courante, produits frais, épicerie fine, commandes spéciales.</p>
+          <ul class="svc-card-items"><li>Courses alimentaires courantes</li><li>Épicerie fine & produits de luxe</li><li>Livraison à domicile</li><li>Commandes producteurs locaux</li></ul>
+          <div class="svc-card-price">Forfait 35–80 € · Abonnement sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.08s">
+          <div class="svc-card-num">02</div>
+          <div class="svc-card-name">Transport & Déplacements</div>
+          <p class="svc-card-desc">Organisation de tous vos déplacements : VTC, navettes aéroport, chauffeur privé.</p>
+          <ul class="svc-card-items"><li>Réservation VTC & taxi</li><li>Navette aéroport (CDG / Orly)</li><li>Chauffeur privé demi-journée / journée</li><li>Accompagnement médical</li></ul>
+          <div class="svc-card-price">Navette à partir de 60 € · Chauffeur sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.16s">
+          <div class="svc-card-num">03</div>
+          <div class="svc-card-name">Ménage & Linge</div>
+          <p class="svc-card-desc">Entretien de votre domicile aux standards professionnels. Repassage, blanchisserie, textiles délicats.</p>
+          <ul class="svc-card-items"><li>Ménage régulier hebdo / bi-mensuel</li><li>Grand ménage ponctuel</li><li>Repassage & pliage</li><li>Blanchisserie & pressing</li></ul>
+          <div class="svc-card-price">25–35 €/h · Forfait mensuel sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.24s">
+          <div class="svc-card-num">04</div>
+          <div class="svc-card-name">Assistance Administrative</div>
+          <p class="svc-card-desc">Gestion du courrier, prises de RDV, démarches administratives diverses.</p>
+          <ul class="svc-card-items"><li>Gestion & tri du courrier</li><li>Prises de rendez-vous</li><li>Démarches administratives</li><li>Rédaction de courriers</li></ul>
+          <div class="svc-card-price">40 €/h · Forfait mensuel sur devis</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.32s">
+          <div class="svc-card-num">05</div>
+          <div class="svc-card-name">Gestion Locative</div>
+          <p class="svc-card-desc">Gestion intégrale de votre bien immobilier.</p>
+          <ul class="svc-card-items"><li>Accueil & remise des clés</li><li>État des lieux entrée & sortie</li><li>Coordination artisans</li><li>Suivi administratif locatif</li></ul>
+          <div class="svc-card-price">45 € / passage · État des lieux 80–150 €</div>
+        </div>
+        <div class="svc-card fade-up" style="animation-delay:0.4s">
+          <div class="svc-card-num">06</div>
+          <div class="svc-card-name">Petits Travaux</div>
+          <p class="svc-card-desc">Réparations courantes, montage, installations — intervention rapide.</p>
+          <ul class="svc-card-items"><li>Montage de meubles</li><li>Réparations courantes</li><li>Fixations & accrochages</li><li>Petite plomberie & électricité</li></ul>
+          <div class="svc-card-price">50–80 € (1h, déplacement inclus)</div>
+        </div></div>
+  </section>
+  <section style="background:var(--navy2);padding:60px 5vw;text-align:center;">
+    <h2 class="section-title fade-up" data-t="contact_title" data-html>Parlons de<br>votre projet</h2>
+    <div class="deco" style="margin:16px auto 28px;"><div class="deco-bar"></div><div class="deco-dia"></div><div class="deco-bar"></div></div>
+    <a href="index.html#contact" class="btn-primary fade-up" data-t="modal_cta">DEMANDER UN DEVIS PERSONNALISÉ</a>
+  </section>
 </div>
-
-<script>
-const PAGE_T = {
-  fr: {
-    hero_eyebrow: 'ÉVÉNEMENTIEL · PRESTIGE',
-    hero_title: 'Événementiel',
-    hero_desc: 'De la première idée au dernier détail, nous orchestrons vos événements avec une exigence absolue. Chaque moment devient une expérience inoubliable.',
-    tl_pre: 'NOS PRESTATIONS',
-    tl_title: 'L'art de créer des instants uniques',
-    quote: '"Un événement d'exception commence par une vision — nous la transformons en réalité."',
-    names: ['Mariages & Cérémonies', 'Soirées Privées & Anniversaires', 'Événements Corporate', 'Coordination de Prestataires', 'Décoration & Scénographie'],
-    descs: ["Organisation et coordination complète de votre mariage. Un chef de projet dédié vous accompagne de la recherche des prestataires jusqu'à la coordination le jour J.", "Soirées d'exception sur-mesure : anniversaires, dîners de prestige, cocktails, soirées à thème. Chaque détail pensé pour surprendre et émerveiller.", "Séminaires, team buildings, conventions et cocktails d'entreprise. Nous concevons vos événements professionnels en accord avec votre image de marque.", "Vous disposez de vos propres prestataires ? Nous assurons la coordination complète avant, pendant et après l'événement — votre chef d'orchestre dédié.", "Décoration florale, mobilier événementiel, éclairage d'ambiance. Nous transformons chaque espace en lieu de réception d'exception."],
-    tags: [['Chef de projet dédié', 'Coordination jour J', 'Prestataires sélectionnés'], ['Concept & thème', 'Décoration', 'Traiteur & animation'], ['Séminaires', 'Team building', 'Cocktails & conventions'], ['Briefing prestataires', 'Planning détaillé', 'Gestion imprévus'], ['Décoration florale', 'Mobilier & éclairage', 'Scénographie']],
-  },
-  en: {
-    hero_eyebrow: 'EVENTS · PRESTIGE',
-    hero_title: 'Events',
-    hero_desc: 'From the first idea to the last detail, we orchestrate your events with absolute precision. Every moment becomes an unforgettable experience.',
-    tl_pre: 'OUR SERVICES',
-    tl_title: 'The art of creating unique moments',
-    quote: '"An exceptional event begins with a vision — we turn it into reality."',
-    names: ['Weddings & Ceremonies', 'Private Parties & Birthdays', 'Corporate Events', 'Supplier Coordination', 'Decoration & Staging'],
-    descs: ['Full organisation and coordination of your wedding. A dedicated project manager accompanies you from sourcing suppliers to coordinating on the day.', 'Bespoke exceptional evenings: birthdays, prestigious dinners, cocktails, themed parties. Every detail crafted to surprise and delight.', 'Seminars, team buildings, conventions and corporate cocktails. We design your professional events in line with your brand image.', 'You have your own suppliers? We provide full coordination before, during and after the event — your dedicated conductor.', 'Floral decoration, event furniture, ambient lighting. We transform any space into an exceptional reception venue.'],
-    tags: [['Dedicated project manager', 'Day-of coordination', 'Curated suppliers'], ['Concept & theme', 'Decoration', 'Catering & entertainment'], ['Seminars', 'Team building', 'Cocktails & conventions'], ['Supplier briefing', 'Detailed planning', 'Contingency management'], ['Floral decoration', 'Furniture & lighting', 'Staging']],
-  }
-};
-
-function applyPageT(l) {
-  const p = PAGE_T[l] || PAGE_T.fr;
-  document.getElementById('svc-eyebrow').textContent  = p.hero_eyebrow;
-  document.getElementById('svc-title').textContent    = p.hero_title;
-  document.getElementById('svc-desc').textContent     = p.hero_desc;
-  document.getElementById('svc-tl-pre').textContent   = p.tl_pre;
-  document.getElementById('svc-tl-title').textContent = p.tl_title;
-  document.getElementById('svc-quote').textContent    = p.quote;
-  p.names.forEach((n, i) => {
-    document.querySelectorAll('.svc-tl-name-' + i).forEach(el => el.textContent = n);
-    document.querySelectorAll('.svc-tl-desc-' + i).forEach(el => el.textContent = p.descs[i]);
-    document.querySelectorAll('.svc-tl-tags-' + i).forEach(el => {
-      el.innerHTML = p.tags[i].map(t => '<span class="svc-tl-tag">' + t + '</span>').join('');
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  applyPageT(lang);
-});
-
-// Override setLang to also apply page-specific translations
-const _origSetLang = setLang;
-window.setLang = function(l) {
-  _origSetLang(l);
-  applyPageT(l);
-};
-</script>
 <footer>
   <div class="footer-brand">APOGÉE & CO</div>
   <div class="footer-copy" data-t="footer_copy">© 2025 Apogée & Co — SIRET 980 327 670 00017</div>
