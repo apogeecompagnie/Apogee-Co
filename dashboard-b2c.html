@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon espace — Apogée & Co</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap');
+:root{
+  --navy:#0e1629;--navy2:#1a2744;--navy3:#0b1120;
+  --gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;
+  --success:#1d9e75;--danger:#e24b4a;--warn:#f59e0b;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:var(--navy3);color:var(--text);min-height:100vh;}
+
+/* ── TOPBAR ── */
+.topbar{height:64px;background:rgba(14,22,41,0.98);border-bottom:1px solid rgba(201,168,76,0.15);
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+.topbar-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.topbar-logo img{height:36px;width:36px;}
+.topbar-brand{font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:0.18em;color:var(--gold);}
+.topbar-brand-sub{font-size:8px;letter-spacing:0.3em;color:var(--gray);display:block;margin-top:1px;}
+.topbar-right{display:flex;align-items:center;gap:16px;}
+.topbar-user{font-size:11px;color:var(--gray);letter-spacing:0.08em;}
+.topbar-user strong{color:var(--gold-l);}
+.topbar-btn{font-size:9px;letter-spacing:0.22em;color:var(--gray);background:transparent;
+  border:1px solid rgba(201,168,76,0.2);padding:7px 16px;cursor:pointer;
+  font-family:'Montserrat',sans-serif;transition:all 0.3s;text-decoration:none;display:inline-block;}
+.topbar-btn:hover{color:var(--gold);border-color:var(--gold);}
+.topbar-btn.danger{border-color:rgba(226,75,74,0.3);color:var(--danger);}
+.topbar-btn.danger:hover{border-color:var(--danger);}
+
+/* ── SIDEBAR ── */
+.layout{display:flex;min-height:calc(100vh - 64px);}
+.sidebar{width:220px;min-width:220px;background:#080e1a;
+  border-right:1px solid rgba(201,168,76,0.08);
+  padding:24px 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
+.sidebar-section{padding:0 12px;margin-bottom:24px;}
+.sidebar-title{font-size:8px;letter-spacing:0.38em;color:var(--gold);font-weight:600;
+  margin-bottom:8px;padding:0 8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:4px;
+  cursor:pointer;font-size:11px;color:var(--gray);letter-spacing:0.06em;
+  border:none;background:transparent;width:100%;text-align:left;
+  font-family:'Montserrat',sans-serif;text-decoration:none;transition:all 0.2s;}
+.nav-item:hover{background:rgba(201,168,76,0.06);color:var(--text);}
+.nav-item.active{background:rgba(201,168,76,0.1);color:var(--gold);}
+.nav-item svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;flex-shrink:0;}
+.nav-badge{font-size:9px;background:rgba(201,168,76,0.15);color:var(--gold);
+  padding:2px 7px;border-radius:10px;margin-left:auto;}
+.nav-badge.red{background:rgba(226,75,74,0.15);color:var(--danger);}
+
+/* ── MAIN ── */
+.main{flex:1;padding:32px;overflow-y:auto;}
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+/* ── WIDGETS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.1);padding:20px 22px;transition:border-color 0.3s;}
+.stat-card:hover{border-color:rgba(201,168,76,0.3);}
+.stat-label{font-size:8.5px;letter-spacing:0.3em;color:var(--gray);margin-bottom:10px;font-weight:500;}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold-l);line-height:1;}
+.stat-sub{font-size:10px;color:var(--gray);margin-top:6px;}
+.stat-icon{float:right;margin-top:-2px;}
+.stat-icon svg{width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.3;opacity:0.6;}
+
+/* ── CARDS ── */
+.card{background:var(--navy2);border:1px solid rgba(201,168,76,0.1);margin-bottom:16px;}
+.card-header{padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(201,168,76,0.07);}
+.card-title{font-size:11px;letter-spacing:0.25em;color:var(--gold);font-weight:600;}
+.card-body{padding:18px 22px;}
+.card-action{font-size:9px;letter-spacing:0.2em;color:var(--gold);background:transparent;
+  border:1px solid rgba(201,168,76,0.25);padding:6px 14px;cursor:pointer;
+  font-family:'Montserrat',sans-serif;transition:all 0.3s;}
+.card-action:hover{background:rgba(201,168,76,0.08);}
+
+/* ── PAGE TITLE ── */
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,36px);
+  font-weight:300;color:var(--gold-l);margin-bottom:4px;}
+.page-sub{font-size:11px;color:var(--gray);letter-spacing:0.08em;margin-bottom:28px;}
+
+/* ── FORM ── */
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.form-label{font-size:9px;letter-spacing:0.28em;color:var(--gold);}
+.form-input{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;
+  font-weight:300;padding:12px 14px;outline:none;transition:border-color 0.3s;width:100%;}
+.form-input:focus{border-color:var(--gold);}
+.form-input::placeholder{color:var(--gray);opacity:0.6;}
+.form-select{background:var(--navy2);appearance:none;cursor:pointer;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn{font-size:10px;letter-spacing:0.25em;border:none;padding:13px 28px;
+  cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.3s;display:inline-block;}
+.btn-primary{color:var(--navy);background:var(--gold);}
+.btn-primary:hover{background:var(--gold-l);}
+.btn-outline{color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,0.35);}
+.btn-outline:hover{background:rgba(201,168,76,0.08);}
+.btn-full{width:100%;}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead tr{border-bottom:1px solid rgba(201,168,76,0.2);}
+th{font-size:8.5px;letter-spacing:0.25em;color:var(--gold);font-weight:600;
+  padding:10px 14px;text-align:left;}
+td{padding:12px 14px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.05);vertical-align:middle;}
+tr:hover td{background:rgba(201,168,76,0.03);}
+td strong{color:var(--text);}
+
+/* ── STATUS BADGES ── */
+.badge{font-size:8.5px;letter-spacing:0.15em;padding:3px 10px;border-radius:2px;font-weight:500;}
+.badge-pending{background:rgba(245,158,11,0.12);color:var(--warn);}
+.badge-active{background:rgba(29,158,117,0.12);color:var(--success);}
+.badge-done{background:rgba(138,154,184,0.12);color:var(--gray);}
+.badge-new{background:rgba(201,168,76,0.12);color:var(--gold);}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative;}
+.tl-item:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:0;
+  width:1px;background:rgba(201,168,76,0.12);}
+.tl-dot{width:30px;height:30px;min-width:30px;border:1px solid rgba(201,168,76,0.35);
+  display:flex;align-items:center;justify-content:center;background:var(--navy2);z-index:1;}
+.tl-dot svg{width:12px;height:12px;fill:none;stroke:var(--gold);stroke-width:1.5;}
+.tl-content{flex:1;padding-top:4px;}
+.tl-title{font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.tl-meta{font-size:11px;color:var(--gray);}
+
+/* ── CHAT ── */
+.chat-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:320px;overflow-y:auto;}
+.msg{display:flex;gap:10px;align-items:flex-start;}
+.msg.mine{flex-direction:row-reverse;}
+.msg-bubble{max-width:75%;padding:11px 14px;font-size:12.5px;line-height:1.65;}
+.msg .msg-bubble{background:var(--navy2);color:var(--text);border:1px solid rgba(201,168,76,0.08);}
+.msg.mine .msg-bubble{background:rgba(201,168,76,0.1);color:var(--gold-l);border:1px solid rgba(201,168,76,0.2);}
+.msg-meta{font-size:10px;color:var(--gray);margin-top:4px;}
+.msg-avatar{width:28px;height:28px;min-width:28px;border:1px solid rgba(201,168,76,0.3);
+  display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold);}
+.chat-input-wrap{display:flex;gap:10px;}
+.chat-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;
+  padding:11px 14px;outline:none;resize:none;}
+
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-day{padding:8px 4px;text-align:center;font-size:11px;color:var(--gray);border-radius:2px;}
+.cal-day.header{color:var(--gold);font-size:9px;letter-spacing:0.15em;font-weight:600;}
+.cal-day.today{background:rgba(201,168,76,0.15);color:var(--gold-l);}
+.cal-day.has-event{border:1px solid rgba(201,168,76,0.3);cursor:pointer;}
+.cal-day.has-event:hover{background:rgba(201,168,76,0.08);}
+.cal-day.other-month{opacity:0.3;}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;right:24px;background:rgba(29,158,117,0.9);
+  color:#fff;font-size:11px;letter-spacing:0.08em;padding:12px 20px;
+  transform:translateY(80px);transition:transform 0.3s;z-index:999;}
+#toast.show{transform:translateY(0);}
+
+/* ── LOADING ── */
+.loading-overlay{position:fixed;inset:0;background:var(--navy3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:999;transition:opacity 0.5s;}
+.loading-overlay.hidden{opacity:0;pointer-events:none;}
+.spinner{width:36px;height:36px;border:2px solid rgba(201,168,76,0.2);
+  border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .form-row{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="A"/>
+    <div>
+      <div class="topbar-brand">APOGÉE & CO</div>
+      <span class="topbar-brand-sub">ESPACE MEMBRE</span>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <span class="topbar-user">Bonjour, <strong id="user-name">Membre</strong></span>
+    <a href="index.html" class="topbar-btn">SITE</a>
+    <button class="topbar-btn danger" onclick="logout()">DÉCONNEXION</button>
+  </div>
+</div>
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-title">MON ESPACE</div>
+    <button class="nav-item active" onclick="nav('dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </button>
+    <button class="nav-item" onclick="nav('nouvelle-demande')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Nouvelle demande
+    </button>
+    <button class="nav-item" onclick="nav('mes-demandes')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Mes demandes
+      <span class="nav-badge red" id="badge-demandes">2</span>
+    </button>
+    <button class="nav-item" onclick="nav('agenda')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Mon agenda
+    </button>
+    <button class="nav-item" onclick="nav('messagerie')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Messagerie
+      <span class="nav-badge" id="badge-msgs">1</span>
+    </button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">MON COMPTE</div>
+    <button class="nav-item" onclick="nav('profil')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mon profil
+    </button>
+  </div>
+</nav>
+<main class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <div class="page-section active" id="sec-dashboard">
+    <div class="page-title" id="greeting">Bonjour</div>
+    <div class="page-sub">Voici un résumé de votre espace personnel.</div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">DEMANDES EN COURS</div>
+        <div class="stat-value" id="stat-pending">—</div>
+        <div class="stat-sub">prestations actives</div>
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PRESTATIONS RÉALISÉES</div>
+        <div class="stat-value" id="stat-done">—</div>
+        <div class="stat-sub">ce mois-ci</div>
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">MESSAGES NON LUS</div>
+        <div class="stat-value" id="stat-msgs">—</div>
+        <div class="stat-sub">de votre concierge</div>
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">PROCHAINE INTERVENTION</div>
+        <div class="stat-value" id="stat-next" style="font-size:18px;padding-top:6px;">—</div>
+        <div class="stat-sub">date planifiée</div>
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">DERNIÈRES DEMANDES</div>
+          <button class="card-action" onclick="nav('mes-demandes')">VOIR TOUT</button>
+        </div>
+        <div class="card-body">
+          <div class="timeline" id="recent-demandes">
+            <div style="color:var(--gray);font-size:12px;">Chargement...</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">MESSAGES RÉCENTS</div>
+          <button class="card-action" onclick="nav('messagerie')">VOIR TOUT</button>
+        </div>
+        <div class="card-body" id="recent-msgs">
+          <div style="color:var(--gray);font-size:12px;">Chargement...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NOUVELLE DEMANDE ── -->
+  <div class="page-section" id="sec-nouvelle-demande">
+    <div class="page-title">Nouvelle demande</div>
+    <div class="page-sub">Décrivez votre besoin — votre concierge vous répondra sous 2h.</div>
+    <div class="card" style="max-width:620px;">
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">TYPE DE PRESTATION</label>
+          <select id="nd-type" class="form-input form-select">
+            <option value="">Sélectionnez...</option>
+            <option>Courses & approvisionnement</option>
+            <option>Transport & déplacements</option>
+            <option>Ménage & linge</option>
+            <option>Assistance administrative</option>
+            <option>Gestion locative</option>
+            <option>Petits travaux</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">DATE SOUHAITÉE</label>
+            <input type="date" id="nd-date" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">HEURE SOUHAITÉE</label>
+            <input type="time" id="nd-time" class="form-input"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ADRESSE D'INTERVENTION</label>
+          <input type="text" id="nd-address" class="form-input" placeholder="Adresse complète"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">DESCRIPTION DÉTAILLÉE</label>
+          <textarea id="nd-desc" class="form-input" rows="5" style="resize:vertical;"
+            placeholder="Décrivez précisément votre besoin..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">PRIORITÉ</label>
+          <select id="nd-priority" class="form-input form-select">
+            <option value="normal">Normal</option>
+            <option value="urgent">Urgent</option>
+            <option value="planifie">Planifié à l'avance</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button class="btn btn-primary" onclick="submitDemande()" id="nd-btn">ENVOYER LA DEMANDE</button>
+          <button class="btn btn-outline" onclick="nav('dashboard')">ANNULER</button>
+        </div>
+        <div id="nd-success" style="display:none;margin-top:12px;padding:12px;
+          background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);
+          color:var(--success);font-size:12px;">
+          ✓ Demande envoyée. Votre concierge vous contactera sous 2h.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MES DEMANDES ── -->
+  <div class="page-section" id="sec-mes-demandes">
+    <div class="page-title">Mes demandes</div>
+    <div class="page-sub">Historique et suivi de vos prestations.</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>PRESTATION</th><th>DATE</th><th>ADRESSE</th><th>STATUT</th><th>ACTIONS</th>
+            </tr></thead>
+            <tbody id="demandes-list">
+              <tr><td colspan="5" style="text-align:center;padding:28px;color:var(--gray);">Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AGENDA ── -->
+  <div class="page-section" id="sec-agenda">
+    <div class="page-title">Mon agenda</div>
+    <div class="page-sub">Vos interventions planifiées.</div>
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" id="cal-month">AVRIL 2025</div>
+          <div style="display:flex;gap:8px;">
+            <button class="card-action" onclick="calPrev()">←</button>
+            <button class="card-action" onclick="calNext()">→</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">ÉVÉNEMENTS DU JOUR</div></div>
+        <div class="card-body" id="cal-events">
+          <div style="color:var(--gray);font-size:12px;">Sélectionnez une date</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MESSAGERIE ── -->
+  <div class="page-section" id="sec-messagerie">
+    <div class="page-title">Messagerie</div>
+    <div class="page-sub">Échangez directement avec votre concierge Apogée & Co.</div>
+    <div class="card" style="max-width:680px;">
+      <div class="card-body">
+        <div class="chat-wrap" id="chat-messages">
+          <div class="msg">
+            <div class="msg-avatar">A</div>
+            <div><div class="msg-bubble">Bonjour, je suis votre concierge Apogée & Co. Comment puis-je vous aider aujourd'hui ?</div>
+            <div class="msg-meta">Concierge · Aujourd'hui 09:14</div></div>
+          </div>
+        </div>
+        <div class="chat-input-wrap">
+          <textarea id="chat-input" class="chat-input" rows="2"
+            placeholder="Votre message..."></textarea>
+          <button class="btn btn-primary" onclick="sendMessage()" style="align-self:flex-end;">ENVOYER</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROFIL ── -->
+  <div class="page-section" id="sec-profil">
+    <div class="page-title">Mon profil</div>
+    <div class="page-sub">Vos informations personnelles.</div>
+    <div class="card" style="max-width:500px;">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">PRÉNOM</label>
+            <input type="text" id="p-prenom" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">NOM</label>
+            <input type="text" id="p-nom" class="form-input"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">EMAIL</label>
+          <input type="email" id="p-email" class="form-input" readonly style="opacity:0.6;cursor:default;"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">TÉLÉPHONE</label>
+          <input type="tel" id="p-tel" class="form-input"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ADRESSE PRINCIPALE</label>
+          <input type="text" id="p-address" class="form-input"/>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button class="btn btn-primary" onclick="saveProfile()">ENREGISTRER</button>
+          <button class="btn btn-outline" onclick="nav('dashboard')">ANNULER</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, collection,
+          query, where, orderBy, getDocs, addDoc, serverTimestamp, limit }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg = {
+  apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
+  authDomain:        "apogee-co.firebaseapp.com",
+  projectId:         "apogee-co",
+  storageBucket:     "apogee-co.firebasestorage.app",
+  messagingSenderId: "752278064291",
+  appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
+};
+const app  = initializeApp(cfg);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let currentUser = null;
+
+// ── Auth guard ───────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  if (!user) { window.location.href = "login.html"; return; }
+  currentUser = user;
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (snap.exists() && snap.data().role === "b2b") {
+    window.location.href = "dashboard-b2b.html"; return;
+  }
+  if (snap.exists() && snap.data().role === "admin") {
+    window.location.href = "admin-membres.html"; return;
+  }
+  const data = snap.data() || {};
+  const name = (data.prenom || user.displayName || user.email.split("@")[0]);
+  document.getElementById("user-name").textContent = name;
+  document.getElementById("greeting").textContent = "Bonjour, " + name;
+  // Pré-remplir profil
+  if (data.prenom) document.getElementById("p-prenom").value = data.prenom;
+  if (data.nom)    document.getElementById("p-nom").value = data.nom;
+  document.getElementById("p-email").value = user.email;
+  if (data.tel)    document.getElementById("p-tel").value = data.tel;
+  if (data.address)document.getElementById("p-address").value = data.address;
+
+  document.getElementById("loading").classList.add("hidden");
+  await loadDashboard();
+  buildCalendar();
+});
+
+// ── Navigation ───────────────────────────────────────────────────────────
+window.nav = function(id) {
+  document.querySelectorAll(".page-section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+  document.getElementById("sec-" + id).classList.add("active");
+  document.querySelector(`[onclick="nav('${id}')"]`)?.classList.add("active");
+  if (id === "mes-demandes") loadDemandes();
+  if (id === "messagerie")   loadMessages();
+};
+
+// ── Logout ───────────────────────────────────────────────────────────────
+window.logout = async function() {
+  await signOut(auth);
+  window.location.href = "login.html";
+};
+
+// ── Dashboard ────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  const q = query(collection(db, "demandes"),
+    where("userId", "==", currentUser.uid),
+    orderBy("createdAt", "desc"), limit(5));
+  const snap = await getDocs(q);
+  const items = snap.docs.map(d => ({id: d.id, ...d.data()}));
+
+  const pending = items.filter(i => i.status === "en cours").length;
+  const done    = items.filter(i => i.status === "terminé").length;
+  document.getElementById("stat-pending").textContent = pending;
+  document.getElementById("stat-done").textContent = done;
+  document.getElementById("stat-msgs").textContent = "1";
+  document.getElementById("stat-next").textContent = items.find(i=>i.date)?.date || "—";
+
+  // Recent demandes timeline
+  const tl = document.getElementById("recent-demandes");
+  if (items.length === 0) {
+    tl.innerHTML = '<div style="color:var(--gray);font-size:12px;">Aucune demande pour l'instant.</div>';
+  } else {
+    tl.innerHTML = items.slice(0,3).map(i => `
+      <div class="tl-item">
+        <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        </svg></div>
+        <div class="tl-content">
+          <div class="tl-title">${i.type || "Demande"}</div>
+          <div class="tl-meta">${i.date || ""} · <span class="badge badge-${i.status==='en cours'?'pending':i.status==='terminé'?'done':'new'}">${i.status || "Nouveau"}</span></div>
+        </div>
+      </div>`).join("");
+  }
+}
+
+// ── Demandes ─────────────────────────────────────────────────────────────
+async function loadDemandes() {
+  const q = query(collection(db, "demandes"),
+    where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
+  const snap = await getDocs(q);
+  const items = snap.docs.map(d => ({id: d.id, ...d.data()}));
+  const tbody = document.getElementById("demandes-list");
+  if (items.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:28px;color:var(--gray);">Aucune demande.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = items.map(i => `
+    <tr>
+      <td><strong>${i.type || "—"}</strong></td>
+      <td>${i.date || "—"}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${i.address || "—"}</td>
+      <td><span class="badge badge-${i.status==='en cours'?'pending':i.status==='terminé'?'done':'new'}">${i.status || "Nouveau"}</span></td>
+      <td><button class="card-action" onclick="alert('Détails : ${i.desc||'Aucune description'}')">DÉTAIL</button></td>
+    </tr>`).join("");
+}
+
+// ── Nouvelle demande ─────────────────────────────────────────────────────
+window.submitDemande = async function() {
+  const type     = document.getElementById("nd-type").value;
+  const date     = document.getElementById("nd-date").value;
+  const address  = document.getElementById("nd-address").value;
+  const desc     = document.getElementById("nd-desc").value;
+  const priority = document.getElementById("nd-priority").value;
+  const btn      = document.getElementById("nd-btn");
+  if (!type || !desc) { showToast("Veuillez remplir les champs obligatoires."); return; }
+  btn.textContent = "ENVOI EN COURS..."; btn.disabled = true;
+  await addDoc(collection(db, "demandes"), {
+    userId: currentUser.uid, type, date, address, desc, priority,
+    status: "Nouveau", createdAt: serverTimestamp()
+  });
+  document.getElementById("nd-success").style.display = "block";
+  btn.style.display = "none";
+  setTimeout(() => { nav("mes-demandes"); }, 2000);
+};
+
+// ── Messages ─────────────────────────────────────────────────────────────
+async function loadMessages() {
+  const q = query(collection(db, "messages"),
+    where("roomId", "==", currentUser.uid), orderBy("createdAt", "asc"));
+  const snap = await getDocs(q);
+  const chat = document.getElementById("chat-messages");
+  snap.docs.forEach(d => {
+    const m = d.data();
+    const isMine = m.from === currentUser.uid;
+    const div = document.createElement("div");
+    div.className = "msg" + (isMine ? " mine" : "");
+    div.innerHTML = `
+      ${!isMine ? '<div class="msg-avatar">A</div>' : ''}
+      <div>
+        <div class="msg-bubble">${m.text}</div>
+        <div class="msg-meta">${isMine?"Vous":"Concierge"} · ${m.createdAt?.toDate()?.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})||""}</div>
+      </div>
+      ${isMine ? '<div class="msg-avatar">M</div>' : ''}`;
+    chat.appendChild(div);
+  });
+  chat.scrollTop = chat.scrollHeight;
+}
+
+window.sendMessage = async function() {
+  const input = document.getElementById("chat-input");
+  const text = input.value.trim();
+  if (!text) return;
+  await addDoc(collection(db, "messages"), {
+    roomId: currentUser.uid, from: currentUser.uid,
+    text, createdAt: serverTimestamp()
+  });
+  input.value = "";
+  const chat = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.className = "msg mine";
+  div.innerHTML = `<div><div class="msg-bubble">${text}</div>
+    <div class="msg-meta">Vous · maintenant</div></div><div class="msg-avatar">M</div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  showToast("Message envoyé ✓");
+};
+
+document.getElementById("chat-input").addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); window.sendMessage(); }
+});
+
+// ── Profil ───────────────────────────────────────────────────────────────
+window.saveProfile = async function() {
+  await setDoc(doc(db, "users", currentUser.uid), {
+    prenom:  document.getElementById("p-prenom").value,
+    nom:     document.getElementById("p-nom").value,
+    tel:     document.getElementById("p-tel").value,
+    address: document.getElementById("p-address").value,
+    role: "b2c"
+  }, { merge: true });
+  showToast("Profil enregistré ✓");
+};
+
+// ── Calendrier ───────────────────────────────────────────────────────────
+let calDate = new Date();
+function buildCalendar() {
+  const months = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN",
+    "JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+  document.getElementById("cal-month").textContent = months[calDate.getMonth()] + " " + calDate.getFullYear();
+  const days = ["LUN","MAR","MER","JEU","VEN","SAM","DIM"];
+  const first = new Date(calDate.getFullYear(), calDate.getMonth(), 1);
+  const last  = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0);
+  let html = days.map(d=>`<div class="cal-day header">${d}</div>`).join("");
+  const startDay = (first.getDay()+6)%7;
+  const today = new Date();
+  for (let i=0; i<startDay; i++) html += `<div class="cal-day other-month"></div>`;
+  for (let d=1; d<=last.getDate(); d++) {
+    const isToday = d===today.getDate() && calDate.getMonth()===today.getMonth() && calDate.getFullYear()===today.getFullYear();
+    html += `<div class="cal-day${isToday?" today":""}">${d}</div>`;
+  }
+  document.getElementById("cal-grid").innerHTML = html;
+}
+window.calPrev = function() { calDate.setMonth(calDate.getMonth()-1); buildCalendar(); };
+window.calNext = function() { calDate.setMonth(calDate.getMonth()+1); buildCalendar(); };
+
+// ── Toast ────────────────────────────────────────────────────────────────
+function showToast(msg, duration=2500) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), duration);
+}
+</script>
+</body>
+</html>
