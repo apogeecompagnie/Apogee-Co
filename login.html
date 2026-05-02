@@ -300,6 +300,7 @@ window.login = async function() {
   const btn      = document.getElementById("login-btn");
   const errDiv   = document.getElementById("error-msg");
   errDiv.style.display = "none";
+  errDiv.style.cssText = "";
 
   if (!email || !password) {
     errDiv.textContent = "Veuillez remplir tous les champs.";
@@ -311,19 +312,38 @@ window.login = async function() {
   btn.disabled = true;
 
   try {
+    // Étape 1 : authentification
     const cred = await signInWithEmailAndPassword(auth, email, password);
-    const snap = await getDoc(doc(db, "users", cred.user.uid));
-    redirect(snap.exists() ? snap.data().role : "b2c");
+    
+    // Étape 2 : récupérer le rôle
+    let role = "b2c";
+    try {
+      const snap = await getDoc(doc(db, "users", cred.user.uid));
+      if (snap.exists()) role = snap.data().role || "b2c";
+    } catch(firestoreErr) {
+      // Firestore inaccessible — on redirige quand même en b2c
+      console.warn("Firestore:", firestoreErr.message);
+    }
+    
+    // Étape 3 : redirection
+    redirect(role);
+
   } catch(e) {
     const msgs = {
       "auth/user-not-found":     "Aucun compte associé à cet email.",
       "auth/wrong-password":     "Mot de passe incorrect.",
       "auth/invalid-email":      "Adresse email invalide.",
       "auth/too-many-requests":  "Trop de tentatives. Réessayez dans quelques minutes.",
-      "auth/invalid-credential": "Email ou mot de passe incorrect."
+      "auth/invalid-credential": "Email ou mot de passe incorrect.",
+      "auth/network-request-failed": "Erreur réseau. Vérifiez votre connexion.",
+      "auth/unauthorized-domain": "Domaine non autorisé dans Firebase."
     };
-    errDiv.textContent = msgs[e.code] || "Une erreur est survenue. Réessayez.";
+    // Afficher l'erreur complète pour déboguer
+    const msg = msgs[e.code] || ("Erreur [" + (e.code||"?") + "] : " + e.message);
+    errDiv.textContent = msg;
     errDiv.style.display = "block";
+    errDiv.style.padding = "12px";
+    errDiv.style.wordBreak = "break-all";
     btn.textContent = "SE CONNECTER";
     btn.disabled = false;
   }
