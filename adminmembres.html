@@ -1,519 +1,103 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Admin Membres — Apogée & Co</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap');
-:root{
-  --navy:#0e1629;--navy2:#1a2744;--navy3:#0b1120;
-  --gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;
-  --success:#1d9e75;--danger:#e24b4a;--warn:#f59e0b;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Montserrat',sans-serif;background:var(--navy3);color:var(--text);min-height:100vh;}
-
-/* ── TOPBAR ── */
-.topbar{height:64px;background:rgba(14,22,41,0.98);border-bottom:1px solid rgba(201,168,76,0.15);
-  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
-  position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
-.topbar-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.topbar-logo img{height:36px;width:36px;}
-.topbar-brand{font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:0.18em;color:var(--gold);}
-.topbar-brand-sub{font-size:8px;letter-spacing:0.3em;color:var(--gray);display:block;margin-top:1px;}
-.topbar-right{display:flex;align-items:center;gap:16px;}
-.topbar-user{font-size:11px;color:var(--gray);letter-spacing:0.08em;}
-.topbar-user strong{color:var(--gold-l);}
-.topbar-btn{font-size:9px;letter-spacing:0.22em;color:var(--gray);background:transparent;
-  border:1px solid rgba(201,168,76,0.2);padding:7px 16px;cursor:pointer;
-  font-family:'Montserrat',sans-serif;transition:all 0.3s;text-decoration:none;display:inline-block;}
-.topbar-btn:hover{color:var(--gold);border-color:var(--gold);}
-.topbar-btn.danger{border-color:rgba(226,75,74,0.3);color:var(--danger);}
-.topbar-btn.danger:hover{border-color:var(--danger);}
-
-/* ── SIDEBAR ── */
-.layout{display:flex;min-height:calc(100vh - 64px);}
-.sidebar{width:220px;min-width:220px;background:#080e1a;
-  border-right:1px solid rgba(201,168,76,0.08);
-  padding:24px 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
-.sidebar-section{padding:0 12px;margin-bottom:24px;}
-.sidebar-title{font-size:8px;letter-spacing:0.38em;color:var(--gold);font-weight:600;
-  margin-bottom:8px;padding:0 8px;}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:4px;
-  cursor:pointer;font-size:11px;color:var(--gray);letter-spacing:0.06em;
-  border:none;background:transparent;width:100%;text-align:left;
-  font-family:'Montserrat',sans-serif;text-decoration:none;transition:all 0.2s;}
-.nav-item:hover{background:rgba(201,168,76,0.06);color:var(--text);}
-.nav-item.active{background:rgba(201,168,76,0.1);color:var(--gold);}
-.nav-item svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;flex-shrink:0;}
-.nav-badge{font-size:9px;background:rgba(201,168,76,0.15);color:var(--gold);
-  padding:2px 7px;border-radius:10px;margin-left:auto;}
-.nav-badge.red{background:rgba(226,75,74,0.15);color:var(--danger);}
-
-/* ── MAIN ── */
-.main{flex:1;padding:32px;overflow-y:auto;}
-.page-section{display:none;}
-.page-section.active{display:block;}
-
-/* ── WIDGETS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
-.stat-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.1);padding:20px 22px;transition:border-color 0.3s;}
-.stat-card:hover{border-color:rgba(201,168,76,0.3);}
-.stat-label{font-size:8.5px;letter-spacing:0.3em;color:var(--gray);margin-bottom:10px;font-weight:500;}
-.stat-value{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold-l);line-height:1;}
-.stat-sub{font-size:10px;color:var(--gray);margin-top:6px;}
-.stat-icon{float:right;margin-top:-2px;}
-.stat-icon svg{width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.3;opacity:0.6;}
-
-/* ── CARDS ── */
-.card{background:var(--navy2);border:1px solid rgba(201,168,76,0.1);margin-bottom:16px;}
-.card-header{padding:18px 22px 14px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(201,168,76,0.07);}
-.card-title{font-size:11px;letter-spacing:0.25em;color:var(--gold);font-weight:600;}
-.card-body{padding:18px 22px;}
-.card-action{font-size:9px;letter-spacing:0.2em;color:var(--gold);background:transparent;
-  border:1px solid rgba(201,168,76,0.25);padding:6px 14px;cursor:pointer;
-  font-family:'Montserrat',sans-serif;transition:all 0.3s;}
-.card-action:hover{background:rgba(201,168,76,0.08);}
-
-/* ── PAGE TITLE ── */
-.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,36px);
-  font-weight:300;color:var(--gold-l);margin-bottom:4px;}
-.page-sub{font-size:11px;color:var(--gray);letter-spacing:0.08em;margin-bottom:28px;}
-
-/* ── FORM ── */
-.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-.form-label{font-size:9px;letter-spacing:0.28em;color:var(--gold);}
-.form-input{background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);
-  color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;
-  font-weight:300;padding:12px 14px;outline:none;transition:border-color 0.3s;width:100%;}
-.form-input:focus{border-color:var(--gold);}
-.form-input::placeholder{color:var(--gray);opacity:0.6;}
-.form-select{background:var(--navy2);appearance:none;cursor:pointer;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.btn{font-size:10px;letter-spacing:0.25em;border:none;padding:13px 28px;
-  cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.3s;display:inline-block;}
-.btn-primary{color:var(--navy);background:var(--gold);}
-.btn-primary:hover{background:var(--gold-l);}
-.btn-outline{color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,0.35);}
-.btn-outline:hover{background:rgba(201,168,76,0.08);}
-.btn-full{width:100%;}
-
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:12px;}
-thead tr{border-bottom:1px solid rgba(201,168,76,0.2);}
-th{font-size:8.5px;letter-spacing:0.25em;color:var(--gold);font-weight:600;
-  padding:10px 14px;text-align:left;}
-td{padding:12px 14px;color:var(--gray);border-bottom:1px solid rgba(201,168,76,0.05);vertical-align:middle;}
-tr:hover td{background:rgba(201,168,76,0.03);}
-td strong{color:var(--text);}
-
-/* ── STATUS BADGES ── */
-.badge{font-size:8.5px;letter-spacing:0.15em;padding:3px 10px;border-radius:2px;font-weight:500;}
-.badge-pending{background:rgba(245,158,11,0.12);color:var(--warn);}
-.badge-active{background:rgba(29,158,117,0.12);color:var(--success);}
-.badge-done{background:rgba(138,154,184,0.12);color:var(--gray);}
-.badge-new{background:rgba(201,168,76,0.12);color:var(--gold);}
-
-/* ── TIMELINE ── */
-.timeline{display:flex;flex-direction:column;gap:0;}
-.tl-item{display:flex;gap:16px;padding-bottom:20px;position:relative;}
-.tl-item:not(:last-child)::before{content:'';position:absolute;left:15px;top:32px;bottom:0;
-  width:1px;background:rgba(201,168,76,0.12);}
-.tl-dot{width:30px;height:30px;min-width:30px;border:1px solid rgba(201,168,76,0.35);
-  display:flex;align-items:center;justify-content:center;background:var(--navy2);z-index:1;}
-.tl-dot svg{width:12px;height:12px;fill:none;stroke:var(--gold);stroke-width:1.5;}
-.tl-content{flex:1;padding-top:4px;}
-.tl-title{font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:3px;}
-.tl-meta{font-size:11px;color:var(--gray);}
-
-/* ── CHAT ── */
-.chat-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;max-height:320px;overflow-y:auto;}
-.msg{display:flex;gap:10px;align-items:flex-start;}
-.msg.mine{flex-direction:row-reverse;}
-.msg-bubble{max-width:75%;padding:11px 14px;font-size:12.5px;line-height:1.65;}
-.msg .msg-bubble{background:var(--navy2);color:var(--text);border:1px solid rgba(201,168,76,0.08);}
-.msg.mine .msg-bubble{background:rgba(201,168,76,0.1);color:var(--gold-l);border:1px solid rgba(201,168,76,0.2);}
-.msg-meta{font-size:10px;color:var(--gray);margin-top:4px;}
-.msg-avatar{width:28px;height:28px;min-width:28px;border:1px solid rgba(201,168,76,0.3);
-  display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold);}
-.chat-input-wrap{display:flex;gap:10px;}
-.chat-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);
-  color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;
-  padding:11px 14px;outline:none;resize:none;}
-
-/* ── CALENDAR ── */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.cal-day{padding:8px 4px;text-align:center;font-size:11px;color:var(--gray);border-radius:2px;}
-.cal-day.header{color:var(--gold);font-size:9px;letter-spacing:0.15em;font-weight:600;}
-.cal-day.today{background:rgba(201,168,76,0.15);color:var(--gold-l);}
-.cal-day.has-event{border:1px solid rgba(201,168,76,0.3);cursor:pointer;}
-.cal-day.has-event:hover{background:rgba(201,168,76,0.08);}
-.cal-day.other-month{opacity:0.3;}
-
-/* ── TOAST ── */
-#toast{position:fixed;bottom:24px;right:24px;background:rgba(29,158,117,0.9);
-  color:#fff;font-size:11px;letter-spacing:0.08em;padding:12px 20px;
-  transform:translateY(80px);transition:transform 0.3s;z-index:999;}
-#toast.show{transform:translateY(0);}
-
-/* ── LOADING ── */
-.loading-overlay{position:fixed;inset:0;background:var(--navy3);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:999;transition:opacity 0.5s;}
-.loading-overlay.hidden{opacity:0;pointer-events:none;}
-.spinner{width:36px;height:36px;border:2px solid rgba(201,168,76,0.2);
-  border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .sidebar{display:none;}
-  .form-row{grid-template-columns:1fr;}
-  .stats-grid{grid-template-columns:1fr 1fr;}
-}
-</style>
-</head>
-<body>
-<div class="loading-overlay" id="loading"><div class="spinner"></div></div>
-
-<div class="topbar">
-  <a href="index.html" class="topbar-logo">
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="A"/>
-    <div><div class="topbar-brand">APOGÉE & CO</div>
-    <span class="topbar-brand-sub">ADMINISTRATION MEMBRES</span></div>
-  </a>
-  <div class="topbar-right">
-    <a href="admin.html" class="topbar-btn">ADMIN SITE</a>
-    <a href="index.html" class="topbar-btn">SITE</a>
-    <button class="topbar-btn danger" onclick="logout()">DÉCONNEXION</button>
-  </div>
-</div>
-
-<div class="layout">
-  <nav class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-title">VUE D'ENSEMBLE</div>
-      <button class="nav-item active" onclick="nav('dashboard')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Tableau de bord
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-title">MEMBRES</div>
-      <button class="nav-item" onclick="nav('membres')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Tous les membres
-        <span class="nav-badge" id="badge-membres">—</span>
-      </button>
-      <button class="nav-item" onclick="nav('nouveau-membre')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Créer un membre
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-title">DEMANDES</div>
-      <button class="nav-item" onclick="nav('demandes')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>Toutes les demandes
-        <span class="nav-badge red" id="badge-demandes">—</span>
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-title">MESSAGERIE</div>
-      <button class="nav-item" onclick="nav('messages')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Conversations
-        <span class="nav-badge" id="badge-msgs">—</span>
-      </button>
-    </div>
-  </nav>
-
-  <main class="main">
-
-    <!-- DASHBOARD ADMIN -->
-    <div class="page-section active" id="sec-dashboard">
-      <div class="page-title">Administration</div>
-      <div class="page-sub">Tableau de bord — Apogée & Co Espace Membres.</div>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">MEMBRES ACTIFS</div>
-          <div class="stat-value" id="a-membres">—</div>
-          <div class="stat-sub">comptes créés</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">PARTICULIERS B2C</div>
-          <div class="stat-value" id="a-b2c">—</div>
-          <div class="stat-sub">espaces particuliers</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">ÉTABLISSEMENTS B2B</div>
-          <div class="stat-value" id="a-b2b">—</div>
-          <div class="stat-sub">hôtels & résidences</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">DEMANDES EN ATTENTE</div>
-          <div class="stat-value" id="a-pending">—</div>
-          <div class="stat-sub">à traiter</div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div class="card">
-          <div class="card-header"><div class="card-title">DERNIÈRES DEMANDES</div>
-            <button class="card-action" onclick="nav('demandes')">TOUT VOIR</button></div>
-          <div class="card-body"><div class="timeline" id="a-recent-demandes">
-            <div style="color:var(--gray);font-size:12px;">Chargement...</div>
-          </div></div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">DERNIERS MEMBRES</div>
-            <button class="card-action" onclick="nav('membres')">TOUT VOIR</button></div>
-          <div class="card-body"><div id="a-recent-membres">
-            <div style="color:var(--gray);font-size:12px;">Chargement...</div>
-          </div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LISTE MEMBRES -->
-    <div class="page-section" id="sec-membres">
-      <div class="page-title">Membres</div>
-      <div class="page-sub">Tous les comptes membres actifs.</div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">LISTE DES MEMBRES</div>
-          <button class="card-action" onclick="nav('nouveau-membre')">+ CRÉER</button>
-        </div>
-        <div class="card-body">
-          <div style="margin-bottom:14px;display:flex;gap:10px;">
-            <input id="search-membre" class="form-input" style="max-width:300px;"
-              placeholder="Rechercher..." oninput="filterMembres()"/>
-            <select id="filter-role" class="form-input form-select" style="max-width:160px;" onchange="filterMembres()">
-              <option value="">Tous les rôles</option>
-              <option value="b2c">Particuliers (B2C)</option>
-              <option value="b2b">Établissements (B2B)</option>
-            </select>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr>
-                <th>NOM / ÉTABLISSEMENT</th><th>EMAIL</th><th>RÔLE</th>
-                <th>CRÉÉ LE</th><th>STATUT</th><th>ACTIONS</th>
-              </tr></thead>
-              <tbody id="membres-list">
-                <tr><td colspan="6" style="text-align:center;padding:28px;color:var(--gray);">Chargement...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CRÉER UN MEMBRE -->
-    <div class="page-section" id="sec-nouveau-membre">
-      <div class="page-title">Créer un membre</div>
-      <div class="page-sub">Le membre recevra un email d'invitation avec son mot de passe provisoire.</div>
-      <div class="card" style="max-width:560px;">
-        <div class="card-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">PRÉNOM / NOM</label>
-              <input type="text" id="nm-nom" class="form-input" placeholder="Nom complet ou établissement"/>
-            </div>
-            <div class="form-group">
-              <label class="form-label">RÔLE</label>
-              <select id="nm-role" class="form-input form-select">
-                <option value="b2c">Particulier (B2C)</option>
-                <option value="b2b">Établissement (B2B)</option>
-                <option value="admin">Admin Apogée</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">EMAIL</label>
-            <input type="email" id="nm-email" class="form-input" placeholder="email@exemple.com"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">MOT DE PASSE PROVISOIRE</label>
-            <div style="display:flex;gap:8px;">
-              <input type="text" id="nm-pwd" class="form-input" placeholder="Généré automatiquement"/>
-              <button class="btn btn-outline" onclick="genPwd()" style="white-space:nowrap;padding:12px 16px;">GÉNÉRER</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">TÉLÉPHONE</label>
-            <input type="tel" id="nm-tel" class="form-input" placeholder="06 XX XX XX XX"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">NOTES INTERNES</label>
-            <textarea id="nm-notes" class="form-input" rows="3" style="resize:vertical;"
-              placeholder="Informations internes, profil client..."></textarea>
-          </div>
-          <div id="nm-error" style="display:none;margin-bottom:12px;padding:12px;
-            background:rgba(226,75,74,0.08);border:1px solid rgba(226,75,74,0.25);
-            color:var(--danger);font-size:12px;"></div>
-          <div id="nm-success" style="display:none;margin-bottom:12px;padding:12px;
-            background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);
-            color:var(--success);font-size:12px;"></div>
-          <div style="display:flex;gap:12px;">
-            <button class="btn btn-primary" onclick="createMembre()" id="nm-btn">CRÉER LE COMPTE</button>
-            <button class="btn btn-outline" onclick="nav('membres')">ANNULER</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOUTES LES DEMANDES -->
-    <div class="page-section" id="sec-demandes">
-      <div class="page-title">Toutes les demandes</div>
-      <div class="page-sub">Demandes de prestations de tous les membres.</div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">DEMANDES EN COURS</div>
-          <select id="filter-status" class="card-action" style="border:1px solid rgba(201,168,76,0.25);
-            background:transparent;color:var(--gold);padding:6px 14px;font-family:'Montserrat',sans-serif;
-            font-size:9px;letter-spacing:0.2em;" onchange="loadDemandes()">
-            <option value="">TOUS LES STATUTS</option>
-            <option value="Nouveau">NOUVEAU</option>
-            <option value="en cours">EN COURS</option>
-            <option value="terminé">TERMINÉ</option>
-          </select>
-        </div>
-        <div class="card-body">
-          <div class="table-wrap">
-            <table>
-              <thead><tr>
-                <th>MEMBRE</th><th>PRESTATION</th><th>DATE</th><th>PRIORITÉ</th><th>STATUT</th><th>ACTIONS</th>
-              </tr></thead>
-              <tbody id="demandes-list">
-                <tr><td colspan="6" style="text-align:center;padding:28px;color:var(--gray);">Chargement...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MESSAGERIE ADMIN -->
-    <div class="page-section" id="sec-messages">
-      <div class="page-title">Conversations</div>
-      <div class="page-sub">Messagerie avec les membres.</div>
-      <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;">
-        <div class="card">
-          <div class="card-header"><div class="card-title">MEMBRES</div></div>
-          <div class="card-body" style="padding:8px;">
-            <div id="conv-list" style="display:flex;flex-direction:column;gap:2px;">
-              <div style="color:var(--gray);font-size:12px;padding:8px;">Chargement...</div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title" id="conv-title">SÉLECTIONNEZ UN MEMBRE</div>
-          </div>
-          <div class="card-body">
-            <div class="chat-wrap" id="admin-chat" style="min-height:200px;">
-              <div style="color:var(--gray);font-size:12px;">Sélectionnez une conversation.</div>
-            </div>
-            <div class="chat-input-wrap" id="admin-chat-input" style="display:none;">
-              <textarea id="admin-msg" class="chat-input" rows="2" placeholder="Votre réponse..."></textarea>
-              <button class="btn btn-primary" onclick="sendAdminMsg()" style="align-self:flex-end;">ENVOYER</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
-<div id="toast"></div>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection,
-         query, where, orderBy, getDocs, addDoc, updateDoc, deleteDoc, serverTimestamp, limit }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, onAuthStateChanged, signOut,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  getFirestore, doc, getDoc, setDoc, collection,
+  query, where, orderBy, getDocs, addDoc,
+  updateDoc, deleteDoc, serverTimestamp, limit,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ================= CONFIG ================= */
 
 const cfg = {
-  apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
-  authDomain:        "apogee-co.firebaseapp.com",
-  projectId:         "apogee-co",
-  storageBucket:     "apogee-co.firebasestorage.app",
-  messagingSenderId: "752278064291",
-  appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
+  apiKey: "AIzaSy...",
+  authDomain: "apogee-co.firebaseapp.com",
+  projectId: "apogee-co",
 };
-const app  = initializeApp(cfg);
+
+const app = initializeApp(cfg);
 const auth = getAuth(app);
-const db   = getFirestore(app);
+const db = getFirestore(app);
 
-let currentUser = null, allMembres = [], currentConvUid = null;
+/* ⚠️ IMPORTANT: secondary app pour créer utilisateurs */
+const secondaryApp = initializeApp(cfg, "Secondary");
+const secondaryAuth = getAuth(secondaryApp);
 
-onAuthStateChanged(auth, async user => {
-  if (!user) { window.location.href = "login.html"; return; }
-  const snap = await getDoc(doc(db,"users",user.uid));
-  if (!snap.exists() || snap.data().role !== "admin") {
-    window.location.href = "login.html"; return;
-  }
-  currentUser = user;
-  document.getElementById("loading").classList.add("hidden");
-  await loadAllStats();
-  await loadAllMembres();
-  await loadDemandes();
-  await loadConvList();
-});
+/* ================= GLOBAL ================= */
 
-window.nav = function(id) {
-  document.querySelectorAll(".page-section").forEach(s=>s.classList.remove("active"));
-  document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
-  document.getElementById("sec-"+id).classList.add("active");
-  document.querySelector(`[onclick="nav('${id}')"]`)?.classList.add("active");
-};
-window.logout = async () => { await signOut(auth); window.location.href = "login.html"; };
+let currentUser = null;
+let allMembres = [];
+let currentConvUid = null;
 
-async function loadAllStats() {
-  const snap = await getDocs(collection(db,"users"));
-  const users = snap.docs.map(d=>d.data());
-  const b2c = users.filter(u=>u.role==="b2c").length;
-  const b2b = users.filter(u=>u.role==="b2b").length;
-  document.getElementById("a-membres").textContent  = users.length;
-  document.getElementById("a-b2c").textContent      = b2c;
-  document.getElementById("a-b2b").textContent      = b2b;
-  document.getElementById("badge-membres").textContent = users.length;
+/* ================= UTILS ================= */
 
-  const dSnap = await getDocs(query(collection(db,"demandes"),where("status","==","Nouveau"),limit(99)));
-  const pending = dSnap.size;
-  document.getElementById("a-pending").textContent    = pending;
-  document.getElementById("badge-demandes").textContent = pending;
-
-  // Recent demandes
-  const rSnap = await getDocs(query(collection(db,"demandes"),orderBy("createdAt","desc"),limit(4)));
-  const tl = document.getElementById("a-recent-demandes");
-  tl.innerHTML = rSnap.docs.length===0
-    ? '<div style="color:var(--gray);font-size:12px;">Aucune demande.</div>'
-    : rSnap.docs.map(d=>{const i=d.data();return `
-        <div class="tl-item">
-          <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg></div>
-          <div class="tl-content">
-            <div class="tl-title">${i.type||"Demande"}</div>
-            <div class="tl-meta"><span class="badge badge-${i.status==='en cours'?'pending':i.status==='terminé'?'done':'new'}">${i.status||"Nouveau"}</span></div>
-          </div>
-        </div>`;}).join("");
-
-  // Recent membres
-  const rm = document.getElementById("a-recent-membres");
-  rm.innerHTML = users.slice(0,4).map(u=>`
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.06);">
-      <div>
-        <div style="font-size:12.5px;color:var(--text);">${u.prenom||u.nom||"—"}</div>
-        <div style="font-size:10px;color:var(--gray);">${u.role==="b2c"?"Particulier":"Établissement"}</div>
-      </div>
-      <span class="badge badge-active">ACTIF</span>
-    </div>`).join("");
+function escapeHTML(str = "") {
+  return str.replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
 }
 
-async function loadAllMembres() {
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+/* ================= AUTH ================= */
+
+onAuthStateChanged(auth, async user => {
+  if (!user) return location.href = "login.html";
+
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (!snap.exists() || snap.data().role !== "admin") {
+    return location.href = "login.html";
+  }
+
+  currentUser = user;
+  document.getElementById("loading").classList.add("hidden");
+
+  await Promise.all([
+    loadStats(),
+    loadMembres(),
+    loadDemandes(),
+    loadConvList()
+  ]);
+});
+
+/* ================= NAV ================= */
+
+window.nav = function(id) {
+  document.querySelectorAll(".page-section").forEach(s => s.classList.remove("active"));
+  document.getElementById("sec-" + id).classList.add("active");
+};
+
+window.logout = () => signOut(auth);
+
+/* ================= STATS ================= */
+
+async function loadStats() {
+  const snap = await getDocs(collection(db,"users"));
+  const users = snap.docs.map(d=>d.data());
+
+  document.getElementById("a-membres").textContent = users.length;
+  document.getElementById("a-b2c").textContent = users.filter(u=>u.role==="b2c").length;
+  document.getElementById("a-b2b").textContent = users.filter(u=>u.role==="b2b").length;
+}
+
+/* ================= MEMBRES ================= */
+
+async function loadMembres() {
   const snap = await getDocs(collection(db,"users"));
   allMembres = snap.docs.map(d=>({id:d.id,...d.data()}));
   renderMembres(allMembres);
@@ -521,171 +105,122 @@ async function loadAllMembres() {
 
 function renderMembres(list) {
   const tbody = document.getElementById("membres-list");
-  tbody.innerHTML = list.length===0
-    ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--gray);">Aucun membre.</td></tr>'
-    : list.map(m=>`<tr>
-        <td><strong>${m.prenom||m.nom||"—"}</strong></td>
-        <td style="font-size:11px;">${m.email||"—"}</td>
-        <td><span class="badge badge-${m.role==="b2c"?"active":"new"}">${m.role==="b2c"?"PARTICULIER":m.role==="b2b"?"ÉTABLISSEMENT":"ADMIN"}</span></td>
-        <td style="font-size:11px;">${m.createdAt?.toDate()?.toLocaleDateString("fr-FR")||"—"}</td>
-        <td><span class="badge badge-active">ACTIF</span></td>
-        <td style="display:flex;gap:6px;">
-          <button class="card-action" onclick="openConv('${m.id}','${m.prenom||m.nom||"Membre"}')">MSG</button>
-          <button class="card-action" style="color:var(--danger);border-color:rgba(226,75,74,0.25);"
-            onclick="if(confirm('Supprimer ce membre ?')) deleteMembre('${m.id}')">SUP.</button>
-        </td>
-      </tr>`).join("");
+  tbody.innerHTML = "";
+
+  list.forEach(m => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td><strong>${escapeHTML(m.prenom || m.nom || "—")}</strong></td>
+      <td>${escapeHTML(m.email || "—")}</td>
+      <td>${m.role}</td>
+      <td>${m.createdAt?.toDate()?.toLocaleDateString("fr-FR") || "—"}</td>
+      <td>ACTIF</td>
+      <td>
+        <button class="msg">MSG</button>
+        <button class="del">SUP</button>
+      </td>
+    `;
+
+    tr.querySelector(".msg").addEventListener("click", () => {
+      openConv(m.id, m.prenom || m.nom);
+    });
+
+    tr.querySelector(".del").addEventListener("click", async () => {
+      if (!confirm("Supprimer ?")) return;
+      await deleteDoc(doc(db,"users",m.id));
+      showToast("Supprimé");
+      loadMembres();
+    });
+
+    tbody.appendChild(tr);
+  });
 }
 
-window.filterMembres = function() {
-  const q  = document.getElementById("search-membre").value.toLowerCase();
-  const role = document.getElementById("filter-role").value;
-  const filtered = allMembres.filter(m =>
-    (!q || (m.prenom||m.nom||"").toLowerCase().includes(q) || (m.email||"").toLowerCase().includes(q)) &&
-    (!role || m.role===role));
-  renderMembres(filtered);
-};
-
-window.genPwd = function() {
-  const chars="abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789!@#";
-  let pwd="";for(let i=0;i<12;i++)pwd+=chars[Math.floor(Math.random()*chars.length)];
-  document.getElementById("nm-pwd").value=pwd;
-};
+/* ================= CREATE USER ================= */
 
 window.createMembre = async function() {
-  const email = document.getElementById("nm-email").value.trim();
-  const pwd   = document.getElementById("nm-pwd").value.trim();
-  const nom   = document.getElementById("nm-nom").value.trim();
-  const role  = document.getElementById("nm-role").value;
-  const tel   = document.getElementById("nm-tel").value.trim();
-  const notes = document.getElementById("nm-notes").value.trim();
-  const btn   = document.getElementById("nm-btn");
-  const err   = document.getElementById("nm-error");
-  const suc   = document.getElementById("nm-success");
-  err.style.display="none"; suc.style.display="none";
-  if (!email || !pwd || !nom) { err.textContent="Email, nom et mot de passe obligatoires."; err.style.display="block"; return; }
-  btn.textContent="CRÉATION..."; btn.disabled=true;
+  const email = nmEmail.value.trim();
+  const pwd = nmPwd.value.trim();
+  const nom = nmNom.value.trim();
+
+  if (!email || !pwd || !nom) return alert("Champs requis");
+
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pwd);
-    await setDoc(doc(db,"users",cred.user.uid),{
-      prenom:nom, email, role, tel, notes,
-      createdAt:serverTimestamp()
+    const cred = await createUserWithEmailAndPassword(secondaryAuth, email, pwd);
+
+    await setDoc(doc(db,"users",cred.user.uid), {
+      prenom: nom,
+      email,
+      role: nmRole.value,
+      createdAt: serverTimestamp()
     });
-    suc.textContent=`✓ Compte créé pour ${nom} (${email}). Mot de passe provisoire : ${pwd}`;
-    suc.style.display="block";
-    btn.style.display="none";
-    await loadAllStats(); await loadAllMembres();
-    setTimeout(()=>nav("membres"),3000);
+
+    showToast("Compte créé");
+    loadMembres();
+
   } catch(e) {
-    const msgs={"auth/email-already-in-use":"Cet email est déjà utilisé.","auth/weak-password":"Mot de passe trop faible (6 caractères min.)"};
-    err.textContent=msgs[e.code]||"Erreur : "+e.message;
-    err.style.display="block";
-    btn.textContent="CRÉER LE COMPTE"; btn.disabled=false;
+    alert(e.message);
   }
 };
 
-window.deleteMembre = async function(uid) {
-  await deleteDoc(doc(db,"users",uid));
-  showToast("Membre supprimé.");
-  await loadAllStats(); await loadAllMembres();
-};
+/* ================= DEMANDES ================= */
 
-window.loadDemandes = async function() {
-  const status = document.getElementById("filter-status")?.value || "";
-  let q = status
-    ? query(collection(db,"demandes"),where("status","==",status),orderBy("createdAt","desc"))
-    : query(collection(db,"demandes"),orderBy("createdAt","desc"));
+async function loadDemandes() {
+  const q = query(collection(db,"demandes"), orderBy("createdAt","desc"));
   const snap = await getDocs(q);
-  const items = snap.docs.map(d=>({id:d.id,...d.data()}));
-  document.getElementById("demandes-list").innerHTML = items.length===0
-    ? '<tr><td colspan="6" style="text-align:center;padding:28px;color:var(--gray);">Aucune demande.</td></tr>'
-    : items.map(i=>`<tr>
-        <td style="font-size:11px;">${i.userId?.substring(0,8)||"—"}</td>
-        <td><strong>${i.type||"—"}</strong></td>
-        <td>${i.date||"—"}</td>
-        <td><span class="badge badge-${i.priority==="urgent"?"red":"done"}">${i.priority||"Normal"}</span></td>
-        <td>
-          <select class="form-input form-select" style="padding:4px 8px;font-size:11px;background:var(--navy2);"
-            onchange="updateStatus('${i.id}',this.value)">
-            <option${i.status==='Nouveau'?' selected':''}>Nouveau</option>
-            <option${i.status==='en cours'?' selected':''}>en cours</option>
-            <option${i.status==='terminé'?' selected':''}>terminé</option>
-          </select>
-        </td>
-        <td><button class="card-action" onclick="alert('Description : ${(i.desc||i.notes||'Aucune').replace(/'/g,\"'\")}')" >DÉTAIL</button></td>
-      </tr>`).join("");
-};
 
-window.updateStatus = async function(id, status) {
-  await updateDoc(doc(db,"demandes",id), {status});
-  showToast("Statut mis à jour ✓");
-};
-
-async function loadConvList() {
-  const snap = await getDocs(collection(db,"users"));
-  const users = snap.docs.map(d=>({id:d.id,...d.data()}));
-  const list = document.getElementById("conv-list");
-  list.innerHTML = users.length===0
-    ? '<div style="color:var(--gray);font-size:12px;padding:8px;">Aucun membre.</div>'
-    : users.map(u=>`
-        <button onclick="openConv('${u.id}','${u.prenom||u.nom||"Membre"}')"
-          style="width:100%;text-align:left;background:transparent;border:none;padding:10px 8px;
-          border-radius:3px;cursor:pointer;transition:background 0.2s;font-family:'Montserrat',sans-serif;"
-          onmouseover="this.style.background='rgba(201,168,76,0.06)'"
-          onmouseout="this.style.background='transparent'">
-          <div style="font-size:12px;color:var(--text);">${u.prenom||u.nom||"—"}</div>
-          <div style="font-size:10px;color:var(--gray);">${u.role==="b2c"?"Particulier":"Établissement"}</div>
-        </button>`).join("");
-  document.getElementById("badge-msgs").textContent = users.length;
+  document.getElementById("demandes-list").innerHTML =
+    snap.docs.map(d => {
+      const i = d.data();
+      return `
+        <tr>
+          <td>${escapeHTML(i.type || "—")}</td>
+          <td>${escapeHTML(i.date || "—")}</td>
+        </tr>
+      `;
+    }).join("");
 }
 
-window.openConv = async function(uid, name) {
+/* ================= CHAT (REALTIME) ================= */
+
+window.openConv = function(uid, name) {
   currentConvUid = uid;
-  document.getElementById("conv-title").textContent = name.toUpperCase();
-  document.getElementById("admin-chat-input").style.display = "flex";
-  const chat = document.getElementById("admin-chat");
-  chat.innerHTML = '<div style="color:var(--gray);font-size:12px;">Chargement...</div>';
-  const q = query(collection(db,"messages"),where("roomId","==",uid),orderBy("createdAt","asc"));
-  const snap = await getDocs(q);
-  chat.innerHTML = "";
-  if (snap.docs.length===0) {
-    chat.innerHTML = '<div style="color:var(--gray);font-size:12px;">Aucun message. Commencez la conversation.</div>';
-    return;
-  }
-  snap.docs.forEach(d=>{
-    const m=d.data(), isAdmin=m.from===currentUser.uid;
-    const div=document.createElement("div");
-    div.className="msg"+(isAdmin?" mine":"");
-    div.innerHTML=`${!isAdmin?'<div class="msg-avatar">M</div>':''}
-      <div><div class="msg-bubble">${m.text}</div>
-      <div class="msg-meta">${isAdmin?"Vous":"Membre"} · ${m.createdAt?.toDate()?.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})||""}</div></div>
-      ${isAdmin?'<div class="msg-avatar">A</div>':''}`;
-    chat.appendChild(div);
+
+  const q = query(
+    collection(db,"messages"),
+    where("roomId","==",uid),
+    orderBy("createdAt","asc")
+  );
+
+  onSnapshot(q, snap => {
+    const chat = document.getElementById("admin-chat");
+    chat.innerHTML = "";
+
+    snap.docs.forEach(d => {
+      const m = d.data();
+
+      const div = document.createElement("div");
+      div.textContent = m.text;
+      chat.appendChild(div);
+    });
   });
-  chat.scrollTop=chat.scrollHeight;
 };
 
 window.sendAdminMsg = async function() {
   if (!currentConvUid) return;
-  const input=document.getElementById("admin-msg");
-  const text=input.value.trim();
-  if (!text) return;
-  await addDoc(collection(db,"messages"),{roomId:currentConvUid,from:currentUser.uid,text,createdAt:serverTimestamp()});
-  input.value="";
-  const div=document.createElement("div");
-  div.className="msg mine";
-  div.innerHTML=`<div><div class="msg-bubble">${text}</div><div class="msg-meta">Vous · maintenant</div></div><div class="msg-avatar">A</div>`;
-  const chat=document.getElementById("admin-chat");
-  chat.appendChild(div); chat.scrollTop=chat.scrollHeight;
-  showToast("Message envoyé ✓");
-};
-document.getElementById("admin-msg").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();window.sendAdminMsg();}});
 
-function showToast(msg) {
-  const t=document.getElementById("toast");
-  t.textContent=msg;t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2500);
-}
+  const text = adminMsg.value.trim();
+  if (!text) return;
+
+  await addDoc(collection(db,"messages"), {
+    roomId: currentConvUid,
+    from: currentUser.uid,
+    text,
+    createdAt: serverTimestamp()
+  });
+
+  adminMsg.value = "";
+};
+
 </script>
-</body>
-</html>
