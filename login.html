@@ -263,6 +263,10 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // Si déjà connecté → rediriger
+// Afficher le formulaire immédiatement — pas d'attente Firebase
+document.getElementById("loading").classList.add("hidden");
+
+// Vérifier si déjà connecté en arrière-plan
 onAuthStateChanged(auth, async user => {
   if (user) {
     try {
@@ -270,21 +274,10 @@ onAuthStateChanged(auth, async user => {
       const role = snap.exists() ? snap.data().role : "b2c";
       redirect(role);
     } catch(e) {
-      // Firestore inaccessible → afficher le formulaire quand même
-      document.getElementById("loading").classList.add("hidden");
+      console.warn("Firestore error:", e.message);
     }
-  } else {
-    document.getElementById("loading").classList.add("hidden");
   }
 });
-
-// Timeout de sécurité : si Firebase ne répond pas en 5s → afficher le formulaire
-setTimeout(() => {
-  const loading = document.getElementById("loading");
-  if (loading && !loading.classList.contains("hidden")) {
-    loading.classList.add("hidden");
-  }
-}, 5000);
 
 function redirect(role) {
   const map = { b2c:"dashboard-b2c.html", b2b:"dashboard-b2b.html", admin:"admin-membres.html" };
