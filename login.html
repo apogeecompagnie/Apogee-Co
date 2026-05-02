@@ -260,17 +260,7 @@ function redirect(role) {
   window.location.replace(getBase() + (map[role] || "dashboard-b2c.html"));
 }
 
-// Vérifier session existante sans bloquer l'affichage
-onAuthStateChanged(auth, async user => {
-  if (user) {
-    try {
-      const snap = await getDoc(doc(db, "users", user.uid));
-      redirect(snap.exists() ? (snap.data().role || "b2c") : "b2c");
-    } catch(e) {
-      // Firestore inaccessible — laisser l'utilisateur se connecter manuellement
-    }
-  }
-});
+// Pas de redirection automatique — l'utilisateur doit toujours saisir ses identifiants
 
 window.doLogin = async function() {
   const email    = document.getElementById("email").value.trim();
