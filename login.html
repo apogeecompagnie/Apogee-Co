@@ -177,22 +177,18 @@ td strong{color:var(--text);}
 }
 </style>
 <style>
-body{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:var(--navy3);padding:20px;}
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy3);padding:20px;}
 .login-wrap{width:100%;max-width:420px;}
 .login-logo{text-align:center;margin-bottom:36px;}
 .login-logo img{width:80px;height:80px;margin-bottom:16px;}
-.login-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;
-  color:var(--gold-l);letter-spacing:0.06em;}
+.login-title{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;color:var(--gold-l);letter-spacing:0.06em;}
 .login-sub{font-size:10px;letter-spacing:0.25em;color:var(--gray);margin-top:6px;}
 .login-card{background:var(--navy2);border:1px solid rgba(201,168,76,0.15);padding:36px 32px;}
 .login-ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 28px;}
 .login-ornament-bar{width:40px;height:1px;background:var(--gold);opacity:0.35;}
 .login-ornament-dia{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);opacity:0.7;}
-.error-msg{background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.25);
-  color:var(--danger);font-size:12px;padding:11px 14px;margin-bottom:14px;display:none;}
-.forgot-link{font-size:10px;color:var(--gray);letter-spacing:0.1em;text-decoration:none;
-  display:block;text-align:right;margin-top:-6px;margin-bottom:14px;transition:color 0.2s;}
+.error-msg{background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.25);color:var(--danger);font-size:12px;padding:11px 14px;margin-bottom:14px;display:none;}
+.forgot-link{font-size:10px;color:var(--gray);letter-spacing:0.1em;text-decoration:none;display:block;text-align:right;margin-top:-6px;margin-bottom:14px;cursor:pointer;transition:color 0.2s;}
 .forgot-link:hover{color:var(--gold);}
 .login-footer{text-align:center;margin-top:20px;font-size:10px;color:var(--gray);}
 .login-footer a{color:var(--gold);text-decoration:none;}
@@ -200,41 +196,29 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;
 </head>
 <body>
 
-<div class="loading-overlay" id="loading">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" style="width:56px;height:56px;margin-bottom:20px;"/>
-  <div class="spinner"></div>
-</div>
-
 <div class="login-wrap">
   <div class="login-logo">
     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="Apogée & Co"/>
     <div class="login-title">Apogée & Co</div>
     <div class="login-sub">ESPACE MEMBRES</div>
   </div>
-
   <div class="login-card">
     <div class="login-ornament">
       <div class="login-ornament-bar"></div>
       <div class="login-ornament-dia"></div>
       <div class="login-ornament-bar"></div>
     </div>
-
     <div class="error-msg" id="error-msg"></div>
-
     <div class="form-group">
       <label class="form-label">ADRESSE EMAIL</label>
       <input type="email" id="email" class="form-input" placeholder="votre@email.com" autocomplete="email"/>
     </div>
-
     <div class="form-group">
       <label class="form-label">MOT DE PASSE</label>
       <input type="password" id="password" class="form-input" placeholder="••••••••" autocomplete="current-password"/>
     </div>
-
-    <a href="#" class="forgot-link" onclick="resetPassword()">Mot de passe oublié ?</a>
-
-    <button class="btn btn-primary btn-full" onclick="login()" id="login-btn">SE CONNECTER</button>
-
+    <span class="forgot-link" onclick="resetPassword()">Mot de passe oublié ?</span>
+    <button class="btn btn-primary btn-full" onclick="doLogin()" id="login-btn">SE CONNECTER</button>
     <div class="login-footer" style="margin-top:24px;">
       Accès sur invitation uniquement.<br>
       <a href="index.html">Retour au site</a>
@@ -249,7 +233,6 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStat
 import { getFirestore, doc, getDoc }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Config Firebase ──────────────────────────────────────────────────────
 const cfg = {
   apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
   authDomain:        "apogee-co.firebaseapp.com",
@@ -258,47 +241,47 @@ const cfg = {
   messagingSenderId: "752278064291",
   appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
 };
+
 const app  = initializeApp(cfg);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// Si déjà connecté → rediriger
-// Afficher le formulaire immédiatement — pas d'attente Firebase
-document.getElementById("loading").classList.add("hidden");
+function getBase() {
+  const href = window.location.href;
+  return href.substring(0, href.lastIndexOf("/") + 1);
+}
 
-// Vérifier si déjà connecté en arrière-plan
+function redirect(role) {
+  const map = {
+    b2c:   "dashboard-b2c.html",
+    b2b:   "dashboard-b2b.html",
+    admin: "admin-membres.html"
+  };
+  window.location.replace(getBase() + (map[role] || "dashboard-b2c.html"));
+}
+
+// Vérifier session existante sans bloquer l'affichage
 onAuthStateChanged(auth, async user => {
   if (user) {
     try {
       const snap = await getDoc(doc(db, "users", user.uid));
-      const role = snap.exists() ? snap.data().role : "b2c";
-      redirect(role);
+      redirect(snap.exists() ? (snap.data().role || "b2c") : "b2c");
     } catch(e) {
-      console.warn("Firestore error:", e.message);
+      // Firestore inaccessible — laisser l'utilisateur se connecter manuellement
     }
   }
 });
 
-function redirect(role) {
-  const map = { b2c:"dashboard-b2c.html", b2b:"dashboard-b2b.html", admin:"admin-membres.html" };
-  const target = map[role] || "dashboard-b2c.html";
-  // Chemin robuste : remplace login.html par la cible
-  const currentUrl = window.location.href;
-  const base = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
-  window.location.replace(base + target);
-}
-
-window.login = async function() {
+window.doLogin = async function() {
   const email    = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
   const btn      = document.getElementById("login-btn");
-  const errDiv   = document.getElementById("error-msg");
-  errDiv.style.display = "none";
-  errDiv.style.cssText = "";
+  const err      = document.getElementById("error-msg");
+  err.style.display = "none";
 
   if (!email || !password) {
-    errDiv.textContent = "Veuillez remplir tous les champs.";
-    errDiv.style.display = "block";
+    err.textContent = "Veuillez remplir tous les champs.";
+    err.style.display = "block";
     return;
   }
 
@@ -306,38 +289,25 @@ window.login = async function() {
   btn.disabled = true;
 
   try {
-    // Étape 1 : authentification
     const cred = await signInWithEmailAndPassword(auth, email, password);
-    
-    // Étape 2 : récupérer le rôle
     let role = "b2c";
     try {
       const snap = await getDoc(doc(db, "users", cred.user.uid));
       if (snap.exists()) role = snap.data().role || "b2c";
-    } catch(firestoreErr) {
-      // Firestore inaccessible — on redirige quand même en b2c
-      console.warn("Firestore:", firestoreErr.message);
-    }
-    
-    // Étape 3 : redirection
+    } catch(fe) { /* Firestore timeout — role b2c par défaut */ }
     redirect(role);
-
   } catch(e) {
     const msgs = {
-      "auth/user-not-found":     "Aucun compte associé à cet email.",
-      "auth/wrong-password":     "Mot de passe incorrect.",
-      "auth/invalid-email":      "Adresse email invalide.",
-      "auth/too-many-requests":  "Trop de tentatives. Réessayez dans quelques minutes.",
-      "auth/invalid-credential": "Email ou mot de passe incorrect.",
+      "auth/invalid-credential":     "Email ou mot de passe incorrect.",
+      "auth/user-not-found":         "Aucun compte associé à cet email.",
+      "auth/wrong-password":         "Mot de passe incorrect.",
+      "auth/invalid-email":          "Adresse email invalide.",
+      "auth/too-many-requests":      "Trop de tentatives. Réessayez plus tard.",
       "auth/network-request-failed": "Erreur réseau. Vérifiez votre connexion.",
-      "auth/unauthorized-domain": "Domaine non autorisé dans Firebase."
+      "auth/unauthorized-domain":    "Domaine non autorisé dans Firebase."
     };
-    // Afficher l'erreur complète pour déboguer
-    const msg = msgs[e.code] || ("Erreur [" + (e.code||"?") + "] : " + e.message);
-    errDiv.textContent = msg;
-    errDiv.style.display = "block";
-    errDiv.style.padding = "12px";
-    errDiv.style.wordBreak = "break-all";
+    err.textContent = msgs[e.code] || "Erreur : " + e.code + " — " + e.message;
+    err.style.display = "block";
     btn.textContent = "SE CONNECTER";
     btn.disabled = false;
   }
@@ -345,17 +315,25 @@ window.login = async function() {
 
 window.resetPassword = async function() {
   const email = document.getElementById("email").value.trim();
+  const err   = document.getElementById("error-msg");
   if (!email) {
-    document.getElementById("error-msg").textContent = "Entrez votre email pour réinitialiser le mot de passe.";
-    document.getElementById("error-msg").style.display = "block";
+    err.textContent = "Entrez votre email pour réinitialiser votre mot de passe.";
+    err.style.display = "block";
     return;
   }
-  await sendPasswordResetEmail(auth, email);
-  document.getElementById("error-msg").style.cssText = "display:block;background:rgba(29,158,117,0.1);border-color:rgba(29,158,117,0.25);color:var(--success);";
-  document.getElementById("error-msg").textContent = "Email de réinitialisation envoyé. Vérifiez votre boîte.";
+  try {
+    await sendPasswordResetEmail(auth, email);
+    err.style.cssText = "display:block;background:rgba(29,158,117,0.1);border-color:rgba(29,158,117,0.25);color:var(--success);padding:11px 14px;";
+    err.textContent = "Email de réinitialisation envoyé. Vérifiez votre boîte.";
+  } catch(e) {
+    err.textContent = "Erreur : " + e.message;
+    err.style.display = "block";
+  }
 };
 
-document.addEventListener("keydown", e => { if(e.key==="Enter") window.login(); });
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter") window.doLogin();
+});
 </script>
 </body>
 </html>
