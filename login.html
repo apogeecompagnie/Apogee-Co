@@ -265,17 +265,33 @@ const db   = getFirestore(app);
 // Si déjà connecté → rediriger
 onAuthStateChanged(auth, async user => {
   if (user) {
-    const snap = await getDoc(doc(db, "users", user.uid));
-    const role = snap.exists() ? snap.data().role : "b2c";
-    redirect(role);
+    try {
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const role = snap.exists() ? snap.data().role : "b2c";
+      redirect(role);
+    } catch(e) {
+      // Firestore inaccessible → afficher le formulaire quand même
+      document.getElementById("loading").classList.add("hidden");
+    }
   } else {
     document.getElementById("loading").classList.add("hidden");
   }
 });
 
+// Timeout de sécurité : si Firebase ne répond pas en 5s → afficher le formulaire
+setTimeout(() => {
+  const loading = document.getElementById("loading");
+  if (loading && !loading.classList.contains("hidden")) {
+    loading.classList.add("hidden");
+  }
+}, 5000);
+
 function redirect(role) {
   const map = { b2c:"dashboard-b2c.html", b2b:"dashboard-b2b.html", admin:"admin-membres.html" };
-  window.location.href = map[role] || "dashboard-b2c.html";
+  const target = map[role] || "dashboard-b2c.html";
+  // Construire le chemin relatif correct (fonctionne sur GitHub Pages et Firebase Hosting)
+  const base = window.location.href.replace(/login\.html.*$/, "");
+  window.location.href = base + target;
 }
 
 window.login = async function() {
