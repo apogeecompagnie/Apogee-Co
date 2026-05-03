@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Mon espace — Apogée & Co</title>
+<title>Espace Établissement — Apogée & Co</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap');
 :root{
@@ -176,113 +176,155 @@ td strong{color:var(--text);}
   .stats-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
-
 <style>
-/* ── AMÉLIORATIONS DESIGN B2C ── */
+/* ── OVERRIDES ARRONDIS & MODERNISATION ── */
+:root{--radius:12px;--radius-sm:8px;--radius-xs:4px;}
+
+.topbar{border-radius:0;}
+.sidebar{border-radius:0 var(--radius) var(--radius) 0;}
+.card{border-radius:var(--radius);}
+.stat-card{border-radius:var(--radius);}
+.btn{border-radius:var(--radius-xs);}
+.form-input{border-radius:var(--radius-xs);}
+.badge{border-radius:20px;}
+.nav-item{border-radius:var(--radius-sm);margin-bottom:2px;}
+
+/* ── WELCOME BANNER ── */
 .welcome-banner{
-  background:linear-gradient(135deg,var(--navy2) 0%,#1e2f55 100%);
-  border:1px solid rgba(201,168,76,0.2);
+  background:linear-gradient(135deg,#1a2744 0%,#1e3060 60%,#0e1629 100%);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:var(--radius);
   padding:28px 32px;margin-bottom:24px;
   display:flex;align-items:center;justify-content:space-between;gap:20px;
+  position:relative;overflow:hidden;
 }
-.welcome-text h2{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;
-  color:var(--gold-l);margin-bottom:4px;}
+.welcome-banner::after{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.welcome-text h2{font-family:'Cormorant Garamond',serif;font-size:26px;
+  font-weight:300;color:var(--gold-l);margin-bottom:4px;}
 .welcome-text p{font-size:12px;color:var(--gray);}
-.welcome-cta{font-size:10px;letter-spacing:0.22em;color:var(--navy);background:var(--gold);
-  border:none;padding:12px 24px;cursor:pointer;font-family:'Montserrat',sans-serif;
+.welcome-actions{display:flex;gap:10px;flex-shrink:0;}
+.welcome-cta{font-size:10px;letter-spacing:0.22em;color:var(--navy);
+  background:var(--gold);border:none;padding:12px 22px;cursor:pointer;
+  font-family:'Montserrat',sans-serif;border-radius:var(--radius-xs);
   white-space:nowrap;transition:background 0.3s;}
 .welcome-cta:hover{background:var(--gold-l);}
+.welcome-cta.outline{background:transparent;color:var(--gold);
+  border:1px solid rgba(201,168,76,0.4);}
+.welcome-cta.outline:hover{background:rgba(201,168,76,0.08);}
 
-/* ── STATS AMÉLIORÉES ── */
-.stat-card{position:relative;overflow:hidden;}
-.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;
-  height:2px;background:var(--gold);opacity:0;transition:opacity 0.3s;}
-.stat-card:hover::after{opacity:1;}
-.stat-icon{position:absolute;top:16px;right:16px;opacity:0.15;}
-.stat-icon svg{width:32px;height:32px;stroke:var(--gold);fill:none;stroke-width:1;}
+/* ── STATS ── */
+.stat-card{position:relative;overflow:hidden;transition:transform 0.2s,border-color 0.3s;}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(201,168,76,0.3);}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.stat-card:hover::before{opacity:1;}
+.stat-icon{position:absolute;top:14px;right:14px;opacity:0.12;}
+.stat-icon svg{width:36px;height:36px;stroke:var(--gold);fill:none;stroke-width:1;}
+.stat-trend{font-size:10px;margin-top:6px;}
+.stat-trend.up{color:#1d9e75;}
+.stat-trend.down{color:var(--danger);}
 
-/* ── DEMANDE CARD ── */
-.demande-card{background:var(--navy);border:1px solid rgba(201,168,76,0.1);
-  padding:18px 20px;display:flex;align-items:center;gap:16px;
-  transition:border-color 0.3s;cursor:pointer;margin-bottom:8px;}
-.demande-card:hover{border-color:rgba(201,168,76,0.3);}
-.demande-icon{width:40px;height:40px;min-width:40px;border:1px solid rgba(201,168,76,0.25);
-  display:flex;align-items:center;justify-content:center;}
-.demande-icon svg{width:16px;height:16px;fill:none;stroke:var(--gold);stroke-width:1.5;}
-.demande-info{flex:1;}
-.demande-type{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;}
-.demande-meta{font-size:11px;color:var(--gray);}
-.demande-status{flex-shrink:0;}
+/* ── COMMANDE CARD ── */
+.cmd-card{
+  background:var(--navy);border:1px solid rgba(201,168,76,0.1);
+  border-radius:var(--radius-sm);padding:16px 18px;
+  display:flex;align-items:center;gap:14px;
+  transition:all 0.25s;cursor:pointer;margin-bottom:8px;
+}
+.cmd-card:hover{border-color:rgba(201,168,76,0.3);transform:translateX(3px);}
+.cmd-icon{width:42px;height:42px;min-width:42px;
+  border:1px solid rgba(201,168,76,0.25);border-radius:var(--radius-xs);
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(201,168,76,0.05);}
+.cmd-icon svg{width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.5;}
+.cmd-info{flex:1;}
+.cmd-type{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.cmd-meta{font-size:11px;color:var(--gray);display:flex;align-items:center;gap:8px;}
+.cmd-dot{width:4px;height:4px;border-radius:50%;background:var(--gray);}
 
-/* ── CHAT AMÉLIORÉ ── */
+/* ── PLANNING WEEK ── */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.week-day{
+  background:var(--navy);border:1px solid rgba(201,168,76,0.07);
+  border-radius:var(--radius-sm);padding:10px 6px;text-align:center;
+  transition:border-color 0.2s;
+}
+.week-day.today{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.05);}
+.week-day-name{font-size:8.5px;letter-spacing:0.2em;color:var(--gray);margin-bottom:6px;}
+.week-day.today .week-day-name{color:var(--gold);}
+.week-day-num{font-size:16px;color:var(--text);font-weight:300;margin-bottom:6px;}
+.week-day.today .week-day-num{color:var(--gold-l);font-weight:500;}
+.week-event{background:rgba(201,168,76,0.12);border-radius:3px;
+  padding:3px 5px;font-size:9px;color:var(--gold);margin-top:3px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ── CHAT ── */
 .chat-wrap{
-  background:var(--navy3);
-  border:1px solid rgba(201,168,76,0.08);
-  border-radius:4px;
-  padding:16px;
-  min-height:280px;
-  max-height:360px;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin-bottom:14px;
+  background:var(--navy3);border:1px solid rgba(201,168,76,0.08);
+  border-radius:var(--radius-sm);padding:16px;
+  min-height:260px;max-height:340px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:12px;margin-bottom:14px;
 }
 .msg{display:flex;gap:10px;align-items:flex-end;}
 .msg.mine{flex-direction:row-reverse;}
-.msg-avatar{width:32px;height:32px;min-width:32px;
-  border:1px solid rgba(201,168,76,0.3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:600;color:var(--gold);
+.msg-avatar{width:32px;height:32px;min-width:32px;border-radius:50%;
+  border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;
+  justify-content:center;font-size:11px;font-weight:600;color:var(--gold);
   background:var(--navy2);flex-shrink:0;}
-.msg-bubble{
-  max-width:72%;padding:10px 14px;
-  font-size:13px;line-height:1.6;
-  border-radius:2px;
-}
-.msg .msg-bubble{
-  background:var(--navy2);color:var(--text);
-  border:1px solid rgba(201,168,76,0.08);
-  border-bottom-left-radius:0;
-}
-.msg.mine .msg-bubble{
-  background:rgba(201,168,76,0.12);color:var(--gold-l);
-  border:1px solid rgba(201,168,76,0.2);
-  border-bottom-right-radius:0;
-}
-.msg-bubble img{max-width:200px;border-radius:4px;display:block;margin-top:6px;}
-.msg-bubble a{color:var(--gold);text-decoration:none;}
-.msg-time{font-size:9px;color:var(--gray);margin-top:4px;letter-spacing:0.08em;}
-
-.chat-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.chat-toolbar-btn{background:transparent;border:1px solid rgba(201,168,76,0.2);
-  color:var(--gray);width:34px;height:34px;display:flex;align-items:center;
-  justify-content:center;cursor:pointer;transition:all 0.2s;}
-.chat-toolbar-btn:hover{border-color:var(--gold);color:var(--gold);}
-.chat-toolbar-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5;}
+.msg-bubble{max-width:72%;padding:10px 14px;font-size:13px;line-height:1.6;}
+.msg .msg-bubble{background:var(--navy2);color:var(--text);
+  border:1px solid rgba(201,168,76,0.08);border-radius:0 var(--radius-sm) var(--radius-sm) var(--radius-sm);}
+.msg.mine .msg-bubble{background:rgba(201,168,76,0.12);color:var(--gold-l);
+  border:1px solid rgba(201,168,76,0.2);border-radius:var(--radius-sm) 0 var(--radius-sm) var(--radius-sm);}
 .chat-input-row{display:flex;gap:8px;}
-.chat-input{
-  flex:1;background:rgba(255,255,255,0.04);
-  border:1px solid rgba(201,168,76,0.2);
-  color:var(--gold-l);font-family:'Montserrat',sans-serif;
-  font-size:13px;padding:11px 14px;outline:none;resize:none;
-  transition:border-color 0.3s;
-}
+.chat-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:13px;
+  padding:11px 14px;outline:none;resize:none;border-radius:var(--radius-xs);
+  transition:border-color 0.3s;}
 .chat-input:focus{border-color:var(--gold);}
 
-/* ── CALENDAR AMÉLIORÉ ── */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-.cal-day{padding:8px 4px;text-align:center;font-size:12px;color:var(--gray);border-radius:2px;}
-.cal-day.header{font-size:9px;letter-spacing:0.15em;color:var(--gold);font-weight:600;padding:6px 0;}
-.cal-day.today{background:rgba(201,168,76,0.15);color:var(--gold-l);font-weight:500;}
-.cal-day.has-event{border:1px solid rgba(201,168,76,0.3);cursor:pointer;}
-.cal-day.has-event:hover{background:rgba(201,168,76,0.08);}
-.cal-day.other-month{opacity:0.25;}
-
-/* ── FORM DEMANDE ── */
+/* ── FORM SECTION ── */
 .form-section-title{font-size:9px;letter-spacing:0.3em;color:var(--gold);
   font-weight:600;margin:20px 0 12px;padding-bottom:8px;
   border-bottom:1px solid rgba(201,168,76,0.1);}
+
+/* ── TABLE ARRONDIE ── */
+.table-wrap{border-radius:var(--radius-sm);overflow:hidden;}
+table{border-radius:var(--radius-sm);}
+thead tr{background:rgba(201,168,76,0.05);}
+
+/* ── PROFIL AVATAR ── */
+.profile-avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(201,168,76,0.1);border:2px solid rgba(201,168,76,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold);
+  margin-bottom:16px;
+}
+
+/* ── QUICK ACTIONS ── */
+.quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:10px;margin-bottom:24px;}
+.quick-btn{background:var(--navy2);border:1px solid rgba(201,168,76,0.1);
+  border-radius:var(--radius-sm);padding:16px 12px;text-align:center;
+  cursor:pointer;transition:all 0.25s;font-family:'Montserrat',sans-serif;}
+.quick-btn:hover{border-color:rgba(201,168,76,0.35);background:rgba(201,168,76,0.05);}
+.quick-btn svg{width:22px;height:22px;fill:none;stroke:var(--gold);stroke-width:1.4;
+  display:block;margin:0 auto 8px;}
+.quick-btn-label{font-size:10px;letter-spacing:0.15em;color:var(--gray);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .sidebar{display:none;}
+  .welcome-actions{flex-direction:column;}
+  .week-grid{grid-template-columns:repeat(3,1fr);}
+  .quick-actions{grid-template-columns:repeat(2,1fr);}
+}
 </style>
 </head>
 <body>
@@ -291,10 +333,10 @@ td strong{color:var(--text);}
   <a href="index.html" class="topbar-logo">
     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="A"/>
     <div><div class="topbar-brand">APOGÉE & CO</div>
-    <span class="topbar-brand-sub">ESPACE MEMBRE</span></div>
+    <span class="topbar-brand-sub">ESPACE ÉTABLISSEMENT</span></div>
   </a>
   <div class="topbar-right">
-    <span class="topbar-user">Bonjour, <strong id="user-name">Membre</strong></span>
+    <span class="topbar-user">Bonjour, <strong id="user-name">Établissement</strong></span>
     <a href="index.html" class="topbar-btn">SITE</a>
     <button class="topbar-btn danger" onclick="logout()">DÉCONNEXION</button>
   </div>
@@ -303,34 +345,39 @@ td strong{color:var(--text);}
 <div class="layout">
   <nav class="sidebar">
     <div class="sidebar-section">
-      <div class="sidebar-title">MON ESPACE</div>
+      <div class="sidebar-title">MON ÉTABLISSEMENT</div>
       <button class="nav-item active" onclick="nav('dashboard')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Tableau de bord
       </button>
-      <button class="nav-item" onclick="nav('nouvelle-demande')">
+      <button class="nav-item" onclick="nav('commande')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        Nouvelle demande
+        Commander un service
       </button>
-      <button class="nav-item" onclick="nav('mes-demandes')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Mes demandes
-        <span class="nav-badge red" id="badge-pending">0</span>
+      <button class="nav-item" onclick="nav('commandes')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        Mes commandes
+        <span class="nav-badge red" id="badge-cmd">0</span>
       </button>
-      <button class="nav-item" onclick="nav('agenda')">
+      <button class="nav-item" onclick="nav('planning')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Mon agenda
+        Planning
       </button>
       <button class="nav-item" onclick="nav('messagerie')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         Messagerie
+        <span class="nav-badge gold" id="badge-msg">0</span>
       </button>
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-title">MON COMPTE</div>
+      <div class="sidebar-title">GESTION</div>
+      <button class="nav-item" onclick="nav('contrats')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Contrats
+      </button>
       <button class="nav-item" onclick="nav('profil')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Mon profil
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        Mon établissement
       </button>
     </div>
   </nav>
@@ -342,148 +389,182 @@ td strong{color:var(--text);}
       <div class="welcome-banner">
         <div class="welcome-text">
           <h2 id="greeting">Bonjour</h2>
-          <p>Bienvenue dans votre espace membre Apogée & Co</p>
+          <p id="welcome-sub">Bienvenue dans votre espace établissement</p>
         </div>
-        <button class="welcome-cta" onclick="nav('nouvelle-demande')">+ NOUVELLE DEMANDE</button>
+        <div class="welcome-actions">
+          <button class="welcome-cta" onclick="nav('commande')">+ COMMANDER</button>
+          <button class="welcome-cta outline" onclick="nav('planning')">PLANNING</button>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="quick-actions">
+        <button class="quick-btn" onclick="nav('commande')">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <span class="quick-btn-label">NOUVEAU SERVICE</span>
+        </button>
+        <button class="quick-btn" onclick="nav('messagerie')">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span class="quick-btn-label">MESSAGERIE</span>
+        </button>
+        <button class="quick-btn" onclick="nav('planning')">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="quick-btn-label">PLANNING</span>
+        </button>
+        <button class="quick-btn" onclick="nav('commandes')">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+          <span class="quick-btn-label">COMMANDES</span>
+        </button>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label">DEMANDES EN COURS</div>
-          <div class="stat-value" id="stat-pending">—</div>
-          <div class="stat-sub">prestations actives</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">PRESTATIONS RÉALISÉES</div>
-          <div class="stat-value" id="stat-done">—</div>
-          <div class="stat-sub">terminées</div>
+          <div class="stat-label">INTERVENTIONS CE MOIS</div>
+          <div class="stat-value" id="s-total">—</div>
+          <div class="stat-trend up" id="s-trend">↑ en cours</div>
           <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">MESSAGES</div>
-          <div class="stat-value" id="stat-msgs">—</div>
-          <div class="stat-sub">conversations</div>
-          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div class="stat-label">EN ATTENTE</div>
+          <div class="stat-value" id="s-pending">—</div>
+          <div class="stat-sub">à confirmer</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         </div>
         <div class="stat-card">
           <div class="stat-label">PROCHAINE INTERVENTION</div>
-          <div class="stat-value" id="stat-next" style="font-size:16px;padding-top:4px;">—</div>
+          <div class="stat-value" id="s-next" style="font-size:16px;padding-top:4px;">—</div>
           <div class="stat-sub">planifiée</div>
           <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         </div>
+        <div class="stat-card">
+          <div class="stat-label">MESSAGES</div>
+          <div class="stat-value" id="s-msgs">—</div>
+          <div class="stat-sub">non lus</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0;">
         <div class="card">
           <div class="card-header">
-            <div class="card-title">DERNIÈRES DEMANDES</div>
-            <button class="card-action" onclick="nav('mes-demandes')">VOIR TOUT</button>
+            <div class="card-title">DERNIÈRES COMMANDES</div>
+            <button class="card-action" onclick="nav('commandes')">TOUT VOIR</button>
           </div>
-          <div class="card-body" id="recent-demandes">
+          <div class="card-body" id="recent-cmd">
             <div style="color:var(--gray);font-size:12px;">Chargement...</div>
           </div>
         </div>
         <div class="card">
           <div class="card-header">
-            <div class="card-title">MESSAGERIE</div>
-            <button class="card-action" onclick="nav('messagerie')">OUVRIR</button>
+            <div class="card-title">PLANNING SEMAINE</div>
+            <button class="card-action" onclick="nav('planning')">COMPLET</button>
           </div>
-          <div class="card-body" id="recent-msgs">
-            <div style="color:var(--gray);font-size:12px;font-style:italic;">
-              Cliquez pour ouvrir votre messagerie avec votre concierge.
-            </div>
+          <div class="card-body">
+            <div class="week-grid" id="mini-week"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── NOUVELLE DEMANDE ── -->
-    <div class="page-section" id="sec-nouvelle-demande">
-      <div class="page-title">Nouvelle demande</div>
-      <div class="page-sub">Décrivez votre besoin — votre concierge vous répondra sous 2h.</div>
-      <div class="card" style="max-width:640px;">
+    <!-- ── COMMANDER ── -->
+    <div class="page-section" id="sec-commande">
+      <div class="page-title">Commander un service</div>
+      <div class="page-sub">Planifiez une intervention dans votre établissement.</div>
+      <div class="card" style="max-width:660px;">
         <div class="card-body">
-          <div class="form-section-title">TYPE DE PRESTATION</div>
-          <div class="form-group">
-            <select id="nd-type" class="form-input form-select">
-              <option value="">Sélectionnez...</option>
-              <option>Courses & approvisionnement</option>
-              <option>Transport & déplacements</option>
-              <option>Ménage & linge</option>
-              <option>Assistance administrative</option>
-              <option>Gestion locative</option>
-              <option>Petits travaux</option>
-              <option>Autre</option>
-            </select>
+          <div class="form-section-title">TYPE DE SERVICE</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">SERVICE</label>
+              <select id="cmd-type" class="form-input form-select">
+                <option value="">Sélectionnez...</option>
+                <option>Accueil & Réception</option>
+                <option>Ménage & Entretien Chambres</option>
+                <option>Restauration & Room Service</option>
+                <option>Bien-être & Spa en Chambre</option>
+                <option>Blanchisserie Hôtelière</option>
+                <option>Service personnalisé</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">AGENTS REQUIS</label>
+              <select id="cmd-agents" class="form-input form-select">
+                <option>1 agent</option>
+                <option>2 agents</option>
+                <option>3 à 5 agents</option>
+                <option>+ de 5 agents</option>
+              </select>
+            </div>
           </div>
           <div class="form-section-title">PLANIFICATION</div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">DATE SOUHAITÉE</label>
-              <input type="date" id="nd-date" class="form-input"/>
+              <label class="form-label">DATE</label>
+              <input type="date" id="cmd-date" class="form-input"/>
             </div>
             <div class="form-group">
-              <label class="form-label">PRIORITÉ</label>
-              <select id="nd-priority" class="form-input form-select">
-                <option value="normal">Normal</option>
-                <option value="urgent">🔴 Urgent</option>
-                <option value="planifie">Planifié à l'avance</option>
+              <label class="form-label">HORAIRE</label>
+              <input type="time" id="cmd-time" class="form-input"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">ZONE / ÉTAGE</label>
+              <input type="text" id="cmd-zone" class="form-input" placeholder="Ex: Étage 2, Chambres 201-210"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">DURÉE</label>
+              <select id="cmd-duree" class="form-input form-select">
+                <option>2 heures</option>
+                <option>Demi-journée (4h)</option>
+                <option>Journée complète (8h)</option>
+                <option>À définir</option>
               </select>
             </div>
           </div>
-          <div class="form-section-title">LIEU & DÉTAILS</div>
+          <div class="form-section-title">INSTRUCTIONS</div>
           <div class="form-group">
-            <label class="form-label">ADRESSE D'INTERVENTION</label>
-            <input type="text" id="nd-address" class="form-input" placeholder="Adresse complète"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">DESCRIPTION DÉTAILLÉE</label>
-            <textarea id="nd-desc" class="form-input" rows="5" style="resize:vertical;"
-              placeholder="Décrivez précisément votre besoin..."></textarea>
+            <label class="form-label">CONSIGNES PARTICULIÈRES</label>
+            <textarea id="cmd-notes" class="form-input" rows="4" style="resize:vertical;"
+              placeholder="Protocoles, accès, codes, consignes..."></textarea>
           </div>
           <div style="display:flex;gap:12px;margin-top:8px;">
-            <button class="btn btn-primary" onclick="submitDemande()" id="nd-btn">ENVOYER LA DEMANDE</button>
+            <button class="btn btn-primary" onclick="submitCommande()" id="cmd-btn">ENVOYER LA COMMANDE</button>
             <button class="btn btn-outline" onclick="nav('dashboard')">ANNULER</button>
           </div>
-          <div id="nd-success" style="display:none;margin-top:12px;padding:12px;
+          <div id="cmd-success" style="display:none;margin-top:12px;padding:14px;
             background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);
-            color:var(--success);font-size:12px;">
-            ✓ Demande envoyée. Votre concierge vous contactera sous 2h.
+            color:var(--success);font-size:12px;border-radius:var(--radius-xs);">
+            ✓ Commande envoyée. Votre référent vous confirmera rapidement.
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ── MES DEMANDES ── -->
-    <div class="page-section" id="sec-mes-demandes">
-      <div class="page-title">Mes demandes</div>
-      <div class="page-sub">Historique et suivi de vos prestations.</div>
-      <div id="demandes-cards">
+    <!-- ── MES COMMANDES ── -->
+    <div class="page-section" id="sec-commandes">
+      <div class="page-title">Mes commandes</div>
+      <div class="page-sub">Historique et suivi des interventions.</div>
+      <div id="commandes-cards">
         <div style="color:var(--gray);font-size:12px;">Chargement...</div>
       </div>
     </div>
 
-    <!-- ── AGENDA ── -->
-    <div class="page-section" id="sec-agenda">
-      <div class="page-title">Mon agenda</div>
-      <div class="page-sub">Vos interventions planifiées.</div>
-      <div style="display:grid;grid-template-columns:1fr 280px;gap:16px;">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title" id="cal-month">—</div>
-            <div style="display:flex;gap:8px;">
-              <button class="card-action" onclick="calPrev()">←</button>
-              <button class="card-action" onclick="calNext()">→</button>
-            </div>
+    <!-- ── PLANNING ── -->
+    <div class="page-section" id="sec-planning">
+      <div class="page-title">Planning des interventions</div>
+      <div class="page-sub">Vue hebdomadaire.</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title" id="week-label">SEMAINE EN COURS</div>
+          <div style="display:flex;gap:8px;">
+            <button class="card-action" onclick="weekOffset--;buildWeek()">←</button>
+            <button class="card-action" onclick="weekOffset=0;buildWeek()">AUJOURD'HUI</button>
+            <button class="card-action" onclick="weekOffset++;buildWeek()">→</button>
           </div>
-          <div class="card-body"><div class="cal-grid" id="cal-grid"></div></div>
         </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">ÉVÉNEMENTS</div></div>
-          <div class="card-body">
-            <div style="color:var(--gray);font-size:12px;">Sélectionnez une date</div>
-          </div>
+        <div class="card-body">
+          <div class="week-grid" id="week-grid"></div>
         </div>
       </div>
     </div>
@@ -491,26 +572,41 @@ td strong{color:var(--text);}
     <!-- ── MESSAGERIE ── -->
     <div class="page-section" id="sec-messagerie">
       <div class="page-title">Messagerie</div>
-      <div class="page-sub">Échangez en temps réel avec votre concierge.</div>
+      <div class="page-sub">Échangez en temps réel avec votre référent Apogée & Co.</div>
       <div class="card" style="max-width:700px;">
         <div class="card-header">
           <div style="display:flex;align-items:center;gap:10px;">
             <div style="width:8px;height:8px;background:#1d9e75;border-radius:50%;"></div>
-            <div class="card-title">CONCIERGE APOGÉE & CO</div>
+            <div class="card-title">RÉFÉRENT APOGÉE & CO</div>
           </div>
         </div>
         <div class="card-body">
           <div class="chat-wrap" id="chat-messages"></div>
-          <div class="chat-toolbar">
-            <label class="chat-toolbar-btn" for="file-input" title="Envoyer un fichier">
-              <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-            </label>
-            <input type="file" id="file-input" style="display:none" accept="image/*,.pdf,.doc,.docx"/>
-          </div>
           <div class="chat-input-row">
             <textarea id="chat-input" class="chat-input" rows="2"
               placeholder="Votre message..."></textarea>
-            <button class="btn btn-primary" onclick="sendMessage()" style="align-self:flex-end;">ENVOYER</button>
+            <button class="btn btn-primary" onclick="sendMessage()"
+              style="align-self:flex-end;border-radius:var(--radius-xs);">ENVOYER</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONTRATS ── -->
+    <div class="page-section" id="sec-contrats">
+      <div class="page-title">Contrats & Documents</div>
+      <div class="page-sub">Vos documents contractuels avec Apogée & Co.</div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>DOCUMENT</th><th>TYPE</th><th>DATE</th><th>STATUT</th></tr></thead>
+              <tbody id="docs-list">
+                <tr><td colspan="4" style="text-align:center;padding:28px;color:var(--gray);">
+                  Aucun document disponible pour le moment.
+                </td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -518,37 +614,52 @@ td strong{color:var(--text);}
 
     <!-- ── PROFIL ── -->
     <div class="page-section" id="sec-profil">
-      <div class="page-title">Mon profil</div>
-      <div class="page-sub">Vos informations personnelles.</div>
-      <div class="card" style="max-width:500px;">
-        <div class="card-body">
-          <div class="form-section-title">IDENTITÉ</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">PRÉNOM</label>
-              <input type="text" id="p-prenom" class="form-input"/>
+      <div class="page-title">Mon établissement</div>
+      <div class="page-sub">Informations et préférences.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:800px;">
+        <div class="card">
+          <div class="card-header"><div class="card-title">INFORMATIONS</div></div>
+          <div class="card-body">
+            <div style="display:flex;justify-content:center;margin-bottom:8px;">
+              <div class="profile-avatar" id="p-avatar">H</div>
             </div>
             <div class="form-group">
-              <label class="form-label">NOM</label>
+              <label class="form-label">NOM DE L'ÉTABLISSEMENT</label>
               <input type="text" id="p-nom" class="form-input"/>
             </div>
+            <div class="form-group">
+              <label class="form-label">TYPE</label>
+              <select id="p-type" class="form-input form-select">
+                <option>Hôtel</option><option>Résidence hôtelière</option>
+                <option>Appart'hôtel</option><option>Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">NOMBRE DE CHAMBRES</label>
+              <input type="number" id="p-chambres" class="form-input" min="1"/>
+            </div>
           </div>
-          <div class="form-section-title">COORDONNÉES</div>
-          <div class="form-group">
-            <label class="form-label">EMAIL</label>
-            <input type="email" id="p-email" class="form-input" readonly style="opacity:0.6;cursor:default;"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">TÉLÉPHONE</label>
-            <input type="tel" id="p-tel" class="form-input"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">ADRESSE PRINCIPALE</label>
-            <input type="text" id="p-address" class="form-input"/>
-          </div>
-          <div style="display:flex;gap:12px;margin-top:20px;">
-            <button class="btn btn-primary" onclick="saveProfile()">ENREGISTRER</button>
-            <button class="btn btn-outline" onclick="nav('dashboard')">ANNULER</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">COORDONNÉES</div></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">EMAIL</label>
+              <input type="email" id="p-email" class="form-input" readonly style="opacity:0.6;cursor:default;"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">TÉLÉPHONE</label>
+              <input type="tel" id="p-tel" class="form-input"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ADRESSE</label>
+              <input type="text" id="p-address" class="form-input"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">CONTACT PRINCIPAL</label>
+              <input type="text" id="p-contact" class="form-input"/>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="saveProfile()" style="margin-top:8px;">ENREGISTRER</button>
           </div>
         </div>
       </div>
@@ -564,10 +675,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, collection,
-          query, where, orderBy, getDocs, addDoc, serverTimestamp, onSnapshot }
+          query, where, orderBy, getDocs, addDoc,
+          serverTimestamp, onSnapshot }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const cfg = {
   apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
@@ -578,13 +688,11 @@ const cfg = {
   appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
 };
 
-const app     = initializeApp(cfg);
-const auth    = getAuth(app);
-const db      = getFirestore(app);
-const storage = getStorage(app);
+const app  = initializeApp(cfg);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
-let currentUser = null;
-let unsubMessages = null;
+let currentUser = null, weekOffset = 0, unsubMsg = null;
 
 function escapeHTML(s=""){
   return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
@@ -595,39 +703,33 @@ function showToast(msg){
   t.textContent=msg;t.classList.add("show");
   setTimeout(()=>t.classList.remove("show"),2500);
 }
-function badge(status){
-  const map={"pending":"pending","done":"done","en cours":"pending","terminé":"done"};
-  return map[status]||"new";
-}
-
-/* ── NOTIFICATIONS ── */
-async function askNotif(){
-  if("Notification" in window && Notification.permission!=="granted")
-    await Notification.requestPermission();
-}
-function notify(title,body){
-  if(Notification.permission==="granted")
-    new Notification(title,{body,icon:"/favicon.ico"});
+function badge(s){
+  return s==="pending"||s==="en cours"?"pending":s==="done"||s==="terminé"?"done":"new";
 }
 
 /* ── AUTH ── */
 onAuthStateChanged(auth, async user => {
-  if (!user) { window.location.href="login.html"; return; }
+  if(!user){ window.location.href="login.html"; return; }
   currentUser = user;
   const snap = await getDoc(doc(db,"users",user.uid));
   const data = snap.exists() ? snap.data() : {};
-  const name = data.prenom || user.email.split("@")[0];
+  const name = data.nom || user.email.split("@")[0];
   document.getElementById("user-name").textContent = name;
   document.getElementById("greeting").textContent  = "Bonjour, " + name;
+  document.getElementById("welcome-sub").textContent =
+    "Bienvenue dans votre espace" + (data.nom ? " — " + data.nom : "");
   document.getElementById("p-email").value = user.email;
-  if(data.prenom)  document.getElementById("p-prenom").value = data.prenom;
-  if(data.nom)     document.getElementById("p-nom").value    = data.nom;
-  if(data.tel)     document.getElementById("p-tel").value    = data.tel;
-  if(data.address) document.getElementById("p-address").value= data.address;
+  if(data.nom)      document.getElementById("p-nom").value     = data.nom;
+  if(data.type)     document.getElementById("p-type").value    = data.type;
+  if(data.chambres) document.getElementById("p-chambres").value= data.chambres;
+  if(data.tel)      document.getElementById("p-tel").value     = data.tel;
+  if(data.address)  document.getElementById("p-address").value = data.address;
+  if(data.contact)  document.getElementById("p-contact").value = data.contact;
+  // Initiale avatar
+  if(name) document.getElementById("p-avatar").textContent = name.charAt(0).toUpperCase();
   await loadDashboard();
-  buildCalendar();
+  buildWeek();
   listenMessages();
-  askNotif();
 });
 
 /* ── NAV ── */
@@ -636,11 +738,10 @@ window.nav = function(id){
   document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
   document.getElementById("sec-"+id).classList.add("active");
   document.querySelector(`[onclick="nav('${id}')"]`)?.classList.add("active");
-  if(id==="mes-demandes") loadDemandes();
+  if(id==="commandes") loadCommandes();
 };
-
 window.logout = async()=>{
-  if(unsubMessages) unsubMessages();
+  if(unsubMsg) unsubMsg();
   await signOut(auth);
   window.location.href="login.html";
 };
@@ -652,162 +753,168 @@ async function loadDashboard(){
   const items = snap.docs.map(d=>({id:d.id,...d.data()}));
   const pending = items.filter(i=>i.status==="pending"||i.status==="en cours").length;
   const done    = items.filter(i=>i.status==="done"||i.status==="terminé").length;
-  document.getElementById("stat-pending").textContent = pending;
-  document.getElementById("stat-done").textContent    = done;
-  document.getElementById("stat-msgs").textContent    = "—";
-  document.getElementById("stat-next").textContent    = formatDate(items.find(i=>i.date)?.date);
-  document.getElementById("badge-pending").textContent= pending;
-  const rd = document.getElementById("recent-demandes");
-  rd.innerHTML = items.length===0
-    ? '<div style="color:var(--gray);font-size:12px;font-style:italic;">Aucune demande pour l'instant.<br><br><button class="btn btn-outline" onclick="nav('nouvelle-demande')" style="font-size:10px;padding:10px 20px;">FAIRE UNE DEMANDE</button></div>'
-    : items.slice(0,3).map(i=>`
-        <div class="demande-card" onclick="nav('mes-demandes')">
-          <div class="demande-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div>
-          <div class="demande-info">
-            <div class="demande-type">${escapeHTML(i.type||"Demande")}</div>
-            <div class="demande-meta">${formatDate(i.date)}</div>
+  document.getElementById("s-total").textContent   = items.length;
+  document.getElementById("s-pending").textContent = pending;
+  document.getElementById("s-msgs").textContent    = "—";
+  document.getElementById("s-next").textContent    = formatDate(items.find(i=>i.date)?.date);
+  document.getElementById("badge-cmd").textContent = pending;
+  // Recent commands
+  const rc = document.getElementById("recent-cmd");
+  rc.innerHTML = items.length===0
+    ? '<div style="color:var(--gray);font-size:12px;font-style:italic;">Aucune commande.<br><br><button class="btn btn-outline" onclick="nav('commande')" style="font-size:10px;padding:10px 18px;border-radius:4px;">COMMANDER UN SERVICE</button></div>'
+    : : items.slice(0,3).map(i=>{
+        const type = escapeHTML(i.type||"Service");
+        const dt   = formatDate(i.date);
+        const ag   = i.agents||"";
+        const st   = i.status||"Nouveau";
+        const bg   = badge(i.status);
+        return `<div class="cmd-card" onclick="nav('commandes')">
+          <div class="cmd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+            <rect x="9" y="3" width="6" height="4" rx="1"/>
+          </svg></div>
+          <div class="cmd-info">
+            <div class="cmd-type">${type}</div>
+            <div class="cmd-meta">${dt}<span class="cmd-dot"></span>${ag}</div>
           </div>
-          <div class="demande-status"><span class="badge badge-${badge(i.status)}">${i.status||"Nouveau"}</span></div>
-        </div>`).join("");
+          <span class="badge badge-${bg}">${st}</span>
+        </div>`;
+      }).join("");
+  buildMiniWeek();
 }
 
-/* ── DEMANDES ── */
-async function loadDemandes(){
+/* ── MINI WEEK ── */
+function buildMiniWeek(){
+  const days=["L","M","M","J","V","S","D"];
+  const today=new Date();
+  const mon=new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7));
+  document.getElementById("mini-week").innerHTML=days.map((d,i)=>{
+    const dt=new Date(mon.getTime()+i*86400000);
+    const isToday=dt.toDateString()===today.toDateString();
+    return `<div class="week-day${isToday?" today":""}">
+      <div class="week-day-name">${d}</div>
+      <div class="week-day-num">${dt.getDate()}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ── COMMANDES ── */
+async function loadCommandes(){
   const q = query(collection(db,"demandes"),where("userId","==",currentUser.uid),orderBy("createdAt","desc"));
   const snap = await getDocs(q);
-  const wrap = document.getElementById("demandes-cards");
+  const wrap = document.getElementById("commandes-cards");
   wrap.innerHTML = snap.docs.length===0
-    ? '<div style="color:var(--gray);font-size:12px;padding:20px;">Aucune demande.</div>'
+    ? '<div style="color:var(--gray);font-size:12px;padding:20px;">Aucune commande.</div>'
     : snap.docs.map(d=>{
         const i=d.data();
-        return `<div class="demande-card">
-          <div class="demande-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div>
-          <div class="demande-info">
-            <div class="demande-type">${escapeHTML(i.type||"—")}</div>
-            <div class="demande-meta">${formatDate(i.date)} · ${escapeHTML(i.address||"")}</div>
+        return `<div class="cmd-card">
+          <div class="cmd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/>
+          </svg></div>
+          <div class="cmd-info">
+            <div class="cmd-type">${escapeHTML(i.type||"Service")}</div>
+            <div class="cmd-meta">${formatDate(i.date)}<span class="cmd-dot"></span>${escapeHTML(i.zone||"")}<span class="cmd-dot"></span>${i.agents||""}</div>
           </div>
-          <div class="demande-status"><span class="badge badge-${badge(i.status)}">${i.status||"Nouveau"}</span></div>
+          <span class="badge badge-${badge(i.status)}">${i.status||"Nouveau"}</span>
         </div>`;
       }).join("");
 }
 
-/* ── NOUVELLE DEMANDE ── */
-window.submitDemande = async function(){
-  const type=document.getElementById("nd-type").value;
-  const desc=document.getElementById("nd-desc").value;
-  if(!type||!desc){showToast("Champs obligatoires manquants");return;}
-  const btn=document.getElementById("nd-btn");
+/* ── COMMANDE FORM ── */
+window.submitCommande = async function(){
+  const type=document.getElementById("cmd-type").value;
+  if(!type){showToast("Sélectionnez un type de service.");return;}
+  const btn=document.getElementById("cmd-btn");
   btn.disabled=true;btn.textContent="ENVOI...";
   await addDoc(collection(db,"demandes"),{
-    userId:currentUser.uid, type,
-    date:document.getElementById("nd-date").value,
-    address:document.getElementById("nd-address").value,
-    desc, priority:document.getElementById("nd-priority").value,
+    userId:currentUser.uid,
+    type, agents:document.getElementById("cmd-agents").value,
+    date:document.getElementById("cmd-date").value,
+    zone:document.getElementById("cmd-zone").value,
+    duree:document.getElementById("cmd-duree").value,
+    notes:document.getElementById("cmd-notes").value,
     status:"pending", createdAt:serverTimestamp()
   });
-  document.getElementById("nd-success").style.display="block";
+  document.getElementById("cmd-success").style.display="block";
   btn.style.display="none";
-  setTimeout(()=>{nav("mes-demandes");loadDashboard();},1500);
+  setTimeout(()=>{nav("commandes");loadDashboard();},1500);
 };
 
-/* ── MESSAGERIE TEMPS RÉEL ── */
+/* ── PLANNING ── */
+window.buildWeek = function(){
+  const days=["LUN","MAR","MER","JEU","VEN","SAM","DIM"];
+  const today=new Date();
+  const mon=new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7)+weekOffset*7);
+  const fmt=d=>d.toLocaleDateString("fr-FR",{day:"2-digit",month:"short"});
+  const el=document.getElementById("week-label");
+  if(el) el.textContent="SEMAINE DU "+fmt(mon).toUpperCase()+" AU "+fmt(new Date(mon.getTime()+6*86400000)).toUpperCase();
+  const grid=document.getElementById("week-grid");
+  if(!grid)return;
+  grid.innerHTML=days.map((d,i)=>{
+    const dt=new Date(mon.getTime()+i*86400000);
+    const isToday=dt.toDateString()===today.toDateString();
+    return `<div class="week-day${isToday?" today":""}">
+      <div class="week-day-name">${d}</div>
+      <div class="week-day-num">${dt.getDate()}</div>
+    </div>`;
+  }).join("");
+};
+window.weekOffset=0;
+
+/* ── MESSAGERIE ── */
 function listenMessages(){
-  const chat = document.getElementById("chat-messages");
-  if(unsubMessages) unsubMessages();
-  const q = query(collection(db,"messages"),where("roomId","==",currentUser.uid),orderBy("createdAt","asc"));
-  let firstLoad = true;
-  unsubMessages = onSnapshot(q, snap=>{
+  const chat=document.getElementById("chat-messages");
+  if(!chat)return;
+  if(unsubMsg) unsubMsg();
+  const q=query(collection(db,"messages"),where("roomId","==",currentUser.uid),orderBy("createdAt","asc"));
+  unsubMsg=onSnapshot(q,snap=>{
     chat.innerHTML="";
     if(snap.docs.length===0){
-      chat.innerHTML='<div class="msg"><div class="msg-avatar">A</div><div><div class="msg-bubble">Bonjour ! Je suis votre concierge Apogée & Co. Comment puis-je vous aider ?</div></div></div>';
+      chat.innerHTML='<div class="msg"><div class="msg-avatar">A</div><div><div class="msg-bubble">Bonjour ! Je suis votre référent Apogée & Co. Comment puis-je vous aider ?</div></div></div>';
       return;
     }
     snap.docs.forEach(d=>{
-      const m=d.data(), mine=m.from===currentUser.uid;
+      const m=d.data(),mine=m.from===currentUser.uid;
       const div=document.createElement("div");
       div.className="msg"+(mine?" mine":"");
-      let content=m.fileUrl
-        ? (m.fileType?.startsWith("image/")
-            ? `<img src="${m.fileUrl}" style="max-width:200px;border-radius:4px;">`
-            : `<a href="${m.fileUrl}" target="_blank">📎 Télécharger fichier</a>`)
-        : escapeHTML(m.text||"");
       div.innerHTML=`${!mine?'<div class="msg-avatar">A</div>':''}
-        <div><div class="msg-bubble">${content}</div></div>
-        ${mine?'<div class="msg-avatar">M</div>':''}`;
+        <div><div class="msg-bubble">${escapeHTML(m.text||"")}</div></div>
+        ${mine?'<div class="msg-avatar" style="background:rgba(201,168,76,0.15);">B</div>':''}`;
       chat.appendChild(div);
     });
     chat.scrollTop=chat.scrollHeight;
-    if(!firstLoad){
-      const last=snap.docs[snap.docs.length-1]?.data();
-      if(last&&last.from!==currentUser.uid) notify("Apogée & Co",last.text||"Nouveau message");
-    }
-    firstLoad=false;
   });
 }
 
-window.sendMessage = async function(){
+window.sendMessage=async function(){
   const input=document.getElementById("chat-input");
   const text=input.value.trim();
   if(!text)return;
   input.value="";
   await addDoc(collection(db,"messages"),{
-    roomId:currentUser.uid, from:currentUser.uid, text, createdAt:serverTimestamp()
+    roomId:currentUser.uid,from:currentUser.uid,text,createdAt:serverTimestamp()
   });
 };
-
-window.sendFile = async function(file){
-  if(!file)return;
-  const storageRef=ref(storage,`chat/${currentUser.uid}/${Date.now()}_${file.name}`);
-  await uploadBytes(storageRef,file);
-  const url=await getDownloadURL(storageRef);
-  await addDoc(collection(db,"messages"),{
-    roomId:currentUser.uid, from:currentUser.uid,
-    fileUrl:url, fileType:file.type, createdAt:serverTimestamp()
-  });
-};
-
-document.getElementById("file-input").addEventListener("change",e=>{
-  window.sendFile(e.target.files[0]);
-});
-
 document.getElementById("chat-input").addEventListener("keydown",e=>{
   if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();window.sendMessage();}
 });
 
 /* ── PROFIL ── */
-window.saveProfile = async function(){
+window.saveProfile=async function(){
+  const nom=document.getElementById("p-nom").value;
   await setDoc(doc(db,"users",currentUser.uid),{
-    prenom:document.getElementById("p-prenom").value,
-    nom:   document.getElementById("p-nom").value,
-    tel:   document.getElementById("p-tel").value,
+    nom, type:document.getElementById("p-type").value,
+    chambres:document.getElementById("p-chambres").value,
+    tel:document.getElementById("p-tel").value,
     address:document.getElementById("p-address").value,
-    role:"b2c"
+    contact:document.getElementById("p-contact").value,
+    role:"b2b"
   },{merge:true});
-  showToast("Profil enregistré ✓");
+  if(nom) document.getElementById("p-avatar").textContent=nom.charAt(0).toUpperCase();
+  showToast("Établissement enregistré ✓");
 };
-
-/* ── CALENDRIER ── */
-let calDate=new Date();
-const MONTHS=["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
-const DAYS=["LUN","MAR","MER","JEU","VEN","SAM","DIM"];
-
-function buildCalendar(){
-  document.getElementById("cal-month").textContent=MONTHS[calDate.getMonth()]+" "+calDate.getFullYear();
-  const first=new Date(calDate.getFullYear(),calDate.getMonth(),1);
-  const last=new Date(calDate.getFullYear(),calDate.getMonth()+1,0);
-  const today=new Date();
-  let html=DAYS.map(d=>`<div class="cal-day header">${d}</div>`).join("");
-  const startDay=(first.getDay()+6)%7;
-  for(let i=0;i<startDay;i++) html+=`<div class="cal-day other-month"></div>`;
-  for(let d=1;d<=last.getDate();d++){
-    const isToday=d===today.getDate()&&calDate.getMonth()===today.getMonth()&&calDate.getFullYear()===today.getFullYear();
-    html+=`<div class="cal-day${isToday?" today":""}">${d}</div>`;
-  }
-  document.getElementById("cal-grid").innerHTML=html;
-}
-window.calPrev=()=>{calDate.setMonth(calDate.getMonth()-1);buildCalendar();};
-window.calNext=()=>{calDate.setMonth(calDate.getMonth()+1);buildCalendar();};
 </script>
 </body>
-</html>
+</html>v
