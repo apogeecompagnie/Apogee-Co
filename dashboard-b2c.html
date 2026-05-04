@@ -1,205 +1,1932 @@
-<script>
-// ══════════════════════════════════════════════════════════════════════════
-// CONFIG GLOBALE
-// ══════════════════════════════════════════════════════════════════════════
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mon espace — Apogée & Co</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#080e1a;--navy2:#0e1629;--navy3:#1a2744;--gold:#C9A84C;--gold-l:#e8d5a3;--gray:#8a9ab8;--text:#d4c9b0;--success:#1d9e75;--danger:#e24b4a;--warn:#f59e0b;--glass:rgba(255,255,255,0.04);--glass-b:rgba(255,255,255,0.08);--gb:rgba(201,168,76,0.06);--gbb:rgba(201,168,76,0.2);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Montserrat',sans-serif;background:var(--navy);color:var(--text);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 70% 50% at 15% 15%,rgba(201,168,76,0.05),transparent 60%),radial-gradient(ellipse 50% 40% at 85% 85%,rgba(26,39,68,0.6),transparent 70%);pointer-events:none;}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(8,14,26,0.75);backdrop-filter:blur(16px);border-bottom:0.5px solid rgba(201,168,76,0.12);}
+.tl{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.tl img{height:34px;width:34px;}
+.tb{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:0.2em;color:var(--gold);}
+.tb span{display:block;font-size:7px;font-family:'Montserrat',sans-serif;letter-spacing:0.35em;color:var(--gray);margin-top:1px;}
+.tr{display:flex;align-items:center;gap:12px;}
+.tu{font-size:11px;color:var(--gray);}
+.tu strong{color:var(--gold-l);}
+.tbtn{font-size:9px;letter-spacing:0.18em;color:var(--gray);background:transparent;border:0.5px solid rgba(201,168,76,0.18);padding:6px 13px;cursor:pointer;font-family:'Montserrat',sans-serif;border-radius:4px;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.tbtn:hover{color:var(--gold);border-color:var(--gbb);}
+.tbtn.red{color:var(--danger);border-color:rgba(226,75,74,0.2);}
+.main{position:relative;z-index:1;padding:80px 32px 100px;max-width:1060px;margin:0 auto;}
+.ps{display:none;}
+.ps.active{display:block;animation:fi 0.3s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.welcome{background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(26,39,68,0.3));border:0.5px solid rgba(201,168,76,0.22);border-radius:20px;padding:26px 30px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden;}
+.welcome::after{content:'';position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.05),transparent 70%);pointer-events:none;}
+.wh2{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:300;color:var(--gold-l);margin-bottom:4px;}
+.wp{font-size:10px;letter-spacing:0.2em;color:var(--gray);}
+.wbtns{display:flex;gap:10px;flex-shrink:0;}
+.bg{font-size:9px;letter-spacing:0.2em;color:var(--navy);background:var(--gold);border:none;padding:11px 20px;cursor:pointer;font-family:'Montserrat',sans-serif;border-radius:6px;transition:background 0.25s;white-space:nowrap;}
+.bg:hover{background:var(--gold-l);}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat{background:var(--glass);backdrop-filter:blur(12px);border:0.5px solid var(--glass-b);border-radius:16px;padding:18px 18px;position:relative;overflow:hidden;transition:border-color 0.25s;}
+.stat:hover{border-color:rgba(201,168,76,0.2);}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,rgba(201,168,76,0.5),transparent);}
+.sl{font-size:7.5px;letter-spacing:0.32em;color:var(--gray);margin-bottom:9px;font-weight:500;}
+.sv{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold-l);line-height:1;}
+.ss{font-size:9px;color:var(--gray);margin-top:5px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.gc{background:var(--glass);backdrop-filter:blur(16px);border:0.5px solid var(--glass-b);border-radius:18px;padding:22px;}
+.gct{font-size:8.5px;letter-spacing:0.3em;color:var(--gold);font-weight:600;margin-bottom:14px;}
+.item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:0.5px solid rgba(255,255,255,0.04);}
+.item:last-child{border-bottom:none;}
+.ii{width:38px;height:38px;min-width:38px;border-radius:10px;background:rgba(201,168,76,0.08);border:0.5px solid rgba(201,168,76,0.18);display:flex;align-items:center;justify-content:center;}
+.ii /* svg global supprimé — styles appliqués par classes */
+.in{font-size:12.5px;font-weight:500;color:var(--text);}
+.im{font-size:10px;color:var(--gray);margin-top:2px;}
+.badge{font-size:7.5px;letter-spacing:0.12em;padding:3px 10px;border-radius:20px;margin-left:auto;flex-shrink:0;white-space:nowrap;}
+.bp{background:rgba(245,158,11,0.12);color:var(--warn);}
+.bd{background:rgba(29,158,117,0.12);color:var(--success);}
+.bn{background:rgba(201,168,76,0.12);color:var(--gold);}
+.cw{display:flex;flex-direction:column;gap:10px;min-height:180px;max-height:260px;overflow-y:auto;margin-bottom:12px;padding:2px;}
+.msg{display:flex;gap:8px;align-items:flex-end;}
+.msg.mine{flex-direction:row-reverse;}
+.mav{width:28px;height:28px;min-width:28px;border-radius:50%;border:0.5px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--gold);background:rgba(201,168,76,0.08);flex-shrink:0;}
+.mb{max-width:75%;padding:9px 13px;font-size:12px;line-height:1.65;border-radius:14px;}
+.msg .mb{background:rgba(255,255,255,0.06);color:var(--text);border-radius:2px 14px 14px 14px;}
+.msg.mine .mb{background:rgba(201,168,76,0.1);color:var(--gold-l);border:0.5px solid rgba(201,168,76,0.18);border-radius:14px 2px 14px 14px;}
+.crow{display:flex;gap:8px;}
+.ci{flex:1;background:rgba(255,255,255,0.04);border:0.5px solid rgba(201,168,76,0.18);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12px;padding:10px 14px;outline:none;resize:none;border-radius:10px;transition:border-color 0.2s;}
+.ci:focus{border-color:var(--gold);}
+.ci::placeholder{color:var(--gray);opacity:0.6;}
+.pt{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,34px);font-weight:300;color:var(--gold-l);margin-bottom:4px;}
+.ps2{font-size:11px;color:var(--gray);letter-spacing:0.08em;margin-bottom:22px;}
+.fs{font-size:8.5px;letter-spacing:0.28em;color:var(--gold);font-weight:600;margin:16px 0 10px;padding-bottom:8px;border-bottom:0.5px solid rgba(201,168,76,0.1);}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.fl{font-size:8.5px;letter-spacing:0.22em;color:var(--gold);}
+.fi{background:rgba(255,255,255,0.04);border:0.5px solid rgba(201,168,76,0.18);color:var(--gold-l);font-family:'Montserrat',sans-serif;font-size:12.5px;font-weight:300;padding:11px 14px;outline:none;border-radius:8px;transition:border-color 0.2s;width:100%;}
+.fi:focus{border-color:var(--gold);}
+.fi::placeholder{color:var(--gray);opacity:0.6;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cd{padding:7px 3px;text-align:center;font-size:11px;color:var(--gray);border-radius:7px;}
+.cd.hd{font-size:7.5px;letter-spacing:0.15em;color:var(--gold);font-weight:600;}
+.cd.td{background:rgba(201,168,76,0.12);color:var(--gold-l);}
+.cd.od{opacity:0.2;}
+.sb{display:none;padding:12px 16px;background:rgba(29,158,117,0.07);border:0.5px solid rgba(29,158,117,0.2);color:var(--success);font-size:12px;border-radius:8px;margin-top:10px;}
+.avatar{width:70px;height:70px;border-radius:50%;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);margin:0 auto 16px;}
+.floatnav{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:200;background:rgba(8,14,26,0.88);backdrop-filter:blur(24px);border:0.5px solid rgba(201,168,76,0.22);border-radius:50px;padding:8px 14px;display:flex;align-items:center;gap:2px;box-shadow:0 16px 40px rgba(0,0,0,0.5);}
+.fn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 13px;border-radius:36px;border:none;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.2s;}
+.fn:hover{background:rgba(201,168,76,0.06);}
+.fn.active{background:rgba(201,168,76,0.1);}
+.fn svg{width:16px;height:16px;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;}
+.fn:not(.active){color:var(--gray);}
+.fn.active{color:var(--gold);}
+.fn svg{stroke:currentColor;}
+.fn span{font-size:7.5px;letter-spacing:0.1em;}
+.fn:not(.active) span{color:var(--gray);}
+.fn.active span{color:var(--gold);}
+.nsep{width:0.5px;height:22px;background:rgba(201,168,76,0.12);margin:0 2px;flex-shrink:0;}
+#toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(14,22,41,0.95);backdrop-filter:blur(8px);border:0.5px solid rgba(201,168,76,0.3);color:var(--gold-l);font-size:11px;letter-spacing:0.06em;padding:10px 20px;border-radius:20px;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(max-width:700px){.g2{grid-template-columns:1fr;}.stats{grid-template-columns:repeat(2,1fr);}.fr{grid-template-columns:1fr;}.fn span{display:none;}.main{padding:80px 14px 100px;}}
 
-const MONTHS = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN",
-"JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+/* ── PRO CARDS (travaux) ── */
+.pro-card{background:var(--glass);border:0.5px solid var(--glass-b);border-radius:12px;padding:14px 12px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.pro-card:hover{border-color:rgba(201,168,76,0.3);background:rgba(201,168,76,0.04);}
+.pro-card.active{border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.08);}
+.pro-icon{width:36px;height:36px;border-radius:9px;background:rgba(201,168,76,0.08);border:0.5px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+.pro-icon svg{width:16px;height:16px;fill:none;stroke:var(--gold);stroke-width:1.4;}
+.pro-card.active .pro-icon{background:rgba(201,168,76,0.15);border-color:rgba(201,168,76,0.4);}
+.pro-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.pro-desc{font-size:9.5px;color:var(--gray);line-height:1.4;}
+/* ── CALENDRIER MÉNAGE ── */
+.men-cal-day{padding:7px 3px;text-align:center;font-size:11.5px;border-radius:8px;cursor:pointer;transition:all 0.15s;user-select:none;}
+.men-cal-day:hover:not(.disabled):not(.past){background:rgba(201,168,76,0.08);}
+.men-cal-day.selected{background:rgba(201,168,76,0.8) !important;color:#080e1a !important;font-weight:600;border-radius:8px;}
+.men-cal-day.today{border:0.5px solid var(--success);color:var(--success);}
+.men-cal-day.disabled,.men-cal-day.past{opacity:0.25;cursor:default;}
+.men-cal-day.header{font-size:8px;letter-spacing:0.15em;color:var(--gold);font-weight:600;cursor:default;padding:5px 0;}
+/* ── RDV TYPE CARDS (admin) ── */
+.rdv-type-card{padding:12px 14px;border:0.5px solid rgba(201,168,76,0.1);border-radius:10px;cursor:pointer;transition:all 0.2s;}
+.rdv-type-card:hover{border-color:rgba(201,168,76,0.25);background:rgba(201,168,76,0.03);}
+.rdv-type-card.active{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.07);}
+/* ── CRÉNEAUX ADMIN ── */
+.slot-btn{padding:8px 14px;border:0.5px solid rgba(201,168,76,0.2);border-radius:8px;background:transparent;color:var(--gray);font-family:'Montserrat',sans-serif;font-size:11px;cursor:pointer;transition:all 0.2s;}
+.slot-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.05);}
+.slot-btn.selected{border-color:var(--gold);color:var(--navy);background:var(--gold);font-weight:500;}
+.slot-btn.unavailable{opacity:0.3;cursor:default;text-decoration:line-through;}
 
-const DAYS = ["L","M","M","J","V","S","D"];
 
-// Helpers sécurité
-const sanitize = str => String(str).replace(/[<>]/g,"").trim();
-const esc = str => String(str).replace(/[&<>"']/g, m => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-}[m]));
+/* ══ PAGE NOUVELLE PRESTATION ═══════════════════════════════════════════ */
+.svc-page-header { margin-bottom: 28px; }
+.svc-page-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4.5vw, 44px);
+  font-weight: 300;
+  color: var(--gold-l);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.svc-page-header p { font-size: 10px; color: var(--gray); letter-spacing: 0.2em; }
+.svc-eyebrow { font-size: 9px; letter-spacing: 0.3em; color: var(--gray); margin-bottom: 8px; }
 
-// ══════════════════════════════════════════════════════════════════════════
-// CALENDRIER GLOBAL
-// ══════════════════════════════════════════════════════════════════════════
+/* ── SÉPARATEUR CATÉGORIE ── */
+.svc-sep {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+}
+.svc-sep-bar {
+  width: 3px; height: 14px; flex-shrink: 0;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  border-radius: 0;
+}
+.svc-sep-lbl { font-size: 9px; letter-spacing: 0.32em; color: var(--gold); font-weight: 600; }
+.svc-sep-line { flex: 1; height: 0.5px; background: linear-gradient(90deg, rgba(201,168,76,0.2), transparent); }
 
-let calDate = new Date();
-
-function buildCalendar() {
-  const monthEl = document.getElementById("cal-month");
-  const gridEl  = document.getElementById("cal-grid");
-  if (!monthEl || !gridEl) return;
-
-  monthEl.textContent = `${MONTHS[calDate.getMonth()]} ${calDate.getFullYear()}`;
-
-  const first = new Date(calDate.getFullYear(), calDate.getMonth(), 1);
-  const last  = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0);
-  const today = new Date();
-
-  let html = DAYS.map(d => `<div class="cd hd">${d}</div>`).join("");
-
-  const start = (first.getDay()+6)%7;
-  for (let i=0; i<start; i++) html += `<div class="cd od"></div>`;
-
-  for (let d=1; d<=last.getDate(); d++) {
-    const isToday =
-      d===today.getDate() &&
-      calDate.getMonth()===today.getMonth() &&
-      calDate.getFullYear()===today.getFullYear();
-
-    html += `<div class="cd${isToday?" td":""}">${d}</div>`;
-  }
-
-  gridEl.innerHTML = html;
+/* ── CARTE HORIZONTALE ── */
+.svc-hrow { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+.svc-hcard {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 0.5px solid var(--glass-b);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+.svc-hcard::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  border-radius: 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.svc-hcard:hover { border-color: rgba(201,168,76,0.28); transform: translateX(3px); }
+.svc-hcard:hover::before { opacity: 1; }
+.svc-hcard.feat {
+  background: rgba(201,168,76,0.04);
+  border-color: rgba(201,168,76,0.14);
 }
 
-window.calPrev = () => { calDate.setMonth(calDate.getMonth()-1); buildCalendar(); };
-window.calNext = () => { calDate.setMonth(calDate.getMonth()+1); buildCalendar(); };
+/* ── ICÔNE ── */
+.svc-hico {
+  width: 38px; height: 38px; min-width: 38px;
+  border-radius: 9px;
+  background: rgba(201,168,76,0.07);
+  border: 0.5px solid rgba(201,168,76,0.15);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s;
+}
+.svc-hico svg {
+  width: 16px; height: 16px;
+  fill: none; stroke: var(--gold);
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.svc-hcard:hover .svc-hico {
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.3);
+}
 
-// ══════════════════════════════════════════════════════════════════════════
-// NAVIGATION SERVICES
-// ══════════════════════════════════════════════════════════════════════════
+/* ── BODY ── */
+.svc-hbody { flex: 1; min-width: 0; }
+.svc-hname { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.svc-hdesc { font-size: 10.5px; color: var(--gray); line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* ── END (tag + CTA) ── */
+.svc-hend { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.svc-tag { font-size: 8px; letter-spacing: 0.12em; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.svc-tag-g { background: rgba(29,158,117,0.12); color: var(--success); }
+.svc-tag-a { background: rgba(201,168,76,0.12); color: var(--gold); }
+.svc-tag-r { background: rgba(226,75,74,0.12); color: var(--danger); }
+
+/* ── CTA dans la charte — pas blanc ── */
+.svc-cta {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 0.5px solid rgba(201,168,76,0.22);
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
+  transition: all 0.2s;
+}
+.svc-cta:hover { background: rgba(201,168,76,0.07); color: var(--gold); border-color: rgba(201,168,76,0.4); }
+
+/* ── CARTES VERTICALES (événementiel) ── */
+.svc-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.svc-vcard {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 0.5px solid var(--glass-b);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: all 0.25s;
+}
+.svc-vcard:hover { border-color: rgba(201,168,76,0.28); transform: translateY(-2px); }
+.svc-vtop { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.svc-vname { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.svc-vdesc { font-size: 10.5px; color: var(--gray); line-height: 1.5; }
+.svc-vbot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(201,168,76,0.08);
+  margin-top: auto;
+}
+.svc-vcta { font-size: 9px; letter-spacing: 0.18em; color: var(--gray); }
+.svc-varr { font-size: 13px; color: rgba(201,168,76,0.4); transition: all 0.2s; }
+.svc-vcard:hover .svc-varr { color: var(--gold); transform: translateX(3px); }
+
+/* ── FOOTER ── */
+.svc-footer {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  padding-top: 16px;
+  border-top: 0.5px solid rgba(201,168,76,0.08);
+}
+.svc-footer-txt { font-size: 10px; color: var(--gray); letter-spacing: 0.12em; }
+
+@media(max-width:700px) {
+  .svc-hend { flex-direction: column; align-items: flex-end; gap: 6px; }
+  .svc-grid2 { grid-template-columns: 1fr; }
+  .svc-hdesc { white-space: normal; }
+}
+@media(max-width:420px) {
+  .svc-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="tl">
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCA2OTAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGUgc3R5bGU9ImZpbGw6cmdiKDAsIDAsIDApO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byI+TG9nbyBBcG9nw6llICZhbXA7IENvIFByZXN0aWdlIOKAlCB2ZXJzaW9uIGZ1c2lvbm7DqWU8L3RpdGxlPgogIDxkZXNjIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkxvZ28gY2lyY3VsYWlyZSBibGV1IG1hcmluZSBhdmVjIG1vbm9ncmFtbWUgQSBkb3LDqSwgbm9tIGVuIGNhcGl0YWxlcyBlc3BhY8OpZXMgZXQgc291cy10aXRyZSBQcmVzdGlnZTwvZGVzYz4KCiAgPGRlZnM+CiAgICAKICA8L2RlZnM+CgogIDwhLS0gRm9uZCBub2lyIChzaW11bGVyIGZvbmQgbmV1dHJlKSAtLT4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjY4MCIgZmlsbD0iIzBlMTYyOSIgc3R5bGU9ImZpbGw6cmdiKDE0LCAyMiwgNDEpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSBleHTDqXJpZXVyIChib3JkdXJlIGZpbmUgb3IpIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjk1IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjEuMnB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIENlcmNsZSByZW1wbGkgYmxldSBtYXJpbmUgLS0+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMzQwIiByPSIyODIiIGZpbGw9IiMxYTI3NDQiIHN0eWxlPSJmaWxsOnJnYigyNiwgMzksIDY4KTtzdHJva2U6bm9uZTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjFweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBEZXV4acOobWUgY2VyY2xlIGludMOpcmlldXIgZmluIG9yIC0tPgogIDxjaXJjbGUgY3g9IjM0MCIgY3k9IjM0MCIgcj0iMjY4IiBmaWxsPSJub25lIiBzdHJva2U9IiNDOUE4NEMiIHN0cm9rZS13aWR0aD0iMC43IiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTpyZ2IoMjAxLCAxNjgsIDc2KTtjb2xvcjpyZ2IoMCwgMCwgMCk7c3Ryb2tlLXdpZHRoOjAuN3B4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTomcXVvdDtBbnRocm9waWMgU2FucyZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90Oywgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6c3RhcnQ7ZG9taW5hbnQtYmFzZWxpbmU6YXV0byIvPgoKICA8IS0tIE1vbm9ncmFtbWUgQSAtLT4KICA8dGV4dCB4PSIzNDAiIHk9IjMzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImF1dG8iIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMjEwIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iLTQiIHN0eWxlPSJmaWxsOnJnYigyMDEsIDE2OCwgNzYpO3N0cm9rZTpub25lO2NvbG9yOnJnYigwLCAwLCAwKTtzdHJva2Utd2lkdGg6MXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO29wYWNpdHk6MTtmb250LWZhbWlseTpHZW9yZ2lhLCAmcXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssIHNlcmlmO2ZvbnQtc2l6ZToyMTBweDtmb250LXdlaWdodDo0MDA7dGV4dC1hbmNob3I6bWlkZGxlO2RvbWluYW50LWJhc2VsaW5lOmF1dG8iPkE8L3RleHQ+CgogIDwhLS0gTGlnbmUgaG9yaXpvbnRhbGUgc8OpcGFyYXRyaWNlIC0tPgogIDxsaW5lIHgxPSIyMjAiIHkxPSIzODUiIHgyPSI0NjAiIHkyPSIzODUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0eWxlPSJmaWxsOnJnYigwLCAwLCAwKTtzdHJva2U6cmdiKDIwMSwgMTY4LCA3Nik7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDowLjhweDtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtvcGFjaXR5OjE7Zm9udC1mYW1pbHk6JnF1b3Q7QW50aHJvcGljIFNhbnMmcXVvdDssIC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOnN0YXJ0O2RvbWluYW50LWJhc2VsaW5lOmF1dG8iLz4KCiAgPCEtLSBOb20gZGUgbGEgbWFycXVlIC0tPgogIDx0ZXh0IHg9IjM0MCIgeT0iNDI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgJ1RpbWVzIE5ldyBSb21hbicsIHNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjQzlBODRDIiBsZXR0ZXItc3BhY2luZz0iOCIgc3R5bGU9ImZpbGw6cmdiKDIwMSwgMTY4LCA3Nik7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjIycHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5BUE9Hw4lFICZhbXA7IENPPC90ZXh0PgoKICA8IS0tIFNvdXMtdGl0cmUgUHJlc3RpZ2UgLS0+CiAgPHRleHQgeD0iMzQwIiB5PSI0NjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCAnVGltZXMgTmV3IFJvbWFuJywgc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSI0MDAiIGZpbGw9IiM4YTlhYjgiIGxldHRlci1zcGFjaW5nPSI3IiBzdHlsZT0iZmlsbDpyZ2IoMTM4LCAxNTQsIDE4NCk7c3Ryb2tlOm5vbmU7Y29sb3I6cmdiKDAsIDAsIDApO3N0cm9rZS13aWR0aDoxcHg7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7b3BhY2l0eToxO2ZvbnQtZmFtaWx5Okdlb3JnaWEsICZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oywgc2VyaWY7Zm9udC1zaXplOjExcHg7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYW5jaG9yOm1pZGRsZTtkb21pbmFudC1iYXNlbGluZTphdXRvIj5QUkVTVElHRTwvdGV4dD4KCjwvc3ZnPg==" alt="A"/>
+    <div class="tb">APOGÉE & CO<span>ESPACE MEMBRE</span></div>
+  </a>
+  <div class="tr">
+    <span class="tu">Bonjour, <strong id="user-name">Membre</strong></span>
+    <a href="index.html" class="tbtn">SITE ↗</a>
+    <button class="tbtn red" onclick="logout()">QUITTER</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div class="ps active" id="sec-dashboard">
+    <div class="welcome">
+      <div>
+        <div class="wh2" id="greeting">Bonjour</div>
+        <div class="wp">ESPACE MEMBRE PRESTIGE · APOGÉE & CO</div>
+      </div>
+      <div class="wbtns">
+        <button class="bg" onclick="nav('nouvelle-demande')">+ NOUVELLE DEMANDE</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="sl">EN COURS</div><div class="sv" id="stat-pending">—</div><div class="ss">prestations en cours</div></div>
+      <div class="stat"><div class="sl">RÉALISÉES</div><div class="sv" id="stat-done">—</div><div class="ss">terminées</div></div>
+      <div class="stat"><div class="sl">MESSAGES</div><div class="sv" id="stat-msgs">—</div><div class="ss">conversations</div></div>
+      <div class="stat"><div class="sl">PROCHAINE</div><div class="sv" id="stat-next" style="font-size:17px;padding-top:5px;">—</div><div class="ss">planifiée</div></div>
+    </div>
+    <div class="g2">
+      <div class="gc">
+        <div class="gct">DERNIÈRES DEMANDES</div>
+        <div id="recent-demandes"><div style="color:var(--gray);font-size:12px;">Chargement...</div></div>
+      </div>
+      <div class="gc">
+        <div class="gct">MESSAGERIE</div>
+        <div class="cw" id="dash-msgs"><div style="color:var(--gray);font-size:12px;font-style:italic;">Cliquez sur Messagerie pour écrire à votre concierge.</div></div>
+        <button class="bg" style="width:100%;font-size:9px;padding:10px;" onclick="nav('messagerie')">OUVRIR LA MESSAGERIE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOUVELLE DEMANDE -->
+  <div class="ps" id="sec-nouvelle-demande">
+
+  <!-- ── VUE SÉLECTION SERVICE ── -->
+  <div id="svc-selector">
+
+    <div class="svc-page-header">
+      <div class="svc-eyebrow">APOGÉE & CO · ESPACE MEMBRE</div>
+      <h2>Quel est votre projet ?</h2>
+      <p>VOTRE CONCIERGE RÉPOND SOUS 2H</p>
+    </div>
+
+    <!-- ── CONCIERGERIE ── -->
+    <div class="svc-sep">
+      <div class="svc-sep-bar"></div>
+      <span class="svc-sep-lbl">CONCIERGERIE</span>
+      <div class="svc-sep-line"></div>
+    </div>
+
+    <div class="svc-hrow">
+
+      <div class="svc-hcard feat" onclick="showServiceForm('courses')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Courses & Approvisionnement</div>
+          <div class="svc-hdesc">Épicerie fine, livraison à domicile, liste interactive</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-g">SOUS 3H</span>
+          <button class="svc-cta">COMMANDER</button>
+        </div>
+      </div>
+
+      <div class="svc-hcard" onclick="showServiceForm('transport')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Transport & Déplacements</div>
+          <div class="svc-hdesc">Chauffeur privé, transferts aéroport, véhicules de prestige</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-g">15 MIN</span>
+          <button class="svc-cta">RÉSERVER</button>
+        </div>
+      </div>
+
+      <div class="svc-hcard" onclick="showServiceForm('menage')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Ménage & Linge</div>
+          <div class="svc-hdesc">Aide ménagère attitrée, repassage, planification sur calendrier</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-a">PLANIFIÉ</span>
+          <button class="svc-cta">PLANIFIER</button>
+        </div>
+      </div>
+
+      <div class="svc-hcard" onclick="showServiceForm('travaux')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Petits Travaux & Réparations</div>
+          <div class="svc-hdesc">Plombier, électricien, serrurier — boîte à outils guidée</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-r">URGENT OK</span>
+          <button class="svc-cta">DÉCRIRE</button>
+        </div>
+      </div>
+
+      <div class="svc-hcard" onclick="showServiceForm('gestion')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Gestion Locative</div>
+          <div class="svc-hdesc">Suivi des biens, états des lieux, coordination des prestataires</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-a">SUR MESURE</span>
+          <button class="svc-cta">DEMANDER</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── ASSISTANCE ── -->
+    <div class="svc-sep">
+      <div class="svc-sep-bar"></div>
+      <span class="svc-sep-lbl">ASSISTANCE PERSONNELLE</span>
+      <div class="svc-sep-line"></div>
+    </div>
+
+    <div class="svc-hrow">
+      <div class="svc-hcard feat" onclick="showServiceForm('admin')">
+        <div class="svc-hico">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="svc-hbody">
+          <div class="svc-hname">Assistance Administrative</div>
+          <div class="svc-hdesc">Courrier, démarches, organisation — rendez-vous avec votre assistante dédiée</div>
+        </div>
+        <div class="svc-hend">
+          <span class="svc-tag svc-tag-g">CRÉNEAUX DISPO</span>
+          <button class="svc-cta">PRENDRE RDV</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉVÉNEMENTIEL ── -->
+    <div class="svc-sep">
+      <div class="svc-sep-bar"></div>
+      <span class="svc-sep-lbl">ÉVÉNEMENTIEL & DÉCORATION</span>
+      <div class="svc-sep-line"></div>
+    </div>
+
+    <div class="svc-grid2">
+
+      <div class="svc-vcard" onclick="showServiceForm('evenementiel')">
+        <div class="svc-vtop">
+          <div class="svc-hico">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <span class="svc-tag svc-tag-a">SUR MESURE</span>
+        </div>
+        <div>
+          <div class="svc-vname">Événementiel Privé</div>
+          <div class="svc-vdesc">Soirées, mariages, réceptions — organisation complète de A à Z</div>
+        </div>
+        <div class="svc-vbot">
+          <span class="svc-vcta">ORGANISER</span>
+          <span class="svc-varr">→</span>
+        </div>
+      </div>
+
+      <div class="svc-vcard" onclick="showServiceForm('decoration')">
+        <div class="svc-vtop">
+          <div class="svc-hico">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="svc-tag svc-tag-a">CRÉATION</span>
+        </div>
+        <div>
+          <div class="svc-vname">Décoration & Scénographie</div>
+          <div class="svc-vdesc">Conception décorative sur-mesure et installation artistique</div>
+        </div>
+        <div class="svc-vbot">
+          <span class="svc-vcta">CRÉER</span>
+          <span class="svc-varr">→</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="svc-footer">
+      <span class="svc-footer-txt">BESOIN D'UNE PRESTATION PARTICULIÈRE ?</span>
+      <button class="svc-cta" onclick="showServiceForm('autre')">DEMANDE SUR MESURE →</button>
+    </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE COURSES
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-courses" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;">Courses & Approvisionnement</div>
+    </div>
+
+    <!-- Voyant statut -->
+    <div id="courses-status-bar" style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:rgba(201,168,76,0.06);border:0.5px solid rgba(201,168,76,0.2);border-radius:14px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--gray);" id="dot-liste"></div>
+        <span style="font-size:10px;letter-spacing:0.15em;color:var(--gray);" id="label-liste">LISTE</span>
+      </div>
+      <div style="width:30px;height:0.5px;background:rgba(201,168,76,0.2);"></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--gray);" id="dot-livraison"></div>
+        <span style="font-size:10px;letter-spacing:0.15em;color:var(--gray);" id="label-livraison">LIVRAISON</span>
+      </div>
+      <div style="width:30px;height:0.5px;background:rgba(201,168,76,0.2);"></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--gray);" id="dot-confirm"></div>
+        <span style="font-size:10px;letter-spacing:0.15em;color:var(--gray);" id="label-confirm">CONFIRMÉE</span>
+      </div>
+      <div style="margin-left:auto;font-size:10px;color:var(--gray);" id="courses-status-txt">En attente de votre liste</div>
+    </div>
+
+    <div class="g2">
+      <!-- COL GAUCHE : liste de courses -->
+      <div class="gc">
+        <div class="gct">MA LISTE DE COURSES</div>
+
+        <!-- Articles pré-définis rapides -->
+        <div style="margin-bottom:14px;">
+          <div class="fl" style="margin-bottom:8px;">AJOUT RAPIDE</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <button onclick="addQuickItem('Eau minérale (6x1.5L)')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Eau minérale</button>
+            <button onclick="addQuickItem('Fruits frais (sélection saison)')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Fruits frais</button>
+            <button onclick="addQuickItem('Pain artisanal')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Pain artisanal</button>
+            <button onclick="addQuickItem('Café (250g)')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Café</button>
+            <button onclick="addQuickItem('Vins & Champagne (à préciser)')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Vins & Champagne</button>
+            <button onclick="addQuickItem('Fleurs (bouquet de saison)')" style="font-size:10px;color:var(--gold);background:var(--gb);border:0.5px solid var(--gbb);padding:5px 12px;border-radius:20px;cursor:pointer;font-family:inherit;">Fleurs</button>
+          </div>
+        </div>
+
+        <!-- Ajout manuel -->
+        <div class="fl" style="margin-bottom:8px;">AJOUTER UN ARTICLE</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <input type="text" id="crs-item" class="fi" style="flex:2;" placeholder="Article ou produit..."/>
+          <input type="text" id="crs-qty" class="fi" style="flex:1;max-width:90px;" placeholder="Qté"/>
+          <button class="bg" onclick="addCrsItem()" style="padding:11px 14px;white-space:nowrap;">+ AJOUTER</button>
+        </div>
+
+        <!-- Liste -->
+        <div id="crs-list" style="display:flex;flex-direction:column;gap:5px;min-height:60px;max-height:260px;overflow-y:auto;">
+          <div style="color:var(--gray);font-size:12px;font-style:italic;padding:10px 0;">Votre liste est vide — ajoutez des articles ci-dessus.</div>
+        </div>
+
+        <!-- Budget estimé -->
+        <div style="margin-top:14px;padding:12px 14px;background:rgba(255,255,255,0.02);border:0.5px solid rgba(201,168,76,0.1);border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:10px;letter-spacing:0.15em;color:var(--gray);">BUDGET ESTIMÉ</span>
+          <input type="text" id="crs-budget" class="fi" style="width:140px;text-align:right;" placeholder="Optionnel (ex: ~80€)"/>
+        </div>
+      </div>
+
+      <!-- COL DROITE : livraison + notes -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">LIVRAISON</div>
+          <div class="fr">
+            <div class="fg"><label class="fl">DATE DE LIVRAISON</label><input type="date" id="crs-date" class="fi"/></div>
+            <div class="fg"><label class="fl">HEURE SOUHAITÉE</label>
+              <select id="crs-time" class="fi">
+                <option value="">Sélectionnez...</option>
+                <option>08:00 — 09:00</option>
+                <option>09:00 — 10:00</option>
+                <option>10:00 — 11:00</option>
+                <option>11:00 — 12:00</option>
+                <option>14:00 — 15:00</option>
+                <option>15:00 — 16:00</option>
+                <option>16:00 — 17:00</option>
+                <option>17:00 — 18:00</option>
+                <option>18:00 — 19:00</option>
+                <option>19:00 — 20:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label class="fl">ADRESSE DE LIVRAISON</label>
+            <input type="text" id="crs-address" class="fi" placeholder="Adresse complète"/>
+          </div>
+          <div class="fg"><label class="fl">ÉTAGE / DIGICODE / INSTRUCTIONS</label>
+            <input type="text" id="crs-access" class="fi" placeholder="Ex: 3ème étage, code 4512"/>
+          </div>
+        </div>
+
+        <div class="gc">
+          <div class="gct">INFORMATIONS COMPLÉMENTAIRES</div>
+          <div class="fg"><label class="fl">PRÉFÉRENCES OU ALLERGIES</label>
+            <textarea id="crs-notes" class="fi" rows="3" style="resize:vertical;" placeholder="Bio, sans gluten, marques préférées, allergies..."></textarea>
+          </div>
+          <div class="fg"><label class="fl">RÉCURRENCE</label>
+            <select id="crs-recurrence" class="fi">
+              <option value="once">Commande unique</option>
+              <option value="weekly">Chaque semaine</option>
+              <option value="biweekly">Toutes les 2 semaines</option>
+              <option value="monthly">Chaque mois</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="bg" onclick="submitCourses()" id="crs-btn">ENVOYER MA LISTE</button>
+      <button class="bgo" onclick="backToServices()">ANNULER</button>
+    </div>
+    <div id="crs-success" style="display:none;margin-top:14px;padding:16px 20px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.25);color:var(--success);font-size:13px;border-radius:12px;line-height:1.8;">
+      <div style="font-weight:500;margin-bottom:4px;">✓ Votre liste a bien été transmise</div>
+      <div style="font-size:11px;opacity:0.8;">Votre concierge prend en charge votre commande et vous confirme la livraison sous 30 minutes.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE TRANSPORT
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-transport" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;">Transport & Déplacements</div>
+    </div>
+
+    <!-- Carte visuelle véhicule -->
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(26,39,68,0.4));border:0.5px solid rgba(201,168,76,0.2);border-radius:20px;padding:28px 30px;margin-bottom:20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);opacity:0.12;">
+        <svg width="120" height="60" viewBox="0 0 24 12" fill="var(--gold)"><rect x="1" y="2" width="15" height="8" rx="2"/><path d="M16 4h4l3 4v4h-7V4z"/><circle cx="5" cy="11" r="1.5"/><circle cx="18" cy="11" r="1.5"/></svg>
+      </div>
+      <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:8px;">VOTRE VÉHICULE</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-l);margin-bottom:4px;" id="tp-vehicle-display">Berline de prestige</div>
+      <div style="font-size:11px;color:var(--gray);" id="tp-chauffeur-display">Un chauffeur vous sera assigné dès confirmation</div>
+    </div>
+
+    <div class="g2">
+      <!-- COL GAUCHE : trajet -->
+      <div class="gc">
+        <div class="gct">VOTRE TRAJET</div>
+
+        <div class="fg">
+          <label class="fl">POINT DE DÉPART</label>
+          <div style="position:relative;">
+            <input type="text" id="tp-from" class="fi" placeholder="Adresse ou lieu de prise en charge"
+              style="padding-left:36px;" oninput="updateTransportSummary()"/>
+            <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--success);flex-shrink:0;"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;padding:4px 0;">
+          <div style="width:1px;height:20px;background:rgba(201,168,76,0.2);"></div>
+        </div>
+
+        <div class="fg">
+          <label class="fl">OÙ SOUHAITEZ-VOUS ALLER ?</label>
+          <div style="position:relative;">
+            <input type="text" id="tp-to" class="fi" placeholder="Destination — adresse, aéroport, hôtel..."
+              style="padding-left:36px;" oninput="updateTransportSummary()"/>
+            <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:2px;background:var(--gold);flex-shrink:0;"></div>
+          </div>
+        </div>
+
+        <div class="fr" style="margin-top:8px;">
+          <div class="fg">
+            <label class="fl">DATE</label>
+            <input type="date" id="tp-date" class="fi" oninput="updateTransportSummary()"/>
+          </div>
+          <div class="fg">
+            <label class="fl">HEURE DE PRISE EN CHARGE</label>
+            <input type="time" id="tp-time" class="fi" value="09:00" oninput="updateTransportSummary()"/>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label class="fl">NOMBRE DE PASSAGERS</label>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <button onclick="changePax(-1)" style="width:36px;height:36px;border-radius:50%;border:0.5px solid var(--gbb);background:transparent;color:var(--gold);font-size:18px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;">−</button>
+            <span id="tp-pax" style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold-l);min-width:30px;text-align:center;">1</span>
+            <button onclick="changePax(1)" style="width:36px;height:36px;border-radius:50%;border:0.5px solid var(--gbb);background:transparent;color:var(--gold);font-size:18px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;">+</button>
+            <span style="font-size:11px;color:var(--gray);" id="tp-pax-label">passager</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL DROITE : véhicule + résumé -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">TYPE DE VÉHICULE</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:0.5px solid rgba(201,168,76,0.2);border-radius:10px;cursor:pointer;transition:all 0.2s;" id="veh-berline">
+              <input type="radio" name="tp-vehicle" value="Berline de prestige" checked onchange="selectVehicle(this)" style="accent-color:var(--gold);width:16px;height:16px;"/>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--text);">Berline de prestige</div>
+                <div style="font-size:10px;color:var(--gray);">Mercedes Classe E · BMW Série 5 · jusqu'à 3 passagers</div>
+              </div>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:0.5px solid rgba(201,168,76,0.1);border-radius:10px;cursor:pointer;transition:all 0.2s;" id="veh-suv">
+              <input type="radio" name="tp-vehicle" value="SUV premium" onchange="selectVehicle(this)" style="accent-color:var(--gold);width:16px;height:16px;"/>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--text);">SUV premium</div>
+                <div style="font-size:10px;color:var(--gray);">Mercedes GLE · BMW X5 · jusqu'à 5 passagers</div>
+              </div>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:0.5px solid rgba(201,168,76,0.1);border-radius:10px;cursor:pointer;transition:all 0.2s;" id="veh-van">
+              <input type="radio" name="tp-vehicle" value="Van premium" onchange="selectVehicle(this)" style="accent-color:var(--gold);width:16px;height:16px;"/>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--text);">Van premium</div>
+                <div style="font-size:10px;color:var(--gray);">Mercedes Vito · jusqu'à 7 passagers</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Résumé dynamique -->
+        <div class="gc" style="background:rgba(29,158,117,0.04);border-color:rgba(29,158,117,0.15);" id="tp-summary-card">
+          <div class="gct" style="color:var(--success);">RÉCAPITULATIF</div>
+          <div id="tp-summary" style="font-size:12px;color:var(--gray);line-height:2;">
+            <div>Remplissez les informations pour voir le récapitulatif</div>
+          </div>
+        </div>
+
+        <div class="fg" style="margin-top:14px;">
+          <label class="fl">INFORMATIONS COMPLÉMENTAIRES</label>
+          <textarea id="tp-notes" class="fi" rows="2" style="resize:none;" placeholder="Bagages, vol à accueillir, consignes particulières..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="bg" onclick="submitTransport()" id="tp-btn">RÉSERVER MON CHAUFFEUR</button>
+      <button class="bgo" onclick="backToServices()">ANNULER</button>
+    </div>
+    <div id="tp-success" style="display:none;margin-top:14px;padding:16px 20px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.25);color:var(--success);font-size:13px;border-radius:12px;line-height:1.8;">
+      <div style="font-weight:500;margin-bottom:6px;">✓ Votre chauffeur est réservé</div>
+      <div id="tp-confirm-msg" style="font-size:11px;opacity:0.85;"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE GÉNÉRIQUE (autres services)
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-generic" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;" id="generic-title">Nouvelle prestation</div>
+    </div>
+    <div class="gc" style="max-width:620px;">
+      <div class="fs">DÉTAILS DE LA PRESTATION</div>
+      <div class="fr">
+        <div class="fg"><label class="fl">DATE SOUHAITÉE</label><input type="date" id="gen-date" class="fi"/></div>
+        <div class="fg"><label class="fl">PRIORITÉ</label>
+          <select id="gen-priority" class="fi">
+            <option value="normal">Normal</option>
+            <option value="urgent">Urgent</option>
+            <option value="planifie">Planifié à l'avance</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">ADRESSE D'INTERVENTION</label>
+        <input type="text" id="gen-address" class="fi" placeholder="Adresse complète"/>
+      </div>
+      <div id="gen-guests-wrap" style="display:none;" class="fg">
+        <label class="fl">NOMBRE DE PERSONNES</label>
+        <input type="number" id="gen-guests" class="fi" min="1" placeholder="Nombre d'invités"/>
+      </div>
+      <div class="fg"><label class="fl">DESCRIPTION DÉTAILLÉE</label>
+        <textarea id="gen-desc" class="fi" rows="5" style="resize:vertical;" placeholder="Décrivez précisément votre besoin..."></textarea>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button class="bg" onclick="submitGeneric()" id="gen-btn">ENVOYER MA DEMANDE</button>
+        <button class="bgo" onclick="backToServices()">ANNULER</button>
+      </div>
+      <div id="gen-success" style="display:none;margin-top:12px;padding:14px 18px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.25);color:var(--success);font-size:12px;border-radius:10px;">
+        ✓ Demande envoyée. Votre concierge vous contactera sous 2h.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE MÉNAGE & LINGE — CALENDRIER + CONFIRMATION
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-menage" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;">Ménage & Linge</div>
+    </div>
+
+    <!-- Bandeau info -->
+    <div style="display:flex;align-items:center;gap:14px;padding:14px 20px;background:rgba(201,168,76,0.05);border:0.5px solid rgba(201,168,76,0.18);border-radius:14px;margin-bottom:22px;">
+      <div style="width:38px;height:38px;min-width:38px;border-radius:10px;background:rgba(201,168,76,0.1);border:0.5px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:500;color:var(--gold-l);">Une aide ménagère vous sera assignée</div>
+        <div style="font-size:10px;color:var(--gray);margin-top:2px;">Après votre réservation, une assistante vous recontactera pour confirmer la prise en charge et vous présenter votre intervenante.</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <!-- COL GAUCHE : calendrier -->
+      <div class="gc">
+        <div class="gct" id="menage-cal-month-label">CHOISISSEZ VOS DATES</div>
+
+        <!-- Navigation mois -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <button onclick="menageCalPrev()" style="background:transparent;border:0.5px solid rgba(201,168,76,0.2);color:var(--gold);width:30px;height:30px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:14px;">←</button>
+          <span style="font-size:10px;letter-spacing:0.2em;color:var(--gold-l);" id="menage-cal-title">MAI 2026</span>
+          <button onclick="menageCalNext()" style="background:transparent;border:0.5px solid rgba(201,168,76,0.2);color:var(--gold);width:30px;height:30px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:14px;">→</button>
+        </div>
+
+        <!-- Grille calendrier -->
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px;" id="menage-cal-grid"></div>
+
+        <!-- Légende -->
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:50%;background:rgba(201,168,76,0.8);"></div><span style="font-size:9px;color:var(--gray);">Sélectionné</span></div>
+          <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(29,158,117,0.3);border:0.5px solid var(--success);"></div><span style="font-size:9px;color:var(--gray);">Aujourd'hui</span></div>
+        </div>
+
+        <!-- Dates sélectionnées -->
+        <div class="fs" style="margin-top:8px;">DATES SÉLECTIONNÉES</div>
+        <div id="menage-selected-dates" style="min-height:40px;">
+          <div style="color:var(--gray);font-size:11px;font-style:italic;">Cliquez sur les dates souhaitées</div>
+        </div>
+      </div>
+
+      <!-- COL DROITE : options -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">VOTRE DOMICILE</div>
+          <div class="fg"><label class="fl">ADRESSE</label>
+            <input type="text" id="men-address" class="fi" placeholder="Adresse complète"/>
+          </div>
+          <div class="fg"><label class="fl">ÉTAGE / ACCÈS</label>
+            <input type="text" id="men-access" class="fi" placeholder="Digicode, interphone..."/>
+          </div>
+          <div class="fr">
+            <div class="fg"><label class="fl">SURFACE (m²)</label>
+              <select id="men-surface" class="fi">
+                <option>Moins de 50 m²</option>
+                <option>50 — 80 m²</option>
+                <option>80 — 120 m²</option>
+                <option>120 — 200 m²</option>
+                <option>Plus de 200 m²</option>
+              </select>
+            </div>
+            <div class="fg"><label class="fl">HEURE DE PASSAGE</label>
+              <select id="men-time" class="fi">
+                <option>08:00 — 10:00</option>
+                <option>10:00 — 12:00</option>
+                <option>14:00 — 16:00</option>
+                <option>16:00 — 18:00</option>
+                <option>À définir avec l'intervenante</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">SERVICES SOUHAITÉS</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-sol" checked style="accent-color:var(--gold);width:16px;height:16px;"/> Nettoyage sols & surfaces
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-sdb" style="accent-color:var(--gold);width:16px;height:16px;"/> Salles de bain & sanitaires
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-cuisine" style="accent-color:var(--gold);width:16px;height:16px;"/> Cuisine & électroménager
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-repassage" style="accent-color:var(--gold);width:16px;height:16px;"/> Repassage & linge
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-vitrerie" style="accent-color:var(--gold);width:16px;height:16px;"/> Vitrerie & fenêtres
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);">
+              <input type="checkbox" id="men-linge" style="accent-color:var(--gold);width:16px;height:16px;"/> Machine à laver & séchage
+            </label>
+          </div>
+        </div>
+
+        <div class="gc">
+          <div class="gct">RÉCURRENCE</div>
+          <select id="men-recurrence" class="fi">
+            <option value="once">Intervention unique</option>
+            <option value="weekly">Chaque semaine</option>
+            <option value="biweekly">Toutes les 2 semaines</option>
+            <option value="monthly">Chaque mois</option>
+          </select>
+          <div class="fg" style="margin-top:12px;"><label class="fl">NOTES POUR L'INTERVENANTE</label>
+            <textarea id="men-notes" class="fi" rows="3" style="resize:vertical;" placeholder="Animal de compagnie, produits préférés, zones prioritaires..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="bg" onclick="submitMenage()" id="men-btn">PROGRAMMER MES INTERVENTIONS</button>
+      <button class="bgo" onclick="backToServices()">ANNULER</button>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="men-success" style="display:none;margin-top:16px;padding:20px 24px;background:rgba(29,158,117,0.06);border:0.5px solid rgba(29,158,117,0.25);border-radius:14px;line-height:1.9;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(29,158,117,0.15);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:500;color:var(--success);">Demande enregistrée</div>
+      </div>
+      <div style="font-size:12px;color:var(--gray);" id="men-confirm-msg"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE PETITS TRAVAUX — BOÎTE À OUTILS
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-travaux" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;">Petits Travaux & Réparations</div>
+    </div>
+
+    <div class="g2">
+      <!-- COL GAUCHE : type de professionnel -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">DE QUEL PROFESSIONNEL AVEZ-VOUS BESOIN ?</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="pro-grid">
+
+            <div class="pro-card active" onclick="selectPro(this,'plombier')" data-pro="plombier">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 22V12M12 12C12 8 8 6 6 8s-2 6 4 6M12 12c0-4 4-6 6-4s2 6-6 6"/><circle cx="12" cy="5" r="3"/></svg>
+              </div>
+              <div class="pro-name">Plombier</div>
+              <div class="pro-desc">Fuite, robinet, WC, siphon</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'electricien')" data-pro="electricien">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div class="pro-name">Électricien</div>
+              <div class="pro-desc">Prise, interrupteur, tableau</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'serrurier')" data-pro="serrurier">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+              </div>
+              <div class="pro-name">Serrurier</div>
+              <div class="pro-desc">Serrure, clé, porte bloquée</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'peintre')" data-pro="peintre">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 13.5V19a2 2 0 002 2h16a2 2 0 002-2v-5.5M2 13.5L12 3l10 10.5M7 19v-4a5 5 0 0110 0v4"/></svg>
+              </div>
+              <div class="pro-name">Peintre</div>
+              <div class="pro-desc">Peinture, rafraîchissement</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'menuisier')" data-pro="menuisier">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div class="pro-name">Menuisier</div>
+              <div class="pro-desc">Porte, fenêtre, meuble</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'carreleur')" data-pro="carreleur">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+              </div>
+              <div class="pro-name">Carreleur</div>
+              <div class="pro-desc">Pose, joint, remplacement</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'jardinage')" data-pro="jardinage">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 22V12M12 12C9 9 5 10 4 13s2 7 8 5M12 12c3-3 7-2 8 1s-2 7-8 5"/></svg>
+              </div>
+              <div class="pro-name">Jardinier</div>
+              <div class="pro-desc">Taille, entretien, aménagement</div>
+            </div>
+
+            <div class="pro-card" onclick="selectPro(this,'autre')" data-pro="autre">
+              <div class="pro-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </div>
+              <div class="pro-name">Autre</div>
+              <div class="pro-desc">Précisez dans la note</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Urgence -->
+        <div class="gc">
+          <div class="gct">NIVEAU D'URGENCE</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:0.5px solid rgba(201,168,76,0.1);border-radius:10px;cursor:pointer;" id="urg-urgent-wrap">
+              <input type="radio" name="trx-urgence" value="urgent" onchange="updateTravaux()" style="accent-color:var(--danger);width:16px;height:16px;"/>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--text);">🔴 Urgent</div>
+                <div style="font-size:10px;color:var(--gray);">Intervention dans les 4h si disponible</div>
+              </div>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:0.5px solid rgba(201,168,76,0.2);border-radius:10px;cursor:pointer;background:rgba(201,168,76,0.04);" id="urg-normal-wrap">
+              <input type="radio" name="trx-urgence" value="normal" checked onchange="updateTravaux()" style="accent-color:var(--gold);width:16px;height:16px;"/>
+              <div>
+                <div style="font-size:12px;font-weight:500;color:var(--text);">📅 Planifié</div>
+                <div style="font-size:10px;color:var(--gray);">Choisissez une date à votre convenance</div>
+              </div>
+            </label>
+          </div>
+          <div class="fg" style="margin-top:12px;" id="trx-date-wrap">
+            <label class="fl">DATE SOUHAITÉE</label>
+            <input type="date" id="trx-date" class="fi"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL DROITE : description + boîte à outils -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct" id="trx-form-title">DÉCRIVEZ LE PROBLÈME</div>
+
+          <!-- Zone de description avec aide contextuelle -->
+          <div id="trx-helper" style="padding:12px 14px;background:rgba(201,168,76,0.04);border:0.5px solid rgba(201,168,76,0.12);border-radius:8px;margin-bottom:12px;font-size:11px;color:var(--gray);line-height:1.7;display:none;"></div>
+
+          <div class="fg">
+            <label class="fl">DESCRIPTION DU PROBLÈME</label>
+            <textarea id="trx-desc" class="fi" rows="5" style="resize:vertical;" placeholder="Décrivez le problème en détail..."></textarea>
+          </div>
+
+          <div class="fg"><label class="fl">ADRESSE D'INTERVENTION</label>
+            <input type="text" id="trx-address" class="fi" placeholder="Adresse complète"/>
+          </div>
+        </div>
+
+        <!-- Boîte à outils photo -->
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">🔧 BOÎTE À OUTILS</div>
+          <div style="font-size:11px;color:var(--gray);margin-bottom:14px;line-height:1.6;">
+            Cochez ce qui vous concerne pour aider le professionnel à préparer son intervention.
+          </div>
+          <div id="trx-checklist" style="display:flex;flex-direction:column;gap:7px;"></div>
+        </div>
+
+        <!-- Résumé professionnel -->
+        <div class="gc" style="background:rgba(201,168,76,0.04);border-color:rgba(201,168,76,0.2);">
+          <div class="gct" style="color:var(--gold);">PROFESSIONNEL SÉLECTIONNÉ</div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(201,168,76,0.1);border:0.5px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;" id="trx-pro-icon-big">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:500;color:var(--gold-l);" id="trx-pro-name-big">Plombier</div>
+              <div style="font-size:10px;color:var(--gray);" id="trx-pro-desc-big">Fuite, robinet, WC, siphon</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--gray);padding:10px 12px;background:rgba(255,255,255,0.02);border-radius:8px;line-height:1.7;" id="trx-pro-detail">
+            Un plombier qualifié interviendra à votre domicile. Pensez à couper l'eau en cas de fuite importante.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="bg" onclick="submitTravaux()" id="trx-btn">ENVOYER MA DEMANDE</button>
+      <button class="bgo" onclick="backToServices()">ANNULER</button>
+    </div>
+    <div id="trx-success" style="display:none;margin-top:14px;padding:16px 20px;background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.25);color:var(--success);font-size:12px;border-radius:12px;line-height:1.8;">
+      <div style="font-weight:500;margin-bottom:4px;">✓ Demande transmise</div>
+      <div id="trx-confirm-msg" style="font-size:11px;opacity:0.85;"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FORMULAIRE ASSISTANCE ADMINISTRATIVE — AGENDA ASSISTANTE
+  ══════════════════════════════════════════════════════════════════ -->
+  <div id="form-admin" style="display:none;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <button class="bgo" onclick="backToServices()" style="padding:8px 14px;font-size:11px;">← Retour</button>
+      <div class="pt" style="margin:0;">Assistance Administrative</div>
+    </div>
+
+    <!-- Présentation assistante -->
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(26,39,68,0.4));border:0.5px solid rgba(201,168,76,0.2);border-radius:20px;padding:24px 28px;margin-bottom:22px;display:flex;align-items:center;gap:20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-20px;top:-20px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.06),transparent 70%);pointer-events:none;"></div>
+      <div style="width:60px;height:60px;min-width:60px;border-radius:50%;background:rgba(201,168,76,0.12);border:1.5px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div style="font-size:9px;letter-spacing:0.3em;color:var(--gold);margin-bottom:4px;">VOTRE ASSISTANTE APOGÉE & CO</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold-l);">Réservez votre rendez-vous</div>
+        <div style="font-size:11px;color:var(--gray);margin-top:4px;">Sélectionnez un créneau disponible — confirmation immédiate par email</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <!-- COL GAUCHE : créneaux disponibles -->
+      <div class="gc">
+        <div class="gct">PROCHAINS CRÉNEAUX DISPONIBLES</div>
+
+        <!-- Navigation semaine -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <button onclick="adminCalPrev()" style="background:transparent;border:0.5px solid rgba(201,168,76,0.2);color:var(--gold);width:28px;height:28px;border-radius:6px;cursor:pointer;font-family:inherit;">←</button>
+          <span style="font-size:10px;letter-spacing:0.15em;color:var(--gold-l);" id="admin-week-label">SEMAINE EN COURS</span>
+          <button onclick="adminCalNext()" style="background:transparent;border:0.5px solid rgba(201,168,76,0.2);color:var(--gold);width:28px;height:28px;border-radius:6px;cursor:pointer;font-family:inherit;">→</button>
+        </div>
+
+        <!-- Créneaux par jour -->
+        <div id="admin-slots" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+
+      <!-- COL DROITE : type + notes -->
+      <div>
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">TYPE DE RENDEZ-VOUS</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="rdv-type-card active" onclick="selectRdvType(this,'planification')" data-type="planification">
+              <div style="font-size:12px;font-weight:500;color:var(--text);">📋 Planification & Organisation</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:2px;">Agenda, priorités, planning hebdomadaire</div>
+            </div>
+            <div class="rdv-type-card" onclick="selectRdvType(this,'courrier')" data-type="courrier">
+              <div style="font-size:12px;font-weight:500;color:var(--text);">📬 Courrier & Démarches</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:2px;">Lettres, dossiers, formulaires administratifs</div>
+            </div>
+            <div class="rdv-type-card" onclick="selectRdvType(this,'finances')" data-type="finances">
+              <div style="font-size:12px;font-weight:500;color:var(--text);">💳 Suivi Financier</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:2px;">Factures, remboursements, budgets</div>
+            </div>
+            <div class="rdv-type-card" onclick="selectRdvType(this,'autre')" data-type="autre">
+              <div style="font-size:12px;font-weight:500;color:var(--text);">✦ Autre</div>
+              <div style="font-size:10px;color:var(--gray);margin-top:2px;">Précisez dans vos notes</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gc" style="margin-bottom:14px;">
+          <div class="gct">FORMAT</div>
+          <div style="display:flex;gap:8px;">
+            <button class="rdv-format-btn active" onclick="selectFormat(this,'place')" data-fmt="place" style="flex:1;padding:11px;border-radius:8px;border:0.5px solid rgba(201,168,76,0.3);background:rgba(201,168,76,0.08);color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.2s;">Sur place</button>
+            <button class="rdv-format-btn" onclick="selectFormat(this,'visio')" data-fmt="visio" style="flex:1;padding:11px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.08);background:transparent;color:var(--gray);font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.2s;">Visio</button>
+            <button class="rdv-format-btn" onclick="selectFormat(this,'tel')" data-fmt="tel" style="flex:1;padding:11px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.08);background:transparent;color:var(--gray);font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.2s;">Téléphone</button>
+          </div>
+        </div>
+
+        <div class="gc">
+          <div class="gct">NOTES POUR VOTRE ASSISTANTE</div>
+          <textarea id="adm-notes" class="fi" rows="4" style="resize:vertical;" placeholder="Décrivez ce que vous souhaitez accomplir lors de ce rendez-vous..."></textarea>
+        </div>
+
+        <!-- Récapitulatif RDV sélectionné -->
+        <div id="admin-rdv-recap" style="display:none;margin-top:14px;padding:16px 18px;background:rgba(201,168,76,0.06);border:0.5px solid rgba(201,168,76,0.25);border-radius:12px;">
+          <div style="font-size:9px;letter-spacing:0.25em;color:var(--gold);margin-bottom:8px;">VOTRE RENDEZ-VOUS</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-l);" id="admin-rdv-date">—</div>
+          <div style="font-size:11px;color:var(--gray);margin-top:4px;" id="admin-rdv-detail">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:8px;">
+      <button class="bg" onclick="submitAdmin()" id="adm-btn">CONFIRMER MON RENDEZ-VOUS</button>
+      <button class="bgo" onclick="backToServices()">ANNULER</button>
+    </div>
+    <div id="adm-success" style="display:none;margin-top:14px;padding:20px 24px;background:rgba(29,158,117,0.06);border:0.5px solid rgba(29,158,117,0.25);border-radius:14px;line-height:1.9;">
+      <div style="font-size:13px;font-weight:500;color:var(--success);margin-bottom:6px;">✓ Rendez-vous confirmé</div>
+      <div style="font-size:11px;color:var(--gray);" id="adm-confirm-msg"></div>
+    </div>
+  </div>
+
+
+
+
+
+<!-- NAV FLOTTANTE -->
+<div class="floatnav">
+  <button class="fn active" onclick="nav('dashboard')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Accueil</span>
+  </button>
+  <div class="nsep"></div>
+  <button class="fn" onclick="nav('nouvelle-demande')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    <span>Services</span>
+  </button>
+  <div class="nsep"></div>
+  <button class="fn" onclick="nav('mes-demandes')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>Suivi</span>
+  </button>
+  <div class="nsep"></div>
+  <button class="fn" onclick="nav('agenda')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Agenda</span>
+  </button>
+  <div class="nsep"></div>
+  <button class="fn" onclick="nav('messagerie')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Messages</span>
+  </button>
+  <div class="nsep"></div>
+  <button class="fn" onclick="nav('profil')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Profil</span>
+  </button>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc,
+  doc, query, where, orderBy, serverTimestamp, onSnapshot, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── Config Firebase ───────────────────────────────────────────────────────
+const cfg = {
+  apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
+  authDomain:        "apogee-co.firebaseapp.com",
+  projectId:         "apogee-co",
+  storageBucket:     "apogee-co.firebasestorage.app",
+  messagingSenderId: "752278064291",
+  appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
+};
+const app  = initializeApp(cfg);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ── Variables globales ────────────────────────────────────────────────────
+let currentUser = null, unsubMsg = null;
+let crsItems = [], tpPax = 1;
+let menageDate = new Date(), menageSelected = [];
+let adminWeekOffset = 0, adminSelectedSlot = null;
+let adminRdvType = "planification", adminFormat = "place";
+
+// ── Constantes ────────────────────────────────────────────────────────────
+const MONTHS   = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+const DAYS_HDR = ["L","M","M","J","V","S","D"];
+
+// ── Utils sécurisés ───────────────────────────────────────────────────────
+function esc(s) {
+  if (typeof s !== "string") s = String(s ?? "");
+  const map = {"&":"&amp;","<":"&lt;",">":"&gt;"};
+  map['"'] = "&quot;";
+  map["'"] = "&#039;";
+  map["`"] = "&#x60;";
+  return s.replace(/[&<>"'`]/g, m => map[m] || m);
+}
+function sanitize(s) { return (s||"").trim().replace(/<[^>]*>/g,"").substring(0,2000); }
+function checkRateLimit(key, max=10, ms=60000) {
+  const now=Date.now(), d=JSON.parse(localStorage.getItem("rl_"+key)||"{}");
+  const calls=(d.calls||[]).filter(t=>now-t<ms);
+  if(calls.length>=max) return false;
+  calls.push(now); localStorage.setItem("rl_"+key,JSON.stringify({calls})); return true;
+}
+function fdate(d) { try { return d?new Date(d).toLocaleDateString("fr-FR"):"—"; } catch { return "—"; } }
+function badge(s) { return (s==="pending"||s==="en cours")?"bp":(s==="done"||s==="terminé")?"bd":"bn"; }
+function blabel(s) { return s==="pending"?"EN ATTENTE":s==="en cours"?"EN COURS":(s==="done"||s==="terminé")?"TERMINÉ":"NOUVEAU"; }
+function toast(msg, type="info") {
+  const t=document.getElementById("toast"); if(!t) return;
+  t.textContent=msg;
+  t.style.borderColor=type==="error"?"rgba(226,75,74,0.4)":type==="success"?"rgba(29,158,117,0.4)":"rgba(201,168,76,0.3)";
+  t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  if (!user) { window.location.href="login.html"; return; }
+  try {
+    const snap = await getDoc(doc(db,"users",user.uid));
+    const data = snap.exists() ? snap.data() : {};
+    if (data.role==="b2b"||data.role==="admin"&&false) { window.location.href="dashboard-b2b.html"; return; }
+    currentUser = user;
+    const name = sanitize(data.prenom||user.email.split("@")[0]);
+    document.getElementById("user-name").textContent = name;
+    document.getElementById("greeting").textContent  = "Bonjour, "+name;
+    document.getElementById("p-email").value = user.email;
+    ["prenom","nom","tel","address"].forEach(f=>{
+      const el=document.getElementById("p-"+f); if(el&&data[f]) el.value=sanitize(data[f]);
+    });
+    document.getElementById("p-avatar").textContent=(data.prenom||name).charAt(0).toUpperCase();
+    await loadDashboard();
+    buildAgendaCal();
+    listenMessages();
+  } catch(e) { console.error(e); toast("Erreur de chargement","error"); }
+});
+
+// ── Nav ───────────────────────────────────────────────────────────────────
+window.nav = function(id) {
+  document.querySelectorAll(".ps").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".fn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("sec-"+id)?.classList.add("active");
+  document.querySelector(`.fn[onclick="nav('${id}')"]`)?.classList.add("active");
+  if (id==="mes-demandes") loadDemandes();
+  if (id==="nouvelle-demande") backToServices();
+};
+window.logout = async()=>{ if(unsubMsg)unsubMsg(); await signOut(auth); window.location.href="login.html"; };
+
+// ── Navigation services ───────────────────────────────────────────────────
 window.showServiceForm = function(svc) {
-  document.querySelectorAll('[id^="form-"], #svc-selector')
-    .forEach(el => el.style.display="none");
-
-  const map = {
-    courses:"form-courses",
-    transport:"form-transport",
-    menage:"form-menage",
-    travaux:"form-travaux",
-    admin:"form-admin"
-  };
-
-  if (map[svc]) {
-    document.getElementById(map[svc]).style.display="block";
-  } else {
+  ["svc-selector","form-courses","form-transport","form-menage",
+   "form-travaux","form-admin","form-generic"].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display="none";
+  });
+  if (svc==="courses")   { document.getElementById("form-courses").style.display="block";  updateCoursesStatus(); }
+  else if(svc==="transport") { document.getElementById("form-transport").style.display="block"; updateTransportSummary(); }
+  else if(svc==="menage")    { document.getElementById("form-menage").style.display="block";   initMenageCal(); }
+  else if(svc==="travaux")   { document.getElementById("form-travaux").style.display="block";  initTravaux(); }
+  else if(svc==="admin")     { document.getElementById("form-admin").style.display="block";    initAdminSlots(); }
+  else {
     document.getElementById("form-generic").style.display="block";
+    const titles={gestion:"Gestion Locative",evenementiel:"Événementiel Privé",decoration:"Décoration & Scénographie"};
+    document.getElementById("generic-title").textContent=titles[svc]||svc;
+    const gw=document.getElementById("gen-guests-wrap");
+    if(gw) gw.style.display=(svc==="evenementiel"||svc==="decoration")?"block":"none";
+    document.getElementById("form-generic").dataset.svc=svc;
   }
 };
-
 window.backToServices = function() {
-  document.querySelectorAll('[id^="form-"]')
-    .forEach(el => el.style.display="none");
-  document.getElementById("svc-selector").style.display="block";
+  ["form-courses","form-transport","form-menage","form-travaux","form-admin","form-generic"].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display="none";
+  });
+  const sel=document.getElementById("svc-selector"); if(sel) sel.style.display="block";
+  crsItems=[]; tpPax=1; renderCrsList();
+};
+
+// ── Dashboard ─────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const snap=await getDocs(query(collection(db,"demandes"),where("userId","==",currentUser.uid)));
+    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById("stat-pending").textContent=items.filter(i=>i.status==="pending"||i.status==="en cours").length;
+    document.getElementById("stat-done").textContent=items.filter(i=>i.status==="done"||i.status==="terminé").length;
+    document.getElementById("stat-msgs").textContent="—";
+    const next=items.filter(i=>i.date).sort((a,b)=>new Date(a.date)-new Date(b.date))[0]?.date;
+    document.getElementById("stat-next").textContent=fdate(next);
+    const rd=document.getElementById("recent-demandes");
+    rd.innerHTML=items.length===0
+      ? `<div style="color:var(--gray);font-size:12px;font-style:italic;">Aucune prestation pour l'instant.<br><br>
+           <button class="bg" onclick="nav('nouvelle-demande')" style="font-size:9px;padding:10px 18px;margin-top:6px;">FAIRE UNE DEMANDE</button></div>`
+      : items.slice(0,3).map(i=>{
+          const t=esc(sanitize(i.type||"Prestation")),d=fdate(i.date),b=badge(i.status),bl=blabel(i.status);
+          return `<div class="item">
+            <div class="ii"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg></div>
+            <div><div class="in">${t}</div><div class="im">${d}</div></div>
+            <span class="badge ${b}">${bl}</span></div>`;
+        }).join("");
+  } catch(e) { console.error(e); toast("Erreur dashboard","error"); }
+}
+
+// ── Mes prestations ───────────────────────────────────────────────────────
+async function loadDemandes() {
+  try {
+    const snap=await getDocs(query(collection(db,"demandes"),where("userId","==",currentUser.uid),orderBy("createdAt","desc")));
+    const wrap=document.getElementById("demandes-list");
+    wrap.innerHTML=snap.docs.length===0
+      ? "<div style=\"color:var(--gray);font-size:12px;padding:20px;\">Aucune prestation.</div>"
+      : snap.docs.map(d=>{
+          const i=d.data(),t=esc(sanitize(i.type||"—")),dt=fdate(i.date),b=badge(i.status),bl=blabel(i.status);
+          const extra=i.groceryItems?`<div style="font-size:10px;color:var(--gray);margin-top:3px;">${i.groceryItems.length} article(s)</div>`
+            :i.dates?.length?`<div style="font-size:10px;color:var(--gray);margin-top:3px;">${i.dates.length} date(s) programmée(s)</div>`:"";
+          return `<div class="item" style="background:var(--glass);backdrop-filter:blur(10px);border:0.5px solid var(--glass-b);border-radius:14px;padding:14px 16px;margin-bottom:8px;">
+            <div class="ii"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            </svg></div>
+            <div style="flex:1;"><div class="in">${t}</div><div class="im">${dt}</div>${extra}</div>
+            <span class="badge ${b}">${bl}</span></div>`;
+        }).join("");
+  } catch(e) { console.error(e); toast("Erreur","error"); }
+}
+
+// ── Messagerie ────────────────────────────────────────────────────────────
+function listenMessages() {
+  if(unsubMsg) unsubMsg();
+  const chat=document.getElementById("chat-messages"); if(!chat) return;
+  const q=query(collection(db,"messages"),where("roomId","==",currentUser.uid),orderBy("createdAt","asc"));
+  unsubMsg=onSnapshot(q,snap=>{
+    chat.innerHTML="";
+    if(!snap.docs.length){
+      chat.innerHTML=`<div class="msg"><div class="mav">A</div><div><div class="mb">Bonjour ! Je suis votre concierge Apogée & Co.</div></div></div>`;
+      return;
+    }
+    snap.forEach(d=>{
+      const m=d.data(),mine=m.from===currentUser.uid;
+      const div=document.createElement("div");
+      div.className="msg"+(mine?" mine":"");
+      div.innerHTML=`${!mine?'<div class="mav">A</div>':""}<div><div class="mb">${esc(m.text||"")}</div></div>${mine?'<div class="mav">M</div>':""}`; 
+      chat.appendChild(div);
+    });
+    chat.scrollTop=chat.scrollHeight;
+  });
+}
+window.sendMessage=async function(){
+  if(!checkRateLimit("msg",30,60000)){toast("Trop de messages","error");return;}
+  const input=document.getElementById("chat-input");
+  const text=sanitize(input.value); if(!text) return;
+  input.value="";
+  try{ await addDoc(collection(db,"messages"),{roomId:currentUser.uid,from:currentUser.uid,text,createdAt:serverTimestamp()}); }
+  catch(e){console.error(e);toast("Erreur message","error");}
+};
+document.getElementById("chat-input")?.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();window.sendMessage();}
+});
+
+// ── Profil ────────────────────────────────────────────────────────────────
+window.saveProfile=async function(){
+  try{
+    const prenom=sanitize(document.getElementById("p-prenom").value);
+    await setDoc(doc(db,"users",currentUser.uid),{
+      prenom,nom:sanitize(document.getElementById("p-nom").value),
+      tel:sanitize(document.getElementById("p-tel").value),
+      address:sanitize(document.getElementById("p-address").value),role:"b2c"
+    },{merge:true});
+    if(prenom) document.getElementById("p-avatar").textContent=prenom.charAt(0).toUpperCase();
+    toast("Profil enregistré ✓","success");
+  }catch(e){console.error(e);toast("Erreur profil","error");}
+};
+
+// ── Agenda calendrier ─────────────────────────────────────────────────────
+let agendaDate=new Date();
+function buildAgendaCal(){
+  const el=document.getElementById("cal-month"); if(el) el.textContent=MONTHS[agendaDate.getMonth()]+" "+agendaDate.getFullYear();
+  const grid=document.getElementById("cal-grid"); if(!grid) return;
+  const first=new Date(agendaDate.getFullYear(),agendaDate.getMonth(),1);
+  const last=new Date(agendaDate.getFullYear(),agendaDate.getMonth()+1,0);
+  const today=new Date();
+  let html=DAYS_HDR.map(d=>`<div class="cd hd">${d}</div>`).join("");
+  const start=(first.getDay()+6)%7;
+  for(let i=0;i<start;i++) html+=`<div class="cd od"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const isT=d===today.getDate()&&agendaDate.getMonth()===today.getMonth()&&agendaDate.getFullYear()===today.getFullYear();
+    html+=`<div class="cd${isT?" td":""}">${d}</div>`;
+  }
+  grid.innerHTML=html;
+}
+window.calPrev=()=>{agendaDate.setMonth(agendaDate.getMonth()-1);buildAgendaCal();};
+window.calNext=()=>{agendaDate.setMonth(agendaDate.getMonth()+1);buildAgendaCal();};
+
+// ══════════════════════════════════════════════════════════════════════════
+// ── COURSES ──────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+function updateCoursesStatus(){
+  const hasItems=crsItems.length>0;
+  const hasDate=document.getElementById("crs-date")?.value;
+  const hasTime=document.getElementById("crs-time")?.value;
+  const setDot=(id,active)=>{
+    const dot=document.getElementById("dot-"+id),lbl=document.getElementById("label-"+id);
+    if(!dot) return;
+    dot.style.background=active?"var(--success)":"var(--gray)";
+    dot.style.boxShadow=active?"0 0 8px rgba(29,158,117,0.5)":"none";
+    if(lbl) lbl.style.color=active?"var(--success)":"var(--gray)";
+  };
+  setDot("liste",hasItems);
+  setDot("livraison",hasItems&&hasDate&&hasTime);
+  setDot("confirm",false);
+  const txt=document.getElementById("courses-status-txt");
+  if(!txt) return;
+  if(!hasItems) txt.textContent="En attente de votre liste";
+  else if(!hasDate||!hasTime) txt.textContent=`${crsItems.length} article(s) — choisissez une date`;
+  else txt.textContent=`${crsItems.length} article(s) · Livraison le ${new Date(hasDate).toLocaleDateString("fr-FR")} ${hasTime}`;
+}
+function renderCrsList(){
+  const list=document.getElementById("crs-list"); if(!list) return;
+  list.innerHTML=crsItems.length===0
+    ? '<div style="color:var(--gray);font-size:12px;font-style:italic;padding:10px 0;">Votre liste est vide.</div>'
+    : crsItems.map((item,i)=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.06);border-radius:8px;">
+          <input type="checkbox" ${item.done?"checked":""} onchange="toggleCrs(${i})" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;cursor:pointer;"/>
+          <span style="flex:1;font-size:12px;color:var(--text);${item.done?"text-decoration:line-through;opacity:0.5":""}">${esc(item.name)}</span>
+          <span style="font-size:11px;color:var(--gray);min-width:36px;text-align:right;">${esc(item.qty)}</span>
+          <button onclick="removeCrs(${i})" style="background:transparent;border:none;color:var(--gray);cursor:pointer;padding:2px 6px;font-size:14px;" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--gray)'">×</button>
+        </div>`).join("");
+  updateCoursesStatus();
+}
+window.addQuickItem=function(name){crsItems.push({name,qty:"1",done:false});renderCrsList();};
+window.addCrsItem=function(){
+  const name=sanitize(document.getElementById("crs-item")?.value||"");
+  const qty=sanitize(document.getElementById("crs-qty")?.value||"1");
+  if(!name) return;
+  crsItems.push({name,qty,done:false});
+  document.getElementById("crs-item").value=""; document.getElementById("crs-qty").value="";
+  renderCrsList();
+};
+window.removeCrs=i=>{crsItems.splice(i,1);renderCrsList();};
+window.toggleCrs=i=>{crsItems[i].done=!crsItems[i].done;renderCrsList();};
+document.addEventListener("change",e=>{ if(e.target.id==="crs-date"||e.target.id==="crs-time") updateCoursesStatus(); });
+
+window.submitCourses=async function(){
+  if(crsItems.length===0){toast("Ajoutez au moins un article","error");return;}
+  const date=sanitize(document.getElementById("crs-date")?.value||"");
+  const time=sanitize(document.getElementById("crs-time")?.value||"");
+  if(!date||!time){toast("Choisissez une date et heure de livraison","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes, patientez","error");return;}
+  const btn=document.getElementById("crs-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try{
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:"Courses & Approvisionnement",
+      groceryItems:crsItems.map(i=>({name:sanitize(i.name),qty:sanitize(i.qty),done:i.done})),
+      date,time,
+      address:sanitize(document.getElementById("crs-address")?.value||""),
+      access:sanitize(document.getElementById("crs-access")?.value||""),
+      notes:sanitize(document.getElementById("crs-notes")?.value||""),
+      budget:sanitize(document.getElementById("crs-budget")?.value||""),
+      recurrence:document.getElementById("crs-recurrence")?.value||"once",
+      status:"pending", createdAt:serverTimestamp()
+    });
+    const dot=document.getElementById("dot-confirm"),lbl=document.getElementById("label-confirm");
+    if(dot){dot.style.background="var(--success)";dot.style.boxShadow="0 0 8px rgba(29,158,117,0.5)";}
+    if(lbl) lbl.style.color="var(--success)";
+    const txt=document.getElementById("courses-status-txt");
+    if(txt) txt.textContent="✓ Commande confirmée — livraison prévue";
+    document.getElementById("crs-success").style.display="block";
+    btn.style.display="none";
+    toast("Votre liste a été transmise ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2500);
+  }catch(e){console.error(e);toast("Erreur envoi","error");btn.disabled=false;btn.textContent="ENVOYER MA LISTE";}
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// COURSES
+// ── TRANSPORT ────────────────────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════════════
+window.changePax=function(delta){
+  tpPax=Math.max(1,Math.min(9,tpPax+delta));
+  document.getElementById("tp-pax").textContent=tpPax;
+  document.getElementById("tp-pax-label").textContent=tpPax>1?"passagers":"passager";
+  updateTransportSummary();
+};
+window.selectVehicle=function(radio){
+  document.getElementById("tp-vehicle-display").textContent=radio.value;
+  document.querySelectorAll('[id^="veh-"]').forEach(el=>{el.style.borderColor="rgba(201,168,76,0.1)";el.style.background="transparent";});
+  const p=radio.closest("label"); if(p){p.style.borderColor="rgba(201,168,76,0.4)";p.style.background="rgba(201,168,76,0.04)";}
+  updateTransportSummary();
+};
+window.updateTransportSummary=function(){
+  const from=sanitize(document.getElementById("tp-from")?.value||"");
+  const to=sanitize(document.getElementById("tp-to")?.value||"");
+  const date=document.getElementById("tp-date")?.value;
+  const time=document.getElementById("tp-time")?.value;
+  const vehicle=document.querySelector('input[name="tp-vehicle"]:checked')?.value||"Berline de prestige";
+  const summary=document.getElementById("tp-summary"); if(!summary) return;
+  const cd=document.getElementById("tp-chauffeur-display");
+  if(!from&&!to){summary.innerHTML='<div style="font-style:italic;color:var(--gray)">Remplissez les informations.</div>';return;}
+  const dateStr=date?new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}):"—";
+  summary.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px;">
+    ${from?`<div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DÉPART</span><br>${esc(from)}</div>`:""}
+    ${to?`<div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DESTINATION</span><br>${esc(to)}</div>`:""}
+    <div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DATE & HEURE</span><br>${dateStr}${time?" à "+time:""}</div>
+    <div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">VÉHICULE</span><br>${esc(vehicle)} · ${tpPax} passager${tpPax>1?"s":""}</div>
+  </div>`;
+  if(cd&&time) cd.textContent=`Un chauffeur sera présent à ${time} — confirmation sous 15 minutes`;
+};
+window.submitTransport=async function(){
+  const from=sanitize(document.getElementById("tp-from")?.value||"");
+  const to=sanitize(document.getElementById("tp-to")?.value||"");
+  const date=document.getElementById("tp-date")?.value;
+  const time=document.getElementById("tp-time")?.value;
+  if(!from||!to||!date||!time){toast("Remplissez tous les champs","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
+  const btn=document.getElementById("tp-btn"); btn.disabled=true; btn.textContent="RÉSERVATION...";
+  try{
+    const vehicle=document.querySelector('input[name="tp-vehicle"]:checked')?.value||"Berline de prestige";
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:"Transport & Déplacements",
+      departure:from,destination:to,date,time,vehicle,passengers:tpPax,
+      notes:sanitize(document.getElementById("tp-notes")?.value||""),
+      status:"pending",createdAt:serverTimestamp()
+    });
+    const dateStr=new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    const msg=document.getElementById("tp-confirm-msg");
+    if(msg) msg.textContent=`Votre ${vehicle} sera au point de prise en charge le ${dateStr} à ${time}. Votre chauffeur vous contactera 30 minutes avant.`;
+    document.getElementById("tp-success").style.display="block"; btn.style.display="none";
+    toast("Chauffeur réservé ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
+  }catch(e){console.error(e);toast("Erreur réservation","error");btn.disabled=false;btn.textContent="RÉSERVER MON CHAUFFEUR";}
+};
 
-let crsItems = [];
-
-function renderCrsList() {
-  const el = document.getElementById("crs-list");
-  if (!el) return;
-
-  if (!crsItems.length) {
-    el.innerHTML = `<div style="opacity:.5">Liste vide</div>`;
+// ══════════════════════════════════════════════════════════════════════════
+// ── MÉNAGE CALENDRIER ────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+function initMenageCal(){
+  menageDate=new Date(); menageSelected=[];
+  renderMenageCal(); renderMenageSelected();
+}
+function renderMenageCal(){
+  const titleEl=document.getElementById("menage-cal-title");
+  if(titleEl) titleEl.textContent=MONTHS[menageDate.getMonth()]+" "+menageDate.getFullYear();
+  const grid=document.getElementById("menage-cal-grid"); if(!grid) return;
+  const first=new Date(menageDate.getFullYear(),menageDate.getMonth(),1);
+  const last=new Date(menageDate.getFullYear(),menageDate.getMonth()+1,0);
+  const today=new Date(); today.setHours(0,0,0,0);
+  let html=DAYS_HDR.map(d=>`<div class="men-cal-day header">${d}</div>`).join("");
+  const startDay=(first.getDay()+6)%7;
+  for(let i=0;i<startDay;i++) html+=`<div class="men-cal-day disabled"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const dt=new Date(menageDate.getFullYear(),menageDate.getMonth(),d);
+    const key=dt.toISOString().split("T")[0];
+    const isPast=dt<today, isToday=dt.getTime()===today.getTime();
+    const isSel=menageSelected.includes(key);
+    const isWE=dt.getDay()===0||dt.getDay()===6;
+    let cls="men-cal-day";
+    if(isPast) cls+=" past disabled";
+    else if(isToday) cls+=" today";
+    if(isSel) cls+=" selected";
+    const col=isWE&&!isSel?"opacity:0.4;":"";
+    html+=`<div class="${cls}" style="${col}" onclick="${isPast?"":"toggleMenageDay('"+key+"')"}">${d}</div>`;
+  }
+  grid.innerHTML=html;
+}
+function renderMenageSelected(){
+  const wrap=document.getElementById("menage-selected-dates"); if(!wrap) return;
+  if(!menageSelected.length){
+    wrap.innerHTML='<div style="color:var(--gray);font-size:11px;font-style:italic;">Cliquez sur les dates souhaitées</div>';
     return;
   }
-
-  el.innerHTML = crsItems.map((item,i)=>`
-    <div>
-      ${esc(item.name)} (${esc(item.qty)})
-      <button onclick="removeCrs(${i})">×</button>
-    </div>
-  `).join("");
-}
-
-window.addCrsItem = function() {
-  const name = sanitize(document.getElementById("crs-item").value);
-  const qty  = sanitize(document.getElementById("crs-qty").value || "1");
-
-  if (!name) return;
-
-  crsItems.push({name, qty});
-  renderCrsList();
-};
-
-window.removeCrs = i => {
-  crsItems.splice(i,1);
-  renderCrsList();
-};
-
-// ══════════════════════════════════════════════════════════════════════════
-// TRANSPORT
-// ══════════════════════════════════════════════════════════════════════════
-
-let tpPax = 1;
-
-window.changePax = function(delta) {
-  tpPax = Math.max(1, Math.min(9, tpPax + delta));
-  document.getElementById("tp-pax").textContent = tpPax;
-};
-
-// ══════════════════════════════════════════════════════════════════════════
-// MÉNAGE CALENDRIER
-// ══════════════════════════════════════════════════════════════════════════
-
-let menageDate = new Date();
-let menageSelected = [];
-
-function renderMenageCal() {
-  const grid = document.getElementById("menage-cal-grid");
-  if (!grid) return;
-
-  const first = new Date(menageDate.getFullYear(), menageDate.getMonth(), 1);
-  const last  = new Date(menageDate.getFullYear(), menageDate.getMonth()+1, 0);
-
-  let html = "";
-
-  for (let d=1; d<=last.getDate(); d++) {
-    const key = `${menageDate.getFullYear()}-${menageDate.getMonth()+1}-${d}`;
-    const selected = menageSelected.includes(key);
-
-    html += `<div onclick="toggleMenageDay('${key}')"
-      style="padding:8px;cursor:pointer;
-      background:${selected?'gold':'transparent'}">
-      ${d}
+  wrap.innerHTML=menageSelected.map(key=>{
+    const dt=new Date(key+"T12:00:00");
+    const label=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(201,168,76,0.08);border:0.5px solid rgba(201,168,76,0.2);border-radius:8px;margin-bottom:5px;">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+      <span style="font-size:11px;color:var(--gold-l);flex:1;">${label}</span>
+      <button onclick="toggleMenageDay('${key}')" style="background:transparent;border:none;color:var(--gray);cursor:pointer;font-size:13px;padding:0 3px;">×</button>
     </div>`;
-  }
-
-  grid.innerHTML = html;
+  }).join("");
 }
-
-window.toggleMenageDay = function(key) {
-  if (menageSelected.includes(key)) {
-    menageSelected = menageSelected.filter(d=>d!==key);
-  } else {
-    menageSelected.push(key);
-  }
-  renderMenageCal();
+window.toggleMenageDay=function(key){
+  if(menageSelected.includes(key)) menageSelected=menageSelected.filter(d=>d!==key);
+  else { menageSelected.push(key); menageSelected.sort(); }
+  renderMenageCal(); renderMenageSelected();
+};
+window.menageCalPrev=function(){menageDate.setMonth(menageDate.getMonth()-1);renderMenageCal();};
+window.menageCalNext=function(){menageDate.setMonth(menageDate.getMonth()+1);renderMenageCal();};
+window.submitMenage=async function(){
+  if(!menageSelected.length){toast("Sélectionnez au moins une date","error");return;}
+  const address=sanitize(document.getElementById("men-address")?.value||"");
+  if(!address){toast("Renseignez votre adresse","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
+  const btn=document.getElementById("men-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try{
+    const services=[];
+    [{id:"sol",l:"Sols & surfaces"},{id:"sdb",l:"Salles de bain"},{id:"cuisine",l:"Cuisine"},
+     {id:"repassage",l:"Repassage"},{id:"vitrerie",l:"Vitrerie"},{id:"linge",l:"Linge"}]
+    .forEach(({id,l})=>{ if(document.getElementById("men-"+id)?.checked) services.push(l); });
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:"Ménage & Linge",
+      dates:menageSelected, address,
+      access:sanitize(document.getElementById("men-access")?.value||""),
+      surface:document.getElementById("men-surface")?.value||"",
+      time:document.getElementById("men-time")?.value||"",
+      services,
+      recurrence:document.getElementById("men-recurrence")?.value||"once",
+      notes:sanitize(document.getElementById("men-notes")?.value||""),
+      status:"pending",createdAt:serverTimestamp()
+    });
+    const firstDate=new Date(menageSelected[0]+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    const msg=document.getElementById("men-confirm-msg");
+    if(msg) msg.textContent=`Votre demande est enregistrée pour ${menageSelected.length} date(s). Première intervention prévue le ${firstDate}. Une assistante vous recontactera sous 24h pour confirmer la prise en charge et vous présenter votre aide ménagère.`;
+    document.getElementById("men-success").style.display="block"; btn.style.display="none";
+    toast("Interventions programmées ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
+  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="PROGRAMMER MES INTERVENTIONS";}
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// TRAVAUX
+// ── TRAVAUX — BOÎTE À OUTILS ─────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════════════
-
 const PRO_DATA = {
-  plombier:"Plombier",
-  electricien:"Électricien",
-  serrurier:"Serrurier"
+  plombier: {
+    name:   "Plombier",
+    desc:   "Fuite, robinet, WC, siphon",
+    detail: "En cas de fuite importante, coupez l'eau au compteur général. Repérez votre robinet d'arrêt.",
+    checklist: [
+      "Fuite visible (eau qui coule)",
+      "Robinet qui goutte en continu",
+      "WC bouché ou qui déborde",
+      "Évier ou douche bouché",
+      "Pression d'eau insuffisante",
+      "Chauffe-eau en panne"
+    ]
+  },
+  electricien: {
+    name:   "Électricien",
+    desc:   "Prise, interrupteur, tableau électrique",
+    detail: "Évitez de toucher aux installations. Coupez le disjoncteur concerné si possible.",
+    checklist: [
+      "Prise électrique défectueuse",
+      "Interrupteur cassé ou qui ne répond plus",
+      "Disjoncteur qui saute fréquemment",
+      "Ampoule ou plafonnier à remplacer",
+      "Court-circuit ou odeur de brûlé",
+      "Installation d'une nouvelle prise"
+    ]
+  },
+  serrurier: {
+    name:   "Serrurier",
+    desc:   "Serrure, clé, porte bloquée",
+    detail: "Ne forcez pas la serrure. Conservez un justificatif de domicile pour faciliter l'intervention.",
+    checklist: [
+      "Clé cassée dans la serrure",
+      "Porte bloquée ou coincée",
+      "Serrure à changer ou réparer",
+      "Double de clé à réaliser",
+      "Verrou de sécurité à poser",
+      "Porte blindée ou anti-effraction"
+    ]
+  },
+  peintre: {
+    name:   "Peintre",
+    desc:   "Peinture, enduit, ravalement",
+    detail: "Déplacez vos meubles et protégez vos sols avec des bâches si possible. Précisez les teintes souhaitées.",
+    checklist: [
+      "Mur ou pièce entière à repeindre",
+      "Plafond abîmé ou jauni",
+      "Papier peint à poser ou retirer",
+      "Fissure légère à reboucher",
+      "Peinture extérieure ou façade",
+      "Retouches suite à des travaux"
+    ]
+  },
+  menuisier: {
+    name:   "Menuisier",
+    desc:   "Porte, fenêtre, parquet, meuble",
+    detail: "Indiquez les dimensions et matériaux. Précisez si vous avez des matériaux de remplacement disponibles.",
+    checklist: [
+      "Porte qui grince ou ferme mal",
+      "Fenêtre difficile à ouvrir",
+      "Placard à réparer ou installer",
+      "Parquet abîmé ou qui craque",
+      "Meuble à assembler ou réparer",
+      "Main courante ou garde-corps"
+    ]
+  },
+  carreleur: {
+    name:   "Carreleur",
+    desc:   "Pose, joint, remplacement de carrelage",
+    detail: "Prévoyez l'accès aux zones concernées. Gardez les carreaux de remplacement si vous en avez.",
+    checklist: [
+      "Carreau fissuré ou cassé",
+      "Joint décollé ou noirci",
+      "Pose d'un nouveau carrelage",
+      "Salle de bain à rénover",
+      "Sol cuisine à refaire",
+      "Terrasse ou balcon"
+    ]
+  },
+  jardinage: {
+    name:   "Jardinier",
+    desc:   "Taille, entretien, aménagement paysager",
+    detail: "Précisez l'accès à votre jardin et les équipements disponibles (eau, prises électriques).",
+    checklist: [
+      "Taille de haie ou d'arbustes",
+      "Tonte de pelouse",
+      "Élagage d'arbres",
+      "Désherbage et entretien",
+      "Création de massifs",
+      "Système d'arrosage"
+    ]
+  },
+  autre: {
+    name:   "Autre professionnel",
+    desc:   "Professionnel à identifier selon votre besoin",
+    detail: "Décrivez précisément votre besoin. Notre équipe vous orientera vers le bon professionnel sous 2h.",
+    checklist: [
+      "Problème difficile à identifier",
+      "Travaux multiples ou combinés",
+      "Besoin d'un devis global",
+      "Intervention urgente"
+    ]
+  }
+};
+function initTravaux(){
+  const firstCard=document.querySelector('.pro-card[data-pro="plombier"]');
+  if(firstCard) selectPro(firstCard,"plombier");
+}
+window.selectPro=function(el,pro){
+  document.querySelectorAll(".pro-card").forEach(c=>c.classList.remove("active"));
+  el?.classList.add("active");
+  const data=PRO_DATA[pro]||PRO_DATA.autre;
+  const get=id=>document.getElementById(id);
+  if(get("trx-pro-name-big")) get("trx-pro-name-big").textContent=data.name;
+  if(get("trx-pro-desc-big")) get("trx-pro-desc-big").textContent=data.desc;
+  if(get("trx-pro-detail"))   get("trx-pro-detail").textContent=data.detail;
+  if(get("trx-form-title"))   get("trx-form-title").textContent="DÉCRIVEZ LE PROBLÈME — "+data.name.toUpperCase();
+  const helpEl=get("trx-helper");
+  if(helpEl){helpEl.textContent="💡 "+data.detail;helpEl.style.display="block";}
+  const cl=get("trx-checklist");
+  if(cl) cl.innerHTML=data.checklist.map((item,i)=>`
+    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);padding:4px 0;">
+      <input type="checkbox" id="trx-cl-${i}" style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;"/> ${item}
+    </label>`).join("");
+  document.getElementById("form-travaux").dataset.pro=pro;
+};
+window.updateTravaux=function(){
+  const urgent=document.querySelector('input[name="trx-urgence"]:checked')?.value==="urgent";
+  const dw=document.getElementById("trx-date-wrap"); if(dw) dw.style.display=urgent?"none":"block";
+};
+window.submitTravaux=async function(){
+  const desc=sanitize(document.getElementById("trx-desc")?.value||"");
+  const address=sanitize(document.getElementById("trx-address")?.value||"");
+  if(!desc){toast("Décrivez le problème","error");return;}
+  if(!address){toast("Renseignez l'adresse","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
+  const btn=document.getElementById("trx-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try{
+    const pro=document.getElementById("form-travaux")?.dataset?.pro||"autre";
+    const urgence=document.querySelector('input[name="trx-urgence"]:checked')?.value||"normal";
+    const checklist=Array.from(document.querySelectorAll('[id^="trx-cl-"]:checked')).map(el=>el.closest("label")?.textContent?.trim()||"");
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:"Petits Travaux & Réparations",
+      pro,desc,address,urgence,checklist,
+      date:sanitize(document.getElementById("trx-date")?.value||""),
+      status:"pending",createdAt:serverTimestamp()
+    });
+    const data=PRO_DATA[pro]||PRO_DATA.autre;
+    const msg=document.getElementById("trx-confirm-msg");
+    if(msg) msg.textContent=urgence==="urgent"
+      ?`Demande urgente transmise. Un ${data.name.toLowerCase()} interviendra dans les meilleurs délais.`
+      :`Demande transmise. Un ${data.name.toLowerCase()} qualifié vous contactera pour convenir d'un rendez-vous.`;
+    document.getElementById("trx-success").style.display="block"; btn.style.display="none";
+    toast("Demande transmise ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2500);
+  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="ENVOYER MA DEMANDE";}
 };
 
-window.selectPro = function(pro) {
-  document.getElementById("trx-pro").textContent = PRO_DATA[pro] || "Autre";
+// ══════════════════════════════════════════════════════════════════════════
+// ── ADMIN RDV ─────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+const ADMIN_TIMES=["09:00","10:00","11:00","14:00","15:00","16:00","17:00"];
+function initAdminSlots(){adminWeekOffset=0;adminSelectedSlot=null;renderAdminSlots();}
+function renderAdminSlots(){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const mon=new Date(today); mon.setDate(today.getDate()-((today.getDay()+6)%7)+adminWeekOffset*7);
+  const fmt=d=>d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"});
+  const lbl=document.getElementById("admin-week-label");
+  if(lbl) lbl.textContent=fmt(mon).toUpperCase()+" — "+fmt(new Date(mon.getTime()+4*86400000)).toUpperCase();
+  const wrap=document.getElementById("admin-slots"); if(!wrap) return;
+  wrap.innerHTML="";
+  for(let i=0;i<5;i++){
+    const dt=new Date(mon.getTime()+i*86400000);
+    const isPast=dt<today;
+    const dayStr=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    const dayEl=document.createElement("div"); dayEl.style.marginBottom="10px";
+    const slotsHtml=ADMIN_TIMES.map((time,j)=>{
+      const isTaken=(i+j)%4===0&&i>0;
+      const key=dt.toISOString().split("T")[0]+"T"+time;
+      const isSel=adminSelectedSlot===key;
+      if(isPast||isTaken) return `<button class="slot-btn unavailable" disabled>${time}</button>`;
+      return `<button class="slot-btn${isSel?" selected":""}" onclick="selectAdminSlot('${key}','${dayStr}','${time}')">${time}</button>`;
+    }).join(" ");
+    dayEl.innerHTML=`<div style="font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:7px;">${dayStr.toUpperCase()}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">${slotsHtml}</div>`;
+    wrap.appendChild(dayEl);
+  }
+}
+window.adminCalPrev=function(){adminWeekOffset--;renderAdminSlots();};
+window.adminCalNext=function(){adminWeekOffset++;renderAdminSlots();};
+window.selectAdminSlot=function(key,dayStr,time){
+  adminSelectedSlot=key; renderAdminSlots();
+  const recap=document.getElementById("admin-rdv-recap");
+  const dateEl=document.getElementById("admin-rdv-date");
+  const detEl=document.getElementById("admin-rdv-detail");
+  if(recap) recap.style.display="block";
+  if(dateEl) dateEl.textContent=dayStr+" à "+time;
+  const rdvMap={planification:"Planification",courrier:"Courrier & démarches",finances:"Suivi financier",autre:"Rendez-vous"};
+  const fmtMap={place:"Sur place",visio:"Visioconférence",tel:"Par téléphone"};
+  if(detEl) detEl.textContent=(rdvMap[adminRdvType]||"Rendez-vous")+" · "+(fmtMap[adminFormat]||"Sur place")+" · 1h";
+};
+window.selectRdvType=function(el,type){
+  document.querySelectorAll(".rdv-type-card").forEach(c=>c.classList.remove("active"));
+  el.classList.add("active"); adminRdvType=type;
+  if(adminSelectedSlot){
+    const rdvMap={planification:"Planification",courrier:"Courrier & démarches",finances:"Suivi financier",autre:"Rendez-vous"};
+    const fmtMap={place:"Sur place",visio:"Visioconférence",tel:"Par téléphone"};
+    const detEl=document.getElementById("admin-rdv-detail");
+    if(detEl) detEl.textContent=(rdvMap[type]||"Rendez-vous")+" · "+(fmtMap[adminFormat]||"Sur place")+" · 1h";
+  }
+};
+window.selectFormat=function(el,fmt){
+  document.querySelectorAll(".rdv-format-btn").forEach(b=>{b.style.borderColor="rgba(255,255,255,0.08)";b.style.background="transparent";b.style.color="var(--gray)";});
+  el.style.borderColor="rgba(201,168,76,0.3)"; el.style.background="rgba(201,168,76,0.08)"; el.style.color="var(--gold)";
+  adminFormat=fmt;
+};
+window.submitAdmin=async function(){
+  if(!adminSelectedSlot){toast("Sélectionnez un créneau","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
+  const btn=document.getElementById("adm-btn"); btn.disabled=true; btn.textContent="CONFIRMATION...";
+  try{
+    const[datePart,timePart]=adminSelectedSlot.split("T");
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:"Assistance Administrative",
+      rdvDate:datePart,rdvTime:timePart,rdvType:adminRdvType,format:adminFormat,
+      notes:sanitize(document.getElementById("adm-notes")?.value||""),
+      status:"pending",createdAt:serverTimestamp()
+    });
+    const dt=new Date(datePart+"T12:00:00");
+    const dateStr=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    const fmtMap={place:"sur place",visio:"en visioconférence",tel:"par téléphone"};
+    const msg=document.getElementById("adm-confirm-msg");
+    if(msg) msg.textContent=`Rendez-vous confirmé le ${dateStr} à ${timePart} (${fmtMap[adminFormat]||"sur place"}). Votre assistante vous enverra une confirmation par email.`;
+    document.getElementById("adm-success").style.display="block"; btn.style.display="none";
+    toast("Rendez-vous confirmé ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
+  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="CONFIRMER MON RENDEZ-VOUS";}
 };
 
-// ══════════════════════════════════════════════════════════════════════════
-// ADMIN RDV
-// ══════════════════════════════════════════════════════════════════════════
-
-let adminSelectedSlot = null;
-
-window.selectAdminSlot = function(slot) {
-  adminSelectedSlot = slot;
-  document.getElementById("admin-selected").textContent = slot;
+// ── Générique ─────────────────────────────────────────────────────────────
+window.submitGeneric=async function(){
+  const desc=sanitize(document.getElementById("gen-desc")?.value||"");
+  if(!desc){toast("Décrivez votre besoin","error");return;}
+  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
+  const btn=document.getElementById("gen-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try{
+    const svc=document.getElementById("form-generic")?.dataset?.svc||"autre";
+    const titles={gestion:"Gestion Locative",evenementiel:"Événementiel Privé",decoration:"Décoration & Scénographie"};
+    await addDoc(collection(db,"demandes"),{
+      userId:currentUser.uid, type:titles[svc]||svc, desc,
+      date:sanitize(document.getElementById("gen-date")?.value||""),
+      address:sanitize(document.getElementById("gen-address")?.value||""),
+      guests:sanitize(document.getElementById("gen-guests")?.value||""),
+      priority:document.getElementById("gen-priority")?.value||"normal",
+      status:"pending",createdAt:serverTimestamp()
+    });
+    document.getElementById("gen-success").style.display="block"; btn.style.display="none";
+    toast("Demande envoyée ✓","success");
+    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2000);
+  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="ENVOYER MA DEMANDE";}
 };
-
-// ══════════════════════════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════════════════════════
-
-document.addEventListener("DOMContentLoaded", () => {
-  buildCalendar();
-  renderCrsList();
-  renderMenageCal();
-});
 </script>
+</body>
+</html>
