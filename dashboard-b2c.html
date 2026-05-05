@@ -269,6 +269,49 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
   .svc-grid { grid-template-columns: 1fr; }
 }
 
+
+/* ══ SECTIONS COMMUNES ═══════════════════════════════════════════════════ */
+.sec-header { margin-bottom: 24px; }
+.sec-eyebrow { font-size: 9px; letter-spacing: 0.32em; color: var(--gold); font-weight: 600; margin-bottom: 8px; }
+.sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 3.5vw, 36px); font-weight: 300; color: var(--gold-l); margin-bottom: 5px; line-height: 1.2; }
+.sec-sub { font-size: 11px; color: var(--gray); letter-spacing: 0.08em; }
+
+/* ── FILTRES ── */
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.filter-btn { font-size: 9px; letter-spacing: 0.2em; color: var(--gray); background: transparent; border: 0.5px solid rgba(201,168,76,0.15); padding: 7px 16px; border-radius: 20px; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: all 0.2s; }
+.filter-btn:hover { color: var(--gold); border-color: rgba(201,168,76,0.35); }
+.filter-btn.active { color: var(--gold); border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.07); }
+
+/* ── ÉTAT VIDE ── */
+.empty-state { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 36px 20px; color: var(--gray); font-size: 12px; font-style: italic; text-align: center; }
+.empty-state svg { width: 32px; height: 32px; opacity: 0.3; }
+.loading-state { color: var(--gray); font-size: 12px; padding: 20px; font-style: italic; }
+
+/* ── CARTES PRESTATIONS (suivi) ── */
+.prestation-card { display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--glass); backdrop-filter: blur(10px); border: 0.5px solid var(--glass-b); border-radius: 14px; margin-bottom: 8px; transition: border-color 0.2s; }
+.prestation-card:hover { border-color: rgba(201,168,76,0.22); }
+.prestation-icon { width: 40px; height: 40px; min-width: 40px; border-radius: 10px; background: rgba(201,168,76,0.07); border: 0.5px solid rgba(201,168,76,0.15); display: flex; align-items: center; justify-content: center; }
+.prestation-icon svg { width: 16px; height: 16px; fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.prestation-info { flex: 1; min-width: 0; }
+.prestation-type { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.prestation-meta { font-size: 10px; color: var(--gray); }
+.prestation-extra { font-size: 10px; color: var(--gray); margin-top: 2px; font-style: italic; }
+
+/* ── CALENDRIER AGENDA ── */
+.cg { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+.cd { padding: 7px 3px; text-align: center; font-size: 11px; color: var(--gray); border-radius: 7px; cursor: default; }
+.cd.hd { font-size: 8px; letter-spacing: 0.15em; color: var(--gold); font-weight: 600; }
+.cd.td { background: rgba(201,168,76,0.12); color: var(--gold-l); font-weight: 500; }
+.cd.od { opacity: 0.2; }
+.cd.has-event { background: rgba(29,158,117,0.1); color: var(--success); border-radius: 7px; }
+
+/* ── AVATAR PROFIL ── */
+.avatar { width: 72px; height: 72px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 1.5px solid rgba(201,168,76,0.28); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); }
+
+@media(max-width:700px) {
+  #sec-profil .g2-profil, #sec-profil > div > div:first-of-type { grid-template-columns: 1fr !important; }
+}
+
 </style>
 </head>
 <body>
@@ -1170,43 +1213,187 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
 
 
 
+  </div>
+
+
+
+    </div>
+<!-- ══ SUIVI ══════════════════════════════════════════════════════════ -->
+  <div class="ps" id="sec-mes-demandes">
+    <div class="sec-header">
+      <div class="sec-eyebrow">MES PRESTATIONS</div>
+      <h2 class="sec-title">Suivi de vos demandes</h2>
+      <p class="sec-sub">Historique et statut de toutes vos prestations Apogée & Co.</p>
+    </div>
+
+    <!-- Filtres -->
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterDemandes(this,'')">TOUTES</button>
+      <button class="filter-btn" onclick="filterDemandes(this,'pending')">EN ATTENTE</button>
+      <button class="filter-btn" onclick="filterDemandes(this,'en cours')">EN COURS</button>
+      <button class="filter-btn" onclick="filterDemandes(this,'done')">TERMINÉES</button>
+    </div>
+
+    <!-- Liste -->
+    <div id="demandes-list">
+      <div class="loading-state">Chargement de vos prestations...</div>
+    </div>
+  </div>
+
+  <!-- ══ AGENDA ══════════════════════════════════════════════════════════ -->
+  <div class="ps" id="sec-agenda">
+    <div class="sec-header">
+      <div class="sec-eyebrow">MON AGENDA</div>
+      <h2 class="sec-title">Vos interventions planifiées</h2>
+      <p class="sec-sub">Vue mensuelle de vos prestations programmées.</p>
+    </div>
+
+    <div class="g2">
+      <!-- Calendrier -->
+      <div class="gc">
+        <div class="gct">
+          <span id="cal-month">—</span>
+          <div style="display:flex;gap:8px;">
+            <button class="tbtn" onclick="calPrev()" style="padding:5px 12px;">←</button>
+            <button class="tbtn" onclick="calNext()" style="padding:5px 12px;">→</button>
+          </div>
+        </div>
+        <div class="cg" id="cal-grid"></div>
+      </div>
+
+      <!-- Prochaines interventions -->
+      <div class="gc">
+        <div class="gct">PROCHAINES INTERVENTIONS</div>
+        <div id="agenda-upcoming">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+            <div>Aucune intervention planifiée</div>
+            <button class="svc-cta" data-nav="nouvelle-demande" style="margin-top:12px;">PLANIFIER →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MESSAGERIE ══════════════════════════════════════════════════════ -->
+  <div class="ps" id="sec-messagerie">
+    <div class="sec-header">
+      <div class="sec-eyebrow">MESSAGERIE</div>
+      <h2 class="sec-title">Votre concierge</h2>
+      <p class="sec-sub">Échangez en temps réel avec votre concierge dédié Apogée & Co.</p>
+    </div>
+
+    <div style="max-width:700px;">
+      <!-- En-tête concierge -->
+      <div style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:rgba(201,168,76,0.04);border:0.5px solid rgba(201,168,76,0.14);border-radius:14px;margin-bottom:14px;">
+        <div style="width:44px;height:44px;min-width:44px;border-radius:50%;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);">A</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:500;color:var(--gold-l);">Concierge Apogée & Co</div>
+          <div style="font-size:10px;color:var(--gray);margin-top:2px;">Votre interlocuteur dédié · disponible 7j/7</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--success);"></div>
+          <span style="font-size:9px;letter-spacing:0.15em;color:var(--success);">EN LIGNE</span>
+        </div>
+      </div>
+
+      <!-- Zone chat -->
+      <div class="gc" style="padding:0;">
+        <div class="cw" id="chat-messages" style="padding:18px 20px;min-height:280px;max-height:380px;"></div>
+        <div style="border-top:0.5px solid rgba(201,168,76,0.08);padding:14px 18px;display:flex;gap:10px;align-items:flex-end;">
+          <textarea id="chat-input" class="ci" rows="2" placeholder="Votre message..." style="flex:1;"></textarea>
+          <button class="bg" onclick="sendMessage()" style="padding:10px 18px;align-self:flex-end;flex-shrink:0;">ENVOYER</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PROFIL ══════════════════════════════════════════════════════════ -->
+  <div class="ps" id="sec-profil">
+    <div class="sec-header">
+      <div class="sec-eyebrow">MON ESPACE</div>
+      <h2 class="sec-title">Mon profil</h2>
+      <p class="sec-sub">Vos informations personnelles et préférences.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:800px;">
+
+      <!-- Identité -->
+      <div class="gc">
+        <div class="gct">IDENTITÉ</div>
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <div class="avatar" id="p-avatar">M</div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="fl">PRÉNOM</label><input type="text" id="p-prenom" class="fi"/></div>
+          <div class="fg"><label class="fl">NOM</label><input type="text" id="p-nom" class="fi"/></div>
+        </div>
+        <div class="fg"><label class="fl">EMAIL</label>
+          <input type="email" id="p-email" class="fi" readonly style="opacity:0.45;cursor:default;"/>
+        </div>
+      </div>
+
+      <!-- Coordonnées -->
+      <div class="gc">
+        <div class="gct">COORDONNÉES</div>
+        <div class="fg"><label class="fl">TÉLÉPHONE</label><input type="tel" id="p-tel" class="fi" placeholder="+33 6 00 00 00 00"/></div>
+        <div class="fg"><label class="fl">ADRESSE PRINCIPALE</label><input type="text" id="p-address" class="fi" placeholder="Adresse complète"/></div>
+        <div class="fg"><label class="fl">PRÉFÉRENCES</label>
+          <textarea id="p-prefs" class="fi" rows="3" style="resize:none;" placeholder="Régime alimentaire, allergies, préférences de service..."></textarea>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:6px;">
+          <button class="bg" onclick="saveProfile()" style="flex:1;">ENREGISTRER</button>
+          <button class="bgo" onclick="nav('dashboard')">ANNULER</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Déconnexion -->
+    <div style="max-width:800px;margin-top:20px;padding-top:20px;border-top:0.5px solid rgba(201,168,76,0.08);display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:11px;color:var(--gray);">Version membre · Apogée & Co © 2025</div>
+      <button class="tbtn red" onclick="logout()" style="font-size:9px;padding:9px 18px;">DÉCONNEXION</button>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
 
 <!-- NAV FLOTTANTE -->
 <div class="floatnav">
-  <button class="fn active" onclick="nav('dashboard')">
+  <button class="fn active" data-nav="dashboard" onclick="nav('dashboard')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>Accueil</span>
   </button>
   <div class="nsep"></div>
-  <button class="fn" onclick="nav('nouvelle-demande')">
+  <button class="fn" data-nav="nouvelle-demande" onclick="nav('nouvelle-demande')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
     <span>Services</span>
   </button>
   <div class="nsep"></div>
-  <button class="fn" onclick="nav('mes-demandes')">
+  <button class="fn" data-nav="mes-demandes" onclick="nav('mes-demandes')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     <span>Suivi</span>
   </button>
   <div class="nsep"></div>
-  <button class="fn" onclick="nav('agenda')">
+  <button class="fn" data-nav="agenda" onclick="nav('agenda')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     <span>Agenda</span>
   </button>
   <div class="nsep"></div>
-  <button class="fn" onclick="nav('messagerie')">
+  <button class="fn" data-nav="messagerie" onclick="nav('messagerie')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     <span>Messages</span>
   </button>
   <div class="nsep"></div>
-  <button class="fn" onclick="nav('profil')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span>Profil</span>
-  </button>
-</div>
-
-<div id="toast"></div>
-
-<script type="module">
+  <button class="fn" data-nav="profil" onclick="nav('profil')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v
+<script type="module" defer>
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -1214,7 +1401,6 @@ import { getFirestore, collection, addDoc, getDocs, getDoc,
   doc, query, where, orderBy, serverTimestamp, onSnapshot, setDoc }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Config Firebase ───────────────────────────────────────────────────────
 const cfg = {
   apiKey:            "AIzaSyCthdmlR6D2wgtMhBUQ6ZwHCBY5wHSN9o4",
   authDomain:        "apogee-co.firebaseapp.com",
@@ -1223,710 +1409,764 @@ const cfg = {
   messagingSenderId: "752278064291",
   appId:             "1:752278064291:web:d22a3a6ac0d7da6c69c316"
 };
+
+// ── Fonctions disponibles immédiatement (avant auth) ─────────────────────
+window.nav = function(id) {
+  document.querySelectorAll(".ps").forEach(function(s){ s.classList.remove("active"); });
+  document.querySelectorAll(".fn").forEach(function(b){ b.classList.remove("active"); });
+  var sec = document.getElementById("sec-"+id);
+  if (sec) sec.classList.add("active");
+  var btn = document.querySelector(".fn[data-nav=\""+id+"\"]");
+  if (btn) btn.classList.add("active");
+};
+window.showServiceForm = function(svc) {
+  ["svc-selector","form-courses","form-transport","form-menage",
+   "form-travaux","form-admin","form-generic"].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display="none";
+  });
+  var map = {courses:"form-courses",transport:"form-transport",menage:"form-menage",travaux:"form-travaux",admin:"form-admin"};
+  var target = map[svc] || "form-generic";
+  var el = document.getElementById(target);
+  if (el) el.style.display = "block";
+  if (svc==="autre"||(!map[svc])) {
+    var titles={gestion:"Gestion Locative",evenementiel:"Événementiel Privé",decoration:"Décoration & Scénographie"};
+    var gt = document.getElementById("generic-title"); if(gt) gt.textContent = titles[svc]||svc;
+    var fg = document.getElementById("form-generic"); if(fg) fg.dataset.svc = svc;
+  }
+};
+window.backToServices = function() {
+  ["form-courses","form-transport","form-menage","form-travaux","form-admin","form-generic"].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display="none";
+  });
+  var sel=document.getElementById("svc-selector"); if(sel) sel.style.display="block";
+};
+window.logout = function() { window.location.href="login.html"; };
+
+
 const app  = initializeApp(cfg);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// ── Variables globales ────────────────────────────────────────────────────
+// ── Variables ─────────────────────────────────────────────────────────────
 let currentUser = null, unsubMsg = null;
 let crsItems = [], tpPax = 1;
 let menageDate = new Date(), menageSelected = [];
 let adminWeekOffset = 0, adminSelectedSlot = null;
 let adminRdvType = "planification", adminFormat = "place";
+let allDemandes = [];
 
-// ── Constantes ────────────────────────────────────────────────────────────
-const MONTHS   = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN","JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
+const MONTHS   = ["JANVIER","FÉVRIER","MARS","AVRIL","MAI","JUIN",
+                  "JUILLET","AOÛT","SEPTEMBRE","OCTOBRE","NOVEMBRE","DÉCEMBRE"];
 const DAYS_HDR = ["L","M","M","J","V","S","D"];
 
-// ── Utils sécurisés ───────────────────────────────────────────────────────
+// ── Utils ─────────────────────────────────────────────────────────────────
 function esc(s) {
   if (typeof s !== "string") s = String(s ?? "");
-  const map = {"&":"&amp;","<":"&lt;",">":"&gt;"};
-  map['"'] = "&quot;";
-  map["'"] = "&#039;";
-  map["`"] = "&#x60;";
-  return s.replace(/[&<>"'`]/g, m => map[m] || m);
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+          .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 function sanitize(s) { return (s||"").trim().replace(/<[^>]*>/g,"").substring(0,2000); }
-function checkRateLimit(key, max=10, ms=60000) {
-  const now=Date.now(), d=JSON.parse(localStorage.getItem("rl_"+key)||"{}");
-  const calls=(d.calls||[]).filter(t=>now-t<ms);
-  if(calls.length>=max) return false;
-  calls.push(now); localStorage.setItem("rl_"+key,JSON.stringify({calls})); return true;
+function checkRateLimit(key, max, ms) {
+  max = max || 10; ms = ms || 60000;
+  const now = Date.now();
+  const d   = JSON.parse(localStorage.getItem("rl_"+key)||"{}");
+  const calls = (d.calls||[]).filter(function(t){return now-t<ms;});
+  if (calls.length >= max) return false;
+  calls.push(now);
+  localStorage.setItem("rl_"+key, JSON.stringify({calls:calls}));
+  return true;
 }
-function fdate(d) { try { return d?new Date(d).toLocaleDateString("fr-FR"):"—"; } catch { return "—"; } }
-function badge(s) { return (s==="pending"||s==="en cours")?"bp":(s==="done"||s==="terminé")?"bd":"bn"; }
-function blabel(s) { return s==="pending"?"EN ATTENTE":s==="en cours"?"EN COURS":(s==="done"||s==="terminé")?"TERMINÉ":"NOUVEAU"; }
-function toast(msg, type="info") {
-  const t=document.getElementById("toast"); if(!t) return;
-  t.textContent=msg;
-  t.style.borderColor=type==="error"?"rgba(226,75,74,0.4)":type==="success"?"rgba(29,158,117,0.4)":"rgba(201,168,76,0.3)";
-  t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3000);
+function fdate(d) { try { return d ? new Date(d).toLocaleDateString("fr-FR") : "—"; } catch(e) { return "—"; } }
+function badge(s) {
+  if (s==="pending"||s==="en cours") return "bp";
+  if (s==="done"||s==="terminé")     return "bd";
+  if (s==="annulé")                  return "br";
+  return "bn";
 }
+function blabel(s) {
+  if (s==="pending")              return "EN ATTENTE";
+  if (s==="en cours")            return "EN COURS";
+  if (s==="done"||s==="terminé") return "TERMINÉ";
+  return "NOUVEAU";
+}
+function toast(msg, type) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.style.borderColor = type==="error"   ? "rgba(226,75,74,0.4)"
+                       : type==="success" ? "rgba(29,158,117,0.4)"
+                       :                   "rgba(201,168,76,0.3)";
+  t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 3000);
+}
+function setEl(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+function getEl(id)       { return document.getElementById(id); }
 
 // ── Auth ──────────────────────────────────────────────────────────────────
-onAuthStateChanged(auth, async user => {
-  if (!user) { window.location.href="login.html"; return; }
+onAuthStateChanged(auth, async function(user) {
+  if (!user) { window.location.href = "login.html"; return; }
   try {
-    const snap = await getDoc(doc(db,"users",user.uid));
+    const snap = await getDoc(doc(db, "users", user.uid));
     const data = snap.exists() ? snap.data() : {};
-    if (data.role==="b2b"||data.role==="admin"&&false) { window.location.href="dashboard-b2b.html"; return; }
     currentUser = user;
-    const name = sanitize(data.prenom||user.email.split("@")[0]);
-    document.getElementById("user-name").textContent = name;
-    document.getElementById("greeting").textContent  = "Bonjour, "+name;
-    document.getElementById("p-email").value = user.email;
-    ["prenom","nom","tel","address"].forEach(f=>{
-      const el=document.getElementById("p-"+f); if(el&&data[f]) el.value=sanitize(data[f]);
+    const name = sanitize(data.prenom || user.email.split("@")[0]);
+    setEl("user-name", name);
+    setEl("greeting", "Bonjour, " + name);
+    var pe = getEl("p-email"); if (pe) pe.value = user.email;
+    ["prenom","nom","tel","address"].forEach(function(f) {
+      var el = getEl("p-"+f); if (el && data[f]) el.value = sanitize(data[f]);
     });
-    document.getElementById("p-avatar").textContent=(data.prenom||name).charAt(0).toUpperCase();
+    var pa = getEl("p-avatar");
+    if (pa) pa.textContent = (data.prenom||name).charAt(0).toUpperCase();
     await loadDashboard();
     buildAgendaCal();
     listenMessages();
+    // Event delegation global
+    document.addEventListener("click", function(e) {
+      var nav = e.target.closest("[data-nav]");
+      if (nav && nav.dataset.nav) window.nav(nav.dataset.nav);
+      var men = e.target.closest("[data-toggle-menage]");
+      if (men && men.dataset.toggleMenage) toggleMenageDay(men.dataset.toggleMenage);
+      var fb = e.target.closest(".filter-btn");
+      if (fb) {
+        document.querySelectorAll(".filter-btn").forEach(function(b){ b.classList.remove("active"); });
+        fb.classList.add("active");
+        filterDemandes(fb.dataset.filter||"");
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+      var ci = getEl("chat-input");
+      if (ci) ci.addEventListener("keydown", function(e) {
+        if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); window.sendMessage(); }
+      });
+    });
+    var ci2 = getEl("chat-input");
+    if (ci2) ci2.addEventListener("keydown", function(e) {
+      if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); window.sendMessage(); }
+    });
+    var crsDate = getEl("crs-date"), crsTime = getEl("crs-time");
+    if (crsDate) crsDate.addEventListener("change", updateCoursesStatus);
+    if (crsTime) crsTime.addEventListener("change", updateCoursesStatus);
   } catch(e) { console.error(e); toast("Erreur de chargement","error"); }
 });
 
 // ── Nav ───────────────────────────────────────────────────────────────────
 window.nav = function(id) {
-  document.querySelectorAll(".ps").forEach(s=>s.classList.remove("active"));
-  document.querySelectorAll(".fn").forEach(b=>b.classList.remove("active"));
-  document.getElementById("sec-"+id)?.classList.add("active");
-  document.querySelector(`.fn[onclick="nav('${id}')"]`)?.classList.add("active");
+  document.querySelectorAll(".ps").forEach(function(s){ s.classList.remove("active"); });
+  document.querySelectorAll(".fn").forEach(function(b){ b.classList.remove("active"); });
+  var sec = getEl("sec-"+id);
+  if (sec) sec.classList.add("active");
+  var btn = document.querySelector(".fn[data-nav=\""+id+"\"]");
+  if (btn) btn.classList.add("active");
   if (id==="mes-demandes") loadDemandes();
+  if (id==="agenda")       buildAgendaCal();
+  if (id==="messagerie")   listenMessages();
   if (id==="nouvelle-demande") backToServices();
 };
-window.logout = async()=>{ if(unsubMsg)unsubMsg(); await signOut(auth); window.location.href="login.html"; };
+window.logout = async function() {
+  if (unsubMsg) unsubMsg();
+  await signOut(auth);
+  window.location.href = "login.html";
+};
 
 // ── Navigation services ───────────────────────────────────────────────────
 window.showServiceForm = function(svc) {
   ["svc-selector","form-courses","form-transport","form-menage",
-   "form-travaux","form-admin","form-generic"].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.style.display="none";
+   "form-travaux","form-admin","form-generic"].forEach(function(id) {
+    var el = getEl(id); if (el) el.style.display = "none";
   });
-  if (svc==="courses")   { document.getElementById("form-courses").style.display="block";  updateCoursesStatus(); }
-  else if(svc==="transport") { document.getElementById("form-transport").style.display="block"; updateTransportSummary(); }
-  else if(svc==="menage")    { document.getElementById("form-menage").style.display="block";   initMenageCal(); }
-  else if(svc==="travaux")   { document.getElementById("form-travaux").style.display="block";  initTravaux(); }
-  else if(svc==="admin")     { document.getElementById("form-admin").style.display="block";    initAdminSlots(); }
+  if      (svc==="courses")   { var el=getEl("form-courses");   if(el){el.style.display="block"; updateCoursesStatus();} }
+  else if (svc==="transport") { var el=getEl("form-transport"); if(el){el.style.display="block"; updateTransportSummary();} }
+  else if (svc==="menage")    { var el=getEl("form-menage");    if(el){el.style.display="block"; initMenageCal();} }
+  else if (svc==="travaux")   { var el=getEl("form-travaux");   if(el){el.style.display="block"; initTravaux();} }
+  else if (svc==="admin")     { var el=getEl("form-admin");     if(el){el.style.display="block"; initAdminSlots();} }
   else {
-    document.getElementById("form-generic").style.display="block";
-    const titles={gestion:"Gestion Locative",evenementiel:"Événementiel Privé",decoration:"Décoration & Scénographie"};
-    document.getElementById("generic-title").textContent=titles[svc]||svc;
-    const gw=document.getElementById("gen-guests-wrap");
-    if(gw) gw.style.display=(svc==="evenementiel"||svc==="decoration")?"block":"none";
-    document.getElementById("form-generic").dataset.svc=svc;
+    var el = getEl("form-generic");
+    if (el) el.style.display = "block";
+    var titles = {gestion:"Gestion Locative", evenementiel:"Événementiel Privé", decoration:"Décoration & Scénographie"};
+    setEl("generic-title", titles[svc]||svc);
+    var gw = getEl("gen-guests-wrap");
+    if (gw) gw.style.display = (svc==="evenementiel"||svc==="decoration") ? "block" : "none";
+    var fg = getEl("form-generic"); if (fg) fg.dataset.svc = svc;
   }
 };
 window.backToServices = function() {
-  ["form-courses","form-transport","form-menage","form-travaux","form-admin","form-generic"].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.style.display="none";
+  ["form-courses","form-transport","form-menage","form-travaux","form-admin","form-generic"].forEach(function(id) {
+    var el = getEl(id); if (el) el.style.display = "none";
   });
-  const sel=document.getElementById("svc-selector"); if(sel) sel.style.display="block";
-  crsItems=[]; tpPax=1; renderCrsList();
+  var sel = getEl("svc-selector"); if (sel) sel.style.display = "block";
+  crsItems = []; tpPax = 1; renderCrsList();
 };
 
 // ── Dashboard ─────────────────────────────────────────────────────────────
 async function loadDashboard() {
   try {
-    const snap=await getDocs(query(collection(db,"demandes"),where("userId","==",currentUser.uid)));
-    const items=snap.docs.map(d=>({id:d.id,...d.data()}));
-    document.getElementById("stat-pending").textContent=items.filter(i=>i.status==="pending"||i.status==="en cours").length;
-    document.getElementById("stat-done").textContent=items.filter(i=>i.status==="done"||i.status==="terminé").length;
-    document.getElementById("stat-msgs").textContent="—";
-    const next=items.filter(i=>i.date).sort((a,b)=>new Date(a.date)-new Date(b.date))[0]?.date;
-    document.getElementById("stat-next").textContent=fdate(next);
-    const rd=document.getElementById("recent-demandes");
-    rd.innerHTML=items.length===0
-      ? `<div style="color:var(--gray);font-size:12px;font-style:italic;">Aucune prestation pour l'instant.<br><br>
-           <button class="bg" onclick="nav('nouvelle-demande')" style="font-size:9px;padding:10px 18px;margin-top:6px;">FAIRE UNE DEMANDE</button></div>`
-      : items.slice(0,3).map(i=>{
-          const t=esc(sanitize(i.type||"Prestation")),d=fdate(i.date),b=badge(i.status),bl=blabel(i.status);
-          return `<div class="item">
-            <div class="ii"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
-            </svg></div>
-            <div><div class="in">${t}</div><div class="im">${d}</div></div>
-            <span class="badge ${b}">${bl}</span></div>`;
-        }).join("");
+    const snap  = await getDocs(query(collection(db,"demandes"), where("userId","==",currentUser.uid)));
+    const items = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+    setEl("stat-pending", items.filter(function(i){ return i.status==="pending"||i.status==="en cours"; }).length);
+    setEl("stat-done",    items.filter(function(i){ return i.status==="done"||i.status==="terminé"; }).length);
+    setEl("stat-msgs", "—");
+    var next = items.filter(function(i){ return i.date; })
+                    .sort(function(a,b){ return new Date(a.date)-new Date(b.date); })[0];
+    setEl("stat-next", fdate(next ? next.date : null));
+    var rd = getEl("recent-demandes");
+    if (!rd) return;
+    if (!items.length) {
+      rd.innerHTML = "<div style=\"color:var(--gray);font-size:12px;font-style:italic;\">Aucune prestation pour l'instant.<br><br><button class=\"bg\" data-nav=\"nouvelle-demande\" style=\"font-size:9px;padding:10px 18px;margin-top:6px;\">FAIRE UNE DEMANDE</button></div>";
+    } else {
+      rd.innerHTML = items.slice(0,3).map(function(i) {
+        var t  = esc(sanitize(i.type||"Prestation"));
+        var d  = fdate(i.date);
+        var b  = badge(i.status);
+        var bl = blabel(i.status);
+        return "<div class=\"item\"><div class=\"ii\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--gold)\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z\"/><polyline points=\"14 2 14 8 20 8\"/></svg></div><div><div class=\"in\">" + t + "</div><div class=\"im\">" + d + "</div></div><span class=\"badge " + b + "\">" + bl + "</span></div>";
+      }).join("");
+    }
   } catch(e) { console.error(e); toast("Erreur dashboard","error"); }
 }
 
 // ── Mes prestations ───────────────────────────────────────────────────────
 async function loadDemandes() {
   try {
-    const snap=await getDocs(query(collection(db,"demandes"),where("userId","==",currentUser.uid),orderBy("createdAt","desc")));
-    const wrap=document.getElementById("demandes-list");
-    wrap.innerHTML=snap.docs.length===0
-      ? "<div style=\"color:var(--gray);font-size:12px;padding:20px;\">Aucune prestation.</div>"
-      : snap.docs.map(d=>{
-          const i=d.data(),t=esc(sanitize(i.type||"—")),dt=fdate(i.date),b=badge(i.status),bl=blabel(i.status);
-          const extra=i.groceryItems?`<div style="font-size:10px;color:var(--gray);margin-top:3px;">${i.groceryItems.length} article(s)</div>`
-            :i.dates?.length?`<div style="font-size:10px;color:var(--gray);margin-top:3px;">${i.dates.length} date(s) programmée(s)</div>`:"";
-          return `<div class="item" style="background:var(--glass);backdrop-filter:blur(10px);border:0.5px solid var(--glass-b);border-radius:14px;padding:14px 16px;margin-bottom:8px;">
-            <div class="ii"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-            </svg></div>
-            <div style="flex:1;"><div class="in">${t}</div><div class="im">${dt}</div>${extra}</div>
-            <span class="badge ${b}">${bl}</span></div>`;
-        }).join("");
+    const snap = await getDocs(query(
+      collection(db,"demandes"),
+      where("userId","==",currentUser.uid),
+      orderBy("createdAt","desc")
+    ));
+    allDemandes = snap.docs.map(function(d){ return Object.assign({id:d.id}, d.data()); });
+    filterDemandes("");
   } catch(e) { console.error(e); toast("Erreur","error"); }
 }
+function filterDemandes(status) {
+  var items = status ? allDemandes.filter(function(i){ return i.status===status; }) : allDemandes;
+  renderDemandesList(items);
+}
+function renderDemandesList(items) {
+  var wrap = getEl("demandes-list"); if (!wrap) return;
+  if (!items.length) {
+    wrap.innerHTML = "<div class=\"empty-state\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\"><path d=\"M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z\"/></svg><div>Aucune prestation</div><button class=\"svc-cta\" data-nav=\"nouvelle-demande\" style=\"margin-top:12px;\">FAIRE UNE DEMANDE &rarr;</button></div>";
+    return;
+  }
+  wrap.innerHTML = items.map(function(i) {
+    var t   = esc(sanitize(i.type||"—"));
+    var dt  = fdate(i.date);
+    var b   = badge(i.status);
+    var bl  = blabel(i.status);
+    var extra = i.groceryItems ? "<div class=\"prestation-extra\">" + i.groceryItems.length + " article(s)</div>"
+              : i.dates&&i.dates.length ? "<div class=\"prestation-extra\">" + i.dates.length + " date(s) programmée(s)</div>"
+              : i.rdvTime ? "<div class=\"prestation-extra\">à " + esc(i.rdvTime) + " · " + esc(i.format||"sur place") + "</div>"
+              : "";
+    return "<div class=\"prestation-card\"><div class=\"prestation-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--gold)\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z\"/></svg></div><div class=\"prestation-info\"><div class=\"prestation-type\">" + t + "</div><div class=\"prestation-meta\">" + dt + "</div>" + extra + "</div><span class=\"badge " + b + "\">" + bl + "</span></div>";
+  }).join("");
+}
+window.filterDemandes = filterDemandes;
 
 // ── Messagerie ────────────────────────────────────────────────────────────
 function listenMessages() {
-  if(unsubMsg) unsubMsg();
-  const chat=document.getElementById("chat-messages"); if(!chat) return;
-  const q=query(collection(db,"messages"),where("roomId","==",currentUser.uid),orderBy("createdAt","asc"));
-  unsubMsg=onSnapshot(q,snap=>{
-    chat.innerHTML="";
-    if(!snap.docs.length){
-      chat.innerHTML=`<div class="msg"><div class="mav">A</div><div><div class="mb">Bonjour ! Je suis votre concierge Apogée & Co.</div></div></div>`;
+  if (unsubMsg) unsubMsg();
+  var chat = getEl("chat-messages"); if (!chat) return;
+  const q = query(collection(db,"messages"), where("roomId","==",currentUser.uid), orderBy("createdAt","asc"));
+  unsubMsg = onSnapshot(q, function(snap) {
+    chat.innerHTML = "";
+    if (!snap.docs.length) {
+      chat.innerHTML = "<div class=\"msg\"><div class=\"mav\">A</div><div><div class=\"mb\">Bonjour\u00a0! Je suis votre concierge Apogée &amp; Co.</div></div></div>";
       return;
     }
-    snap.forEach(d=>{
-      const m=d.data(),mine=m.from===currentUser.uid;
-      const div=document.createElement("div");
-      div.className="msg"+(mine?" mine":"");
-      div.innerHTML=`${!mine?'<div class="mav">A</div>':""}<div><div class="mb">${esc(m.text||"")}</div></div>${mine?'<div class="mav">M</div>':""}`; 
+    snap.forEach(function(d) {
+      var m    = d.data();
+      var mine = m.from === currentUser.uid;
+      var div  = document.createElement("div");
+      div.className = "msg" + (mine ? " mine" : "");
+      var av  = mine ? "" : "<div class=\"mav\">A</div>";
+      var av2 = mine ? "<div class=\"mav\">M</div>" : "";
+      div.innerHTML = av + "<div><div class=\"mb\">" + esc(m.text||"") + "</div></div>" + av2;
       chat.appendChild(div);
     });
-    chat.scrollTop=chat.scrollHeight;
+    chat.scrollTop = chat.scrollHeight;
   });
 }
-window.sendMessage=async function(){
-  if(!checkRateLimit("msg",30,60000)){toast("Trop de messages","error");return;}
-  const input=document.getElementById("chat-input");
-  const text=sanitize(input.value); if(!text) return;
-  input.value="";
-  try{ await addDoc(collection(db,"messages"),{roomId:currentUser.uid,from:currentUser.uid,text,createdAt:serverTimestamp()}); }
-  catch(e){console.error(e);toast("Erreur message","error");}
+window.sendMessage = async function() {
+  if (!checkRateLimit("msg",30,60000)) { toast("Trop de messages","error"); return; }
+  var input = getEl("chat-input");
+  var text  = sanitize(input ? input.value : "");
+  if (!text) return;
+  if (input) input.value = "";
+  try {
+    await addDoc(collection(db,"messages"), {
+      roomId: currentUser.uid, from: currentUser.uid,
+      text: text, createdAt: serverTimestamp()
+    });
+  } catch(e) { console.error(e); toast("Erreur message","error"); }
 };
-document.getElementById("chat-input")?.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();window.sendMessage();}
-});
 
 // ── Profil ────────────────────────────────────────────────────────────────
-window.saveProfile=async function(){
-  try{
-    const prenom=sanitize(document.getElementById("p-prenom").value);
-    await setDoc(doc(db,"users",currentUser.uid),{
-      prenom,nom:sanitize(document.getElementById("p-nom").value),
-      tel:sanitize(document.getElementById("p-tel").value),
-      address:sanitize(document.getElementById("p-address").value),role:"b2c"
-    },{merge:true});
-    if(prenom) document.getElementById("p-avatar").textContent=prenom.charAt(0).toUpperCase();
+window.saveProfile = async function() {
+  try {
+    var prenom = sanitize((getEl("p-prenom")||{}).value||"");
+    await setDoc(doc(db,"users",currentUser.uid), {
+      prenom: prenom,
+      nom:     sanitize((getEl("p-nom")||{}).value||""),
+      tel:     sanitize((getEl("p-tel")||{}).value||""),
+      address: sanitize((getEl("p-address")||{}).value||""),
+      role: "b2c"
+    }, {merge:true});
+    if (prenom) { var pa=getEl("p-avatar"); if(pa) pa.textContent=prenom.charAt(0).toUpperCase(); }
     toast("Profil enregistré ✓","success");
-  }catch(e){console.error(e);toast("Erreur profil","error");}
+  } catch(e) { console.error(e); toast("Erreur profil","error"); }
 };
 
 // ── Agenda calendrier ─────────────────────────────────────────────────────
-let agendaDate=new Date();
-function buildAgendaCal(){
-  const el=document.getElementById("cal-month"); if(el) el.textContent=MONTHS[agendaDate.getMonth()]+" "+agendaDate.getFullYear();
-  const grid=document.getElementById("cal-grid"); if(!grid) return;
-  const first=new Date(agendaDate.getFullYear(),agendaDate.getMonth(),1);
-  const last=new Date(agendaDate.getFullYear(),agendaDate.getMonth()+1,0);
-  const today=new Date();
-  let html=DAYS_HDR.map(d=>`<div class="cd hd">${d}</div>`).join("");
-  const start=(first.getDay()+6)%7;
-  for(let i=0;i<start;i++) html+=`<div class="cd od"></div>`;
-  for(let d=1;d<=last.getDate();d++){
-    const isT=d===today.getDate()&&agendaDate.getMonth()===today.getMonth()&&agendaDate.getFullYear()===today.getFullYear();
-    html+=`<div class="cd${isT?" td":""}">${d}</div>`;
+var agendaDate = new Date();
+function buildAgendaCal() {
+  var el = getEl("cal-month");
+  if (el) el.textContent = MONTHS[agendaDate.getMonth()] + " " + agendaDate.getFullYear();
+  var grid = getEl("cal-grid"); if (!grid) return;
+  var first = new Date(agendaDate.getFullYear(), agendaDate.getMonth(), 1);
+  var last  = new Date(agendaDate.getFullYear(), agendaDate.getMonth()+1, 0);
+  var today = new Date();
+  var html  = DAYS_HDR.map(function(d){ return "<div class=\"cd hd\">" + d + "</div>"; }).join("");
+  var start = (first.getDay()+6)%7;
+  for (var i=0; i<start; i++) html += "<div class=\"cd od\"></div>";
+  for (var d=1; d<=last.getDate(); d++) {
+    var isT = d===today.getDate() && agendaDate.getMonth()===today.getMonth() && agendaDate.getFullYear()===today.getFullYear();
+    html += "<div class=\"cd" + (isT?" td":"") + "\">" + d + "</div>";
   }
-  grid.innerHTML=html;
+  grid.innerHTML = html;
 }
-window.calPrev=()=>{agendaDate.setMonth(agendaDate.getMonth()-1);buildAgendaCal();};
-window.calNext=()=>{agendaDate.setMonth(agendaDate.getMonth()+1);buildAgendaCal();};
+window.calPrev = function(){ agendaDate.setMonth(agendaDate.getMonth()-1); buildAgendaCal(); };
+window.calNext = function(){ agendaDate.setMonth(agendaDate.getMonth()+1); buildAgendaCal(); };
 
 // ══════════════════════════════════════════════════════════════════════════
-// ── COURSES ──────────────────────────────────────────────────────────────
+// COURSES
 // ══════════════════════════════════════════════════════════════════════════
-function updateCoursesStatus(){
-  const hasItems=crsItems.length>0;
-  const hasDate=document.getElementById("crs-date")?.value;
-  const hasTime=document.getElementById("crs-time")?.value;
-  const setDot=(id,active)=>{
-    const dot=document.getElementById("dot-"+id),lbl=document.getElementById("label-"+id);
-    if(!dot) return;
-    dot.style.background=active?"var(--success)":"var(--gray)";
-    dot.style.boxShadow=active?"0 0 8px rgba(29,158,117,0.5)":"none";
-    if(lbl) lbl.style.color=active?"var(--success)":"var(--gray)";
-  };
-  setDot("liste",hasItems);
-  setDot("livraison",hasItems&&hasDate&&hasTime);
-  setDot("confirm",false);
-  const txt=document.getElementById("courses-status-txt");
-  if(!txt) return;
-  if(!hasItems) txt.textContent="En attente de votre liste";
-  else if(!hasDate||!hasTime) txt.textContent=`${crsItems.length} article(s) — choisissez une date`;
-  else txt.textContent=`${crsItems.length} article(s) · Livraison le ${new Date(hasDate).toLocaleDateString("fr-FR")} ${hasTime}`;
+function updateCoursesStatus() {
+  var hasItems = crsItems.length > 0;
+  var crsDateEl = getEl("crs-date"), crsTiEl = getEl("crs-time");
+  var hasDate = crsDateEl && crsDateEl.value;
+  var hasTime = crsTiEl  && crsTiEl.value;
+  function setDot(id, active) {
+    var dot=getEl("dot-"+id), lbl=getEl("label-"+id);
+    if (!dot) return;
+    dot.style.background   = active ? "var(--success)" : "var(--gray)";
+    dot.style.boxShadow    = active ? "0 0 8px rgba(29,158,117,0.5)" : "none";
+    if (lbl) lbl.style.color = active ? "var(--success)" : "var(--gray)";
+  }
+  setDot("liste",    hasItems);
+  setDot("livraison",hasItems && hasDate && hasTime);
+  setDot("confirm",  false);
+  var txt = getEl("courses-status-txt"); if (!txt) return;
+  if (!hasItems) txt.textContent = "En attente de votre liste";
+  else if (!hasDate||!hasTime) txt.textContent = crsItems.length + " article(s) — choisissez une date";
+  else txt.textContent = crsItems.length + " article(s) · Livraison le " + new Date(hasDate).toLocaleDateString("fr-FR") + " " + hasTime;
 }
-function renderCrsList(){
-  const list=document.getElementById("crs-list"); if(!list) return;
-  list.innerHTML=crsItems.length===0
-    ? '<div style="color:var(--gray);font-size:12px;font-style:italic;padding:10px 0;">Votre liste est vide.</div>'
-    : crsItems.map((item,i)=>`
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.06);border-radius:8px;">
-          <input type="checkbox" ${item.done?"checked":""} onchange="toggleCrs(${i})" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;cursor:pointer;"/>
-          <span style="flex:1;font-size:12px;color:var(--text);${item.done?"text-decoration:line-through;opacity:0.5":""}">${esc(item.name)}</span>
-          <span style="font-size:11px;color:var(--gray);min-width:36px;text-align:right;">${esc(item.qty)}</span>
-          <button onclick="removeCrs(${i})" style="background:transparent;border:none;color:var(--gray);cursor:pointer;padding:2px 6px;font-size:14px;" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--gray)'">×</button>
-        </div>`).join("");
+function renderCrsList() {
+  var list = getEl("crs-list"); if (!list) return;
+  if (!crsItems.length) {
+    list.innerHTML = "<div style=\"color:var(--gray);font-size:12px;font-style:italic;padding:10px 0;\">Votre liste est vide.</div>";
+  } else {
+    list.innerHTML = crsItems.map(function(item, i) {
+      return "<div style=\"display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.06);border-radius:8px;\">"
+        + "<input type=\"checkbox\"" + (item.done?" checked":"") + " data-crs-toggle=\"" + i + "\" style=\"accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;cursor:pointer;\"/>"
+        + "<span style=\"flex:1;font-size:12px;color:var(--text);" + (item.done?"text-decoration:line-through;opacity:0.5":"") + "\">" + esc(item.name) + "</span>"
+        + "<span style=\"font-size:11px;color:var(--gray);min-width:36px;text-align:right;\">" + esc(item.qty) + "</span>"
+        + "<button data-crs-del=\"" + i + "\" style=\"background:transparent;border:none;color:var(--gray);cursor:pointer;padding:2px 6px;font-size:14px;\">&times;</button>"
+        + "</div>";
+    }).join("");
+    list.querySelectorAll("[data-crs-toggle]").forEach(function(el) {
+      el.addEventListener("change", function(){ toggleCrs(parseInt(el.dataset.crsToggle)); });
+    });
+    list.querySelectorAll("[data-crs-del]").forEach(function(el) {
+      el.addEventListener("click", function(){ removeCrs(parseInt(el.dataset.crsDel)); });
+    });
+  }
   updateCoursesStatus();
 }
-window.addQuickItem=function(name){crsItems.push({name,qty:"1",done:false});renderCrsList();};
-window.addCrsItem=function(){
-  const name=sanitize(document.getElementById("crs-item")?.value||"");
-  const qty=sanitize(document.getElementById("crs-qty")?.value||"1");
-  if(!name) return;
-  crsItems.push({name,qty,done:false});
-  document.getElementById("crs-item").value=""; document.getElementById("crs-qty").value="";
+window.addQuickItem = function(name) { crsItems.push({name:name,qty:"1",done:false}); renderCrsList(); };
+window.addCrsItem = function() {
+  var nameEl = getEl("crs-item"), qtyEl = getEl("crs-qty");
+  var name = sanitize(nameEl ? nameEl.value : "");
+  var qty  = sanitize(qtyEl  ? qtyEl.value  : "1") || "1";
+  if (!name) return;
+  crsItems.push({name:name, qty:qty, done:false});
+  if (nameEl) nameEl.value = ""; if (qtyEl) qtyEl.value = "";
   renderCrsList();
 };
-window.removeCrs=i=>{crsItems.splice(i,1);renderCrsList();};
-window.toggleCrs=i=>{crsItems[i].done=!crsItems[i].done;renderCrsList();};
-document.addEventListener("change",e=>{ if(e.target.id==="crs-date"||e.target.id==="crs-time") updateCoursesStatus(); });
+function removeCrs(i)  { crsItems.splice(i,1); renderCrsList(); }
+function toggleCrs(i)  { crsItems[i].done = !crsItems[i].done; renderCrsList(); }
 
-window.submitCourses=async function(){
-  if(crsItems.length===0){toast("Ajoutez au moins un article","error");return;}
-  const date=sanitize(document.getElementById("crs-date")?.value||"");
-  const time=sanitize(document.getElementById("crs-time")?.value||"");
-  if(!date||!time){toast("Choisissez une date et heure de livraison","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes, patientez","error");return;}
-  const btn=document.getElementById("crs-btn"); btn.disabled=true; btn.textContent="ENVOI...";
-  try{
-    await addDoc(collection(db,"demandes"),{
-      userId:currentUser.uid, type:"Courses & Approvisionnement",
-      groceryItems:crsItems.map(i=>({name:sanitize(i.name),qty:sanitize(i.qty),done:i.done})),
-      date,time,
-      address:sanitize(document.getElementById("crs-address")?.value||""),
-      access:sanitize(document.getElementById("crs-access")?.value||""),
-      notes:sanitize(document.getElementById("crs-notes")?.value||""),
-      budget:sanitize(document.getElementById("crs-budget")?.value||""),
-      recurrence:document.getElementById("crs-recurrence")?.value||"once",
-      status:"pending", createdAt:serverTimestamp()
+window.submitCourses = async function() {
+  if (!crsItems.length) { toast("Ajoutez au moins un article","error"); return; }
+  var dateEl=getEl("crs-date"), timeEl=getEl("crs-time");
+  var date = sanitize(dateEl ? dateEl.value : "");
+  var time = sanitize(timeEl ? timeEl.value : "");
+  if (!date||!time) { toast("Choisissez une date et heure de livraison","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes, patientez","error"); return; }
+  var btn = getEl("crs-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try {
+    await addDoc(collection(db,"demandes"), {
+      userId: currentUser.uid, type: "Courses & Approvisionnement",
+      groceryItems: crsItems.map(function(i){ return {name:sanitize(i.name),qty:sanitize(i.qty),done:i.done}; }),
+      date: date, time: time,
+      address:    sanitize((getEl("crs-address")||{}).value||""),
+      access:     sanitize((getEl("crs-access")||{}).value||""),
+      notes:      sanitize((getEl("crs-notes")||{}).value||""),
+      budget:     sanitize((getEl("crs-budget")||{}).value||""),
+      recurrence: (getEl("crs-recurrence")||{}).value||"once",
+      status: "pending", createdAt: serverTimestamp()
     });
-    const dot=document.getElementById("dot-confirm"),lbl=document.getElementById("label-confirm");
+    var dot=getEl("dot-confirm"),lbl=getEl("label-confirm");
     if(dot){dot.style.background="var(--success)";dot.style.boxShadow="0 0 8px rgba(29,158,117,0.5)";}
     if(lbl) lbl.style.color="var(--success)";
-    const txt=document.getElementById("courses-status-txt");
-    if(txt) txt.textContent="✓ Commande confirmée — livraison prévue";
-    document.getElementById("crs-success").style.display="block";
+    setEl("courses-status-txt","✓ Commande confirmée — livraison prévue");
+    var s=getEl("crs-success"); if(s) s.style.display="block";
     btn.style.display="none";
     toast("Votre liste a été transmise ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2500);
-  }catch(e){console.error(e);toast("Erreur envoi","error");btn.disabled=false;btn.textContent="ENVOYER MA LISTE";}
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 2500);
+  } catch(e) { console.error(e); toast("Erreur envoi","error"); btn.disabled=false; btn.textContent="ENVOYER MA LISTE"; }
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// ── TRANSPORT ────────────────────────────────────────────────────────────
+// TRANSPORT
 // ══════════════════════════════════════════════════════════════════════════
-window.changePax=function(delta){
-  tpPax=Math.max(1,Math.min(9,tpPax+delta));
-  document.getElementById("tp-pax").textContent=tpPax;
-  document.getElementById("tp-pax-label").textContent=tpPax>1?"passagers":"passager";
+window.changePax = function(delta) {
+  tpPax = Math.max(1, Math.min(9, tpPax + delta));
+  setEl("tp-pax", tpPax);
+  setEl("tp-pax-label", tpPax>1 ? "passagers" : "passager");
   updateTransportSummary();
 };
-window.selectVehicle=function(radio){
-  document.getElementById("tp-vehicle-display").textContent=radio.value;
-  document.querySelectorAll('[id^="veh-"]').forEach(el=>{el.style.borderColor="rgba(201,168,76,0.1)";el.style.background="transparent";});
-  const p=radio.closest("label"); if(p){p.style.borderColor="rgba(201,168,76,0.4)";p.style.background="rgba(201,168,76,0.04)";}
+window.selectVehicle = function(radio) {
+  setEl("tp-vehicle-display", radio.value);
+  document.querySelectorAll("[id^=\"veh-\"]").forEach(function(el){
+    el.style.borderColor="rgba(201,168,76,0.1)"; el.style.background="transparent";
+  });
+  var p = radio.closest("label");
+  if (p) { p.style.borderColor="rgba(201,168,76,0.4)"; p.style.background="rgba(201,168,76,0.04)"; }
   updateTransportSummary();
 };
-window.updateTransportSummary=function(){
-  const from=sanitize(document.getElementById("tp-from")?.value||"");
-  const to=sanitize(document.getElementById("tp-to")?.value||"");
-  const date=document.getElementById("tp-date")?.value;
-  const time=document.getElementById("tp-time")?.value;
-  const vehicle=document.querySelector('input[name="tp-vehicle"]:checked')?.value||"Berline de prestige";
-  const summary=document.getElementById("tp-summary"); if(!summary) return;
-  const cd=document.getElementById("tp-chauffeur-display");
-  if(!from&&!to){summary.innerHTML='<div style="font-style:italic;color:var(--gray)">Remplissez les informations.</div>';return;}
-  const dateStr=date?new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}):"—";
-  summary.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px;">
-    ${from?`<div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DÉPART</span><br>${esc(from)}</div>`:""}
-    ${to?`<div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DESTINATION</span><br>${esc(to)}</div>`:""}
-    <div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">DATE & HEURE</span><br>${dateStr}${time?" à "+time:""}</div>
-    <div><span style="color:var(--gold);font-size:9px;letter-spacing:0.2em;">VÉHICULE</span><br>${esc(vehicle)} · ${tpPax} passager${tpPax>1?"s":""}</div>
-  </div>`;
-  if(cd&&time) cd.textContent=`Un chauffeur sera présent à ${time} — confirmation sous 15 minutes`;
-};
-window.submitTransport=async function(){
-  const from=sanitize(document.getElementById("tp-from")?.value||"");
-  const to=sanitize(document.getElementById("tp-to")?.value||"");
-  const date=document.getElementById("tp-date")?.value;
-  const time=document.getElementById("tp-time")?.value;
-  if(!from||!to||!date||!time){toast("Remplissez tous les champs","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
-  const btn=document.getElementById("tp-btn"); btn.disabled=true; btn.textContent="RÉSERVATION...";
-  try{
-    const vehicle=document.querySelector('input[name="tp-vehicle"]:checked')?.value||"Berline de prestige";
-    await addDoc(collection(db,"demandes"),{
-      userId:currentUser.uid, type:"Transport & Déplacements",
-      departure:from,destination:to,date,time,vehicle,passengers:tpPax,
-      notes:sanitize(document.getElementById("tp-notes")?.value||""),
-      status:"pending",createdAt:serverTimestamp()
-    });
-    const dateStr=new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-    const msg=document.getElementById("tp-confirm-msg");
-    if(msg) msg.textContent=`Votre ${vehicle} sera au point de prise en charge le ${dateStr} à ${time}. Votre chauffeur vous contactera 30 minutes avant.`;
-    document.getElementById("tp-success").style.display="block"; btn.style.display="none";
-    toast("Chauffeur réservé ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
-  }catch(e){console.error(e);toast("Erreur réservation","error");btn.disabled=false;btn.textContent="RÉSERVER MON CHAUFFEUR";}
-};
-
-// ══════════════════════════════════════════════════════════════════════════
-// ── MÉNAGE CALENDRIER ────────────────────────────────────────────────────
-// ══════════════════════════════════════════════════════════════════════════
-function initMenageCal(){
-  menageDate=new Date(); menageSelected=[];
-  renderMenageCal(); renderMenageSelected();
-}
-function renderMenageCal(){
-  const titleEl=document.getElementById("menage-cal-title");
-  if(titleEl) titleEl.textContent=MONTHS[menageDate.getMonth()]+" "+menageDate.getFullYear();
-  const grid=document.getElementById("menage-cal-grid"); if(!grid) return;
-  const first=new Date(menageDate.getFullYear(),menageDate.getMonth(),1);
-  const last=new Date(menageDate.getFullYear(),menageDate.getMonth()+1,0);
-  const today=new Date(); today.setHours(0,0,0,0);
-  let html=DAYS_HDR.map(d=>`<div class="men-cal-day header">${d}</div>`).join("");
-  const startDay=(first.getDay()+6)%7;
-  for(let i=0;i<startDay;i++) html+=`<div class="men-cal-day disabled"></div>`;
-  for(let d=1;d<=last.getDate();d++){
-    const dt=new Date(menageDate.getFullYear(),menageDate.getMonth(),d);
-    const key=dt.toISOString().split("T")[0];
-    const isPast=dt<today, isToday=dt.getTime()===today.getTime();
-    const isSel=menageSelected.includes(key);
-    const isWE=dt.getDay()===0||dt.getDay()===6;
-    let cls="men-cal-day";
-    if(isPast) cls+=" past disabled";
-    else if(isToday) cls+=" today";
-    if(isSel) cls+=" selected";
-    const col=isWE&&!isSel?"opacity:0.4;":"";
-    html+=`<div class="${cls}" style="${col}" onclick="${isPast?"":"toggleMenageDay('"+key+"')"}">${d}</div>`;
-  }
-  grid.innerHTML=html;
-}
-function renderMenageSelected(){
-  const wrap=document.getElementById("menage-selected-dates"); if(!wrap) return;
-  if(!menageSelected.length){
-    wrap.innerHTML='<div style="color:var(--gray);font-size:11px;font-style:italic;">Cliquez sur les dates souhaitées</div>';
+window.updateTransportSummary = function() {
+  var fromEl=getEl("tp-from"), toEl=getEl("tp-to"), dateEl=getEl("tp-date"), timeEl=getEl("tp-time");
+  var from = sanitize(fromEl ? fromEl.value : "");
+  var to   = sanitize(toEl   ? toEl.value   : "");
+  var date = dateEl ? dateEl.value : "";
+  var time = timeEl ? timeEl.value : "";
+  var vRadio = document.querySelector("input[name=\"tp-vehicle\"]:checked");
+  var vehicle = vRadio ? vRadio.value : "Berline de prestige";
+  var summary = getEl("tp-summary"); if (!summary) return;
+  var cd = getEl("tp-chauffeur-display");
+  if (!from && !to) {
+    summary.innerHTML = "<div style=\"font-style:italic;color:var(--gray)\">Remplissez les informations.</div>";
     return;
   }
-  wrap.innerHTML=menageSelected.map(key=>{
-    const dt=new Date(key+"T12:00:00");
-    const label=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(201,168,76,0.08);border:0.5px solid rgba(201,168,76,0.2);border-radius:8px;margin-bottom:5px;">
-      <div style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
-      <span style="font-size:11px;color:var(--gold-l);flex:1;">${label}</span>
-      <button onclick="toggleMenageDay('${key}')" style="background:transparent;border:none;color:var(--gray);cursor:pointer;font-size:13px;padding:0 3px;">×</button>
-    </div>`;
+  var dateStr = date ? new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"}) : "—";
+  var html = "<div style=\"display:flex;flex-direction:column;gap:8px;\">";
+  if (from) html += "<div><span style=\"color:var(--gold);font-size:9px;letter-spacing:0.2em;\">DÉPART</span><br>" + esc(from) + "</div>";
+  if (to)   html += "<div><span style=\"color:var(--gold);font-size:9px;letter-spacing:0.2em;\">DESTINATION</span><br>" + esc(to) + "</div>";
+  html += "<div><span style=\"color:var(--gold);font-size:9px;letter-spacing:0.2em;\">DATE &amp; HEURE</span><br>" + dateStr + (time?" à "+time:"") + "</div>";
+  html += "<div><span style=\"color:var(--gold);font-size:9px;letter-spacing:0.2em;\">VÉHICULE</span><br>" + esc(vehicle) + " · " + tpPax + " passager" + (tpPax>1?"s":"") + "</div>";
+  html += "</div>";
+  summary.innerHTML = html;
+  if (cd && time) cd.textContent = "Un chauffeur sera présent à " + time + " — confirmation sous 15 minutes";
+};
+window.submitTransport = async function() {
+  var fromEl=getEl("tp-from"),toEl=getEl("tp-to"),dateEl=getEl("tp-date"),timeEl=getEl("tp-time");
+  var from=sanitize(fromEl?fromEl.value:""), to=sanitize(toEl?toEl.value:"");
+  var date=dateEl?dateEl.value:"", time=timeEl?timeEl.value:"";
+  if (!from||!to||!date||!time) { toast("Remplissez tous les champs","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes","error"); return; }
+  var btn=getEl("tp-btn"); btn.disabled=true; btn.textContent="RÉSERVATION...";
+  try {
+    var vRadio = document.querySelector("input[name=\"tp-vehicle\"]:checked");
+    var vehicle = vRadio ? vRadio.value : "Berline de prestige";
+    await addDoc(collection(db,"demandes"), {
+      userId:currentUser.uid, type:"Transport & Déplacements",
+      departure:from, destination:to, date:date, time:time, vehicle:vehicle, passengers:tpPax,
+      notes:sanitize((getEl("tp-notes")||{}).value||""),
+      status:"pending", createdAt:serverTimestamp()
+    });
+    var dateStr = new Date(date).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    var msg = getEl("tp-confirm-msg");
+    if (msg) msg.textContent = "Votre " + vehicle + " sera au point de prise en charge le " + dateStr + " à " + time + ". Votre chauffeur vous contactera 30 minutes avant.";
+    var s=getEl("tp-success"); if(s) s.style.display="block";
+    btn.style.display="none";
+    toast("Chauffeur réservé ✓","success");
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 3000);
+  } catch(e) { console.error(e); toast("Erreur réservation","error"); btn.disabled=false; btn.textContent="RÉSERVER MON CHAUFFEUR"; }
+};
+
+// ══════════════════════════════════════════════════════════════════════════
+// MÉNAGE — CALENDRIER
+// ══════════════════════════════════════════════════════════════════════════
+function initMenageCal() { menageDate=new Date(); menageSelected=[]; renderMenageCal(); renderMenageSelected(); }
+function renderMenageCal() {
+  var titleEl = getEl("menage-cal-title");
+  if (titleEl) titleEl.textContent = MONTHS[menageDate.getMonth()] + " " + menageDate.getFullYear();
+  var grid = getEl("menage-cal-grid"); if (!grid) return;
+  var first = new Date(menageDate.getFullYear(), menageDate.getMonth(), 1);
+  var last  = new Date(menageDate.getFullYear(), menageDate.getMonth()+1, 0);
+  var today = new Date(); today.setHours(0,0,0,0);
+  var html  = DAYS_HDR.map(function(d){ return "<div class=\"men-cal-day header\">" + d + "</div>"; }).join("");
+  var startDay = (first.getDay()+6)%7;
+  for (var i=0; i<startDay; i++) html += "<div class=\"men-cal-day disabled\"></div>";
+  for (var d=1; d<=last.getDate(); d++) {
+    var dt   = new Date(menageDate.getFullYear(), menageDate.getMonth(), d);
+    var key  = dt.toISOString().split("T")[0];
+    var isPast = dt < today, isToday = dt.getTime()===today.getTime();
+    var isSel  = menageSelected.indexOf(key) >= 0;
+    var isWE   = dt.getDay()===0 || dt.getDay()===6;
+    var cls    = "men-cal-day" + (isPast?" past disabled":"") + (isToday?" today":"") + (isSel?" selected":"");
+    var col    = (isWE && !isSel) ? "opacity:0.4;" : "";
+    var attr   = isPast ? "" : " data-key=\"" + key + "\"";
+    html += "<div class=\"" + cls + "\" style=\"" + col + "\"" + attr + ">" + d + "</div>";
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll("[data-key]").forEach(function(el) {
+    el.addEventListener("click", function(){ toggleMenageDay(el.dataset.key); });
+  });
+}
+function renderMenageSelected() {
+  var wrap = getEl("menage-selected-dates"); if (!wrap) return;
+  if (!menageSelected.length) {
+    wrap.innerHTML = "<div style=\"color:var(--gray);font-size:11px;font-style:italic;\">Cliquez sur les dates souhaitées</div>";
+    return;
+  }
+  wrap.innerHTML = menageSelected.map(function(key) {
+    var dt    = new Date(key+"T12:00:00");
+    var label = dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    return "<div style=\"display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(201,168,76,0.08);border:0.5px solid rgba(201,168,76,0.2);border-radius:8px;margin-bottom:5px;\">"
+      + "<div style=\"width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;\">"
+      + "<span style=\"font-size:11px;color:var(--gold-l);flex:1;\">" + label + "</span>"
+      + "<button data-toggle-menage=\"" + key + "\" style=\"background:transparent;border:none;color:var(--gray);cursor:pointer;font-size:13px;padding:0 3px;\">&times;</button>"
+      + "";
   }).join("");
 }
-window.toggleMenageDay=function(key){
-  if(menageSelected.includes(key)) menageSelected=menageSelected.filter(d=>d!==key);
-  else { menageSelected.push(key); menageSelected.sort(); }
+function toggleMenageDay(key) {
+  var idx = menageSelected.indexOf(key);
+  if (idx>=0) menageSelected.splice(idx,1); else { menageSelected.push(key); menageSelected.sort(); }
   renderMenageCal(); renderMenageSelected();
-};
-window.menageCalPrev=function(){menageDate.setMonth(menageDate.getMonth()-1);renderMenageCal();};
-window.menageCalNext=function(){menageDate.setMonth(menageDate.getMonth()+1);renderMenageCal();};
-window.submitMenage=async function(){
-  if(!menageSelected.length){toast("Sélectionnez au moins une date","error");return;}
-  const address=sanitize(document.getElementById("men-address")?.value||"");
-  if(!address){toast("Renseignez votre adresse","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
-  const btn=document.getElementById("men-btn"); btn.disabled=true; btn.textContent="ENVOI...";
-  try{
-    const services=[];
+}
+window.menageCalPrev = function(){ menageDate.setMonth(menageDate.getMonth()-1); renderMenageCal(); };
+window.menageCalNext = function(){ menageDate.setMonth(menageDate.getMonth()+1); renderMenageCal(); };
+window.submitMenage = async function() {
+  if (!menageSelected.length) { toast("Sélectionnez au moins une date","error"); return; }
+  var address = sanitize((getEl("men-address")||{}).value||"");
+  if (!address) { toast("Renseignez votre adresse","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes","error"); return; }
+  var btn=getEl("men-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try {
+    var services=[];
     [{id:"sol",l:"Sols & surfaces"},{id:"sdb",l:"Salles de bain"},{id:"cuisine",l:"Cuisine"},
      {id:"repassage",l:"Repassage"},{id:"vitrerie",l:"Vitrerie"},{id:"linge",l:"Linge"}]
-    .forEach(({id,l})=>{ if(document.getElementById("men-"+id)?.checked) services.push(l); });
-    await addDoc(collection(db,"demandes"),{
+    .forEach(function(x){ var el=getEl("men-"+x.id); if(el&&el.checked) services.push(x.l); });
+    await addDoc(collection(db,"demandes"), {
       userId:currentUser.uid, type:"Ménage & Linge",
-      dates:menageSelected, address,
-      access:sanitize(document.getElementById("men-access")?.value||""),
-      surface:document.getElementById("men-surface")?.value||"",
-      time:document.getElementById("men-time")?.value||"",
-      services,
-      recurrence:document.getElementById("men-recurrence")?.value||"once",
-      notes:sanitize(document.getElementById("men-notes")?.value||""),
-      status:"pending",createdAt:serverTimestamp()
+      dates:menageSelected, address:address,
+      access:     sanitize((getEl("men-access")||{}).value||""),
+      surface:    (getEl("men-surface")||{}).value||"",
+      time:       (getEl("men-time")||{}).value||"",
+      services:   services,
+      recurrence: (getEl("men-recurrence")||{}).value||"once",
+      notes:      sanitize((getEl("men-notes")||{}).value||""),
+      status:"pending", createdAt:serverTimestamp()
     });
-    const firstDate=new Date(menageSelected[0]+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-    const msg=document.getElementById("men-confirm-msg");
-    if(msg) msg.textContent=`Votre demande est enregistrée pour ${menageSelected.length} date(s). Première intervention prévue le ${firstDate}. Une assistante vous recontactera sous 24h pour confirmer la prise en charge et vous présenter votre aide ménagère.`;
-    document.getElementById("men-success").style.display="block"; btn.style.display="none";
+    var firstDate = new Date(menageSelected[0]+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    var msg = getEl("men-confirm-msg");
+    if (msg) msg.textContent = "Votre demande est enregistrée pour " + menageSelected.length + " date(s). Première intervention prévue le " + firstDate + ". Une assistante vous recontactera sous 24h pour confirmer la prise en charge et vous présenter votre aide ménagère.";
+    var s=getEl("men-success"); if(s) s.style.display="block";
+    btn.style.display="none";
     toast("Interventions programmées ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
-  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="PROGRAMMER MES INTERVENTIONS";}
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 3000);
+  } catch(e) { console.error(e); toast("Erreur","error"); btn.disabled=false; btn.textContent="PROGRAMMER MES INTERVENTIONS"; }
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// ── TRAVAUX — BOÎTE À OUTILS ─────────────────────────────────────────────
+// TRAVAUX — BOÎTE À OUTILS
 // ══════════════════════════════════════════════════════════════════════════
-const PRO_DATA = {
-  plombier: {
-    name:   "Plombier",
-    desc:   "Fuite, robinet, WC, siphon",
-    detail: "En cas de fuite importante, coupez l'eau au compteur général. Repérez votre robinet d'arrêt.",
-    checklist: [
-      "Fuite visible (eau qui coule)",
-      "Robinet qui goutte en continu",
-      "WC bouché ou qui déborde",
-      "Évier ou douche bouché",
-      "Pression d'eau insuffisante",
-      "Chauffe-eau en panne"
-    ]
-  },
-  electricien: {
-    name:   "Électricien",
-    desc:   "Prise, interrupteur, tableau électrique",
-    detail: "Évitez de toucher aux installations. Coupez le disjoncteur concerné si possible.",
-    checklist: [
-      "Prise électrique défectueuse",
-      "Interrupteur cassé ou qui ne répond plus",
-      "Disjoncteur qui saute fréquemment",
-      "Ampoule ou plafonnier à remplacer",
-      "Court-circuit ou odeur de brûlé",
-      "Installation d'une nouvelle prise"
-    ]
-  },
-  serrurier: {
-    name:   "Serrurier",
-    desc:   "Serrure, clé, porte bloquée",
-    detail: "Ne forcez pas la serrure. Conservez un justificatif de domicile pour faciliter l'intervention.",
-    checklist: [
-      "Clé cassée dans la serrure",
-      "Porte bloquée ou coincée",
-      "Serrure à changer ou réparer",
-      "Double de clé à réaliser",
-      "Verrou de sécurité à poser",
-      "Porte blindée ou anti-effraction"
-    ]
-  },
-  peintre: {
-    name:   "Peintre",
-    desc:   "Peinture, enduit, ravalement",
-    detail: "Déplacez vos meubles et protégez vos sols avec des bâches si possible. Précisez les teintes souhaitées.",
-    checklist: [
-      "Mur ou pièce entière à repeindre",
-      "Plafond abîmé ou jauni",
-      "Papier peint à poser ou retirer",
-      "Fissure légère à reboucher",
-      "Peinture extérieure ou façade",
-      "Retouches suite à des travaux"
-    ]
-  },
-  menuisier: {
-    name:   "Menuisier",
-    desc:   "Porte, fenêtre, parquet, meuble",
-    detail: "Indiquez les dimensions et matériaux. Précisez si vous avez des matériaux de remplacement disponibles.",
-    checklist: [
-      "Porte qui grince ou ferme mal",
-      "Fenêtre difficile à ouvrir",
-      "Placard à réparer ou installer",
-      "Parquet abîmé ou qui craque",
-      "Meuble à assembler ou réparer",
-      "Main courante ou garde-corps"
-    ]
-  },
-  carreleur: {
-    name:   "Carreleur",
-    desc:   "Pose, joint, remplacement de carrelage",
-    detail: "Prévoyez l'accès aux zones concernées. Gardez les carreaux de remplacement si vous en avez.",
-    checklist: [
-      "Carreau fissuré ou cassé",
-      "Joint décollé ou noirci",
-      "Pose d'un nouveau carrelage",
-      "Salle de bain à rénover",
-      "Sol cuisine à refaire",
-      "Terrasse ou balcon"
-    ]
-  },
-  jardinage: {
-    name:   "Jardinier",
-    desc:   "Taille, entretien, aménagement paysager",
-    detail: "Précisez l'accès à votre jardin et les équipements disponibles (eau, prises électriques).",
-    checklist: [
-      "Taille de haie ou d'arbustes",
-      "Tonte de pelouse",
-      "Élagage d'arbres",
-      "Désherbage et entretien",
-      "Création de massifs",
-      "Système d'arrosage"
-    ]
-  },
-  autre: {
-    name:   "Autre professionnel",
-    desc:   "Professionnel à identifier selon votre besoin",
-    detail: "Décrivez précisément votre besoin. Notre équipe vous orientera vers le bon professionnel sous 2h.",
-    checklist: [
-      "Problème difficile à identifier",
-      "Travaux multiples ou combinés",
-      "Besoin d'un devis global",
-      "Intervention urgente"
-    ]
-  }
+var PRO_DATA = {
+  plombier:   {name:"Plombier",    desc:"Fuite, robinet, WC, siphon",         detail:"En cas de fuite importante, coupez l'eau au compteur général. Repérez votre robinet d'arrêt.",                   checklist:["Fuite visible","Robinet qui goutte","WC bouché ou qui déborde","Évier ou douche bouché","Pression d'eau insuffisante","Chauffe-eau en panne"]},
+  electricien:{name:"Électricien", desc:"Prise, interrupteur, tableau",        detail:"Évitez de toucher aux installations. Coupez le disjoncteur concerné si possible.",                              checklist:["Prise électrique défectueuse","Interrupteur cassé","Disjoncteur qui saute","Ampoule à remplacer","Court-circuit ou odeur de brûlé","Nouvelle installation"]},
+  serrurier:  {name:"Serrurier",   desc:"Serrure, clé, porte bloquée",        detail:"Ne forcez pas la serrure. Conservez un justificatif de domicile pour faciliter l'intervention.",                checklist:["Clé cassée dans la serrure","Porte bloquée","Serrure à changer","Double de clé","Verrou de sécurité","Porte blindée"]},
+  peintre:    {name:"Peintre",     desc:"Peinture, enduit, ravalement",        detail:"Déplacez vos meubles et protégez vos sols avec des bâches si possible. Précisez les teintes souhaitées.",      checklist:["Mur à repeindre","Plafond abîmé","Papier peint","Fissure à reboucher","Peinture extérieure","Retouches post-travaux"]},
+  menuisier:  {name:"Menuisier",   desc:"Porte, fenêtre, parquet, meuble",    detail:"Indiquez les dimensions et matériaux. Précisez si vous avez des matériaux de remplacement.",                   checklist:["Porte qui grince","Fenêtre difficile","Placard à réparer","Parquet abîmé","Meuble à assembler","Main courante"]},
+  carreleur:  {name:"Carreleur",   desc:"Pose, joint, remplacement",           detail:"Prévoyez l'accès aux zones concernées. Gardez les carreaux de remplacement si vous en avez.",                  checklist:["Carreau fissuré","Joint décollé","Nouveau carrelage","Salle de bain","Sol cuisine","Terrasse ou balcon"]},
+  jardinage:  {name:"Jardinier",   desc:"Taille, entretien, aménagement",      detail:"Précisez l'accès à votre jardin et les équipements disponibles (eau, prises électriques).",                   checklist:["Taille de haie","Tonte de pelouse","Élagage","Désherbage","Création de massifs","Système d'arrosage"]},
+  autre:      {name:"Autre",       desc:"Professionnel à identifier",          detail:"Décrivez précisément votre besoin. Notre équipe vous orientera vers le bon professionnel sous 2h.",             checklist:["Problème difficile à identifier","Travaux multiples","Besoin d'un devis global","Intervention urgente"]}
 };
-function initTravaux(){
-  const firstCard=document.querySelector('.pro-card[data-pro="plombier"]');
-  if(firstCard) selectPro(firstCard,"plombier");
+function initTravaux() {
+  var firstCard = document.querySelector(".pro-card[data-pro=\"plombier\"]");
+  if (firstCard) window.selectPro(firstCard, "plombier");
 }
-window.selectPro=function(el,pro){
-  document.querySelectorAll(".pro-card").forEach(c=>c.classList.remove("active"));
-  el?.classList.add("active");
-  const data=PRO_DATA[pro]||PRO_DATA.autre;
-  const get=id=>document.getElementById(id);
-  if(get("trx-pro-name-big")) get("trx-pro-name-big").textContent=data.name;
-  if(get("trx-pro-desc-big")) get("trx-pro-desc-big").textContent=data.desc;
-  if(get("trx-pro-detail"))   get("trx-pro-detail").textContent=data.detail;
-  if(get("trx-form-title"))   get("trx-form-title").textContent="DÉCRIVEZ LE PROBLÈME — "+data.name.toUpperCase();
-  const helpEl=get("trx-helper");
-  if(helpEl){helpEl.textContent="💡 "+data.detail;helpEl.style.display="block";}
-  const cl=get("trx-checklist");
-  if(cl) cl.innerHTML=data.checklist.map((item,i)=>`
-    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);padding:4px 0;">
-      <input type="checkbox" id="trx-cl-${i}" style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;"/> ${item}
-    </label>`).join("");
-  document.getElementById("form-travaux").dataset.pro=pro;
+window.selectPro = function(el, pro) {
+  document.querySelectorAll(".pro-card").forEach(function(c){ c.classList.remove("active"); });
+  if (el) el.classList.add("active");
+  var data = PRO_DATA[pro] || PRO_DATA.autre;
+  setEl("trx-pro-name-big", data.name);
+  setEl("trx-pro-desc-big", data.desc);
+  setEl("trx-pro-detail",   data.detail);
+  setEl("trx-form-title",   "DÉCRIVEZ LE PROBLÈME — " + data.name.toUpperCase());
+  var helpEl = getEl("trx-helper");
+  if (helpEl) { helpEl.textContent = "💡 " + data.detail; helpEl.style.display = "block"; }
+  var cl = getEl("trx-checklist");
+  if (cl) {
+    cl.innerHTML = data.checklist.map(function(item, i) {
+      return "<label style=\"display:flex;align-items:center;gap:10px;cursor:pointer;font-size:12px;color:var(--text);padding:4px 0;\">"
+        + "<input type=\"checkbox\" id=\"trx-cl-" + i + "\" style=\"accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;\"/> "
+        + item + "</label>";
+    }).join("");
+  }
+  var ft = getEl("form-travaux"); if (ft) ft.dataset.pro = pro;
 };
-window.updateTravaux=function(){
-  const urgent=document.querySelector('input[name="trx-urgence"]:checked')?.value==="urgent";
-  const dw=document.getElementById("trx-date-wrap"); if(dw) dw.style.display=urgent?"none":"block";
+window.updateTravaux = function() {
+  var rEl = document.querySelector("input[name=\"trx-urgence\"]:checked");
+  var urgent = rEl && rEl.value === "urgent";
+  var dw = getEl("trx-date-wrap"); if (dw) dw.style.display = urgent ? "none" : "block";
 };
-window.submitTravaux=async function(){
-  const desc=sanitize(document.getElementById("trx-desc")?.value||"");
-  const address=sanitize(document.getElementById("trx-address")?.value||"");
-  if(!desc){toast("Décrivez le problème","error");return;}
-  if(!address){toast("Renseignez l'adresse","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
-  const btn=document.getElementById("trx-btn"); btn.disabled=true; btn.textContent="ENVOI...";
-  try{
-    const pro=document.getElementById("form-travaux")?.dataset?.pro||"autre";
-    const urgence=document.querySelector('input[name="trx-urgence"]:checked')?.value||"normal";
-    const checklist=Array.from(document.querySelectorAll('[id^="trx-cl-"]:checked')).map(el=>el.closest("label")?.textContent?.trim()||"");
-    await addDoc(collection(db,"demandes"),{
-      userId:currentUser.uid, type:"Petits Travaux & Réparations",
-      pro,desc,address,urgence,checklist,
-      date:sanitize(document.getElementById("trx-date")?.value||""),
-      status:"pending",createdAt:serverTimestamp()
+window.submitTravaux = async function() {
+  var desc    = sanitize((getEl("trx-desc")||{}).value||"");
+  var address = sanitize((getEl("trx-address")||{}).value||"");
+  if (!desc)    { toast("Décrivez le problème","error"); return; }
+  if (!address) { toast("Renseignez l'adresse","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes","error"); return; }
+  var btn=getEl("trx-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try {
+    var ft = getEl("form-travaux");
+    var pro = ft ? ft.dataset.pro||"autre" : "autre";
+    var rEl = document.querySelector("input[name=\"trx-urgence\"]:checked");
+    var urgence = rEl ? rEl.value : "normal";
+    var checklist = [];
+    document.querySelectorAll("[id^=\"trx-cl-\"]:checked").forEach(function(el) {
+      var label = el.closest("label"); if (label) checklist.push(label.textContent.trim());
     });
-    const data=PRO_DATA[pro]||PRO_DATA.autre;
-    const msg=document.getElementById("trx-confirm-msg");
-    if(msg) msg.textContent=urgence==="urgent"
-      ?`Demande urgente transmise. Un ${data.name.toLowerCase()} interviendra dans les meilleurs délais.`
-      :`Demande transmise. Un ${data.name.toLowerCase()} qualifié vous contactera pour convenir d'un rendez-vous.`;
-    document.getElementById("trx-success").style.display="block"; btn.style.display="none";
+    await addDoc(collection(db,"demandes"), {
+      userId:currentUser.uid, type:"Petits Travaux & Réparations",
+      pro:pro, desc:desc, address:address, urgence:urgence, checklist:checklist,
+      date:sanitize((getEl("trx-date")||{}).value||""),
+      status:"pending", createdAt:serverTimestamp()
+    });
+    var data = PRO_DATA[pro] || PRO_DATA.autre;
+    var msg  = getEl("trx-confirm-msg");
+    if (msg) msg.textContent = urgence==="urgent"
+      ? "Demande urgente transmise. Un " + data.name.toLowerCase() + " interviendra dans les meilleurs délais."
+      : "Demande transmise. Un " + data.name.toLowerCase() + " qualifié vous contactera pour convenir d'un rendez-vous.";
+    var s=getEl("trx-success"); if(s) s.style.display="block";
+    btn.style.display="none";
     toast("Demande transmise ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2500);
-  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="ENVOYER MA DEMANDE";}
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 2500);
+  } catch(e) { console.error(e); toast("Erreur","error"); btn.disabled=false; btn.textContent="ENVOYER MA DEMANDE"; }
 };
 
 // ══════════════════════════════════════════════════════════════════════════
-// ── ADMIN RDV ─────────────────────────────────────────────────────────────
+// ADMIN — CRÉNEAUX
 // ══════════════════════════════════════════════════════════════════════════
-const ADMIN_TIMES=["09:00","10:00","11:00","14:00","15:00","16:00","17:00"];
-function initAdminSlots(){adminWeekOffset=0;adminSelectedSlot=null;renderAdminSlots();}
-function renderAdminSlots(){
-  const today=new Date(); today.setHours(0,0,0,0);
-  const mon=new Date(today); mon.setDate(today.getDate()-((today.getDay()+6)%7)+adminWeekOffset*7);
-  const fmt=d=>d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"});
-  const lbl=document.getElementById("admin-week-label");
-  if(lbl) lbl.textContent=fmt(mon).toUpperCase()+" — "+fmt(new Date(mon.getTime()+4*86400000)).toUpperCase();
-  const wrap=document.getElementById("admin-slots"); if(!wrap) return;
-  wrap.innerHTML="";
-  for(let i=0;i<5;i++){
-    const dt=new Date(mon.getTime()+i*86400000);
-    const isPast=dt<today;
-    const dayStr=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-    const dayEl=document.createElement("div"); dayEl.style.marginBottom="10px";
-    const slotsHtml=ADMIN_TIMES.map((time,j)=>{
-      const isTaken=(i+j)%4===0&&i>0;
-      const key=dt.toISOString().split("T")[0]+"T"+time;
-      const isSel=adminSelectedSlot===key;
-      if(isPast||isTaken) return `<button class="slot-btn unavailable" disabled>${time}</button>`;
-      return `<button class="slot-btn${isSel?" selected":""}" onclick="selectAdminSlot('${key}','${dayStr}','${time}')">${time}</button>`;
+var ADMIN_TIMES = ["09:00","10:00","11:00","14:00","15:00","16:00","17:00"];
+function initAdminSlots() { adminWeekOffset=0; adminSelectedSlot=null; renderAdminSlots(); }
+function renderAdminSlots() {
+  var today = new Date(); today.setHours(0,0,0,0);
+  var mon   = new Date(today);
+  mon.setDate(today.getDate()-((today.getDay()+6)%7)+adminWeekOffset*7);
+  function fmt(d) { return d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"}); }
+  var lbl = getEl("admin-week-label");
+  if (lbl) lbl.textContent = fmt(mon).toUpperCase() + " — " + fmt(new Date(mon.getTime()+4*86400000)).toUpperCase();
+  var wrap = getEl("admin-slots"); if (!wrap) return;
+  wrap.innerHTML = "";
+  for (var i=0; i<5; i++) {
+    var dt     = new Date(mon.getTime()+i*86400000);
+    var isPast = dt < today;
+    var dayStr = dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    var dayEl  = document.createElement("div");
+    dayEl.style.marginBottom = "10px";
+    var slotsHtml = ADMIN_TIMES.map(function(time, j) {
+      var isTaken = (i+j)%4===0 && i>0;
+      var key     = dt.toISOString().split("T")[0] + "T" + time;
+      var isSel   = adminSelectedSlot === key;
+      if (isPast||isTaken) return "<button class=\"slot-btn unavailable\" disabled>" + time + "</button>";
+      return "<button class=\"slot-btn" + (isSel?" selected":"") + "\" data-slot-key=\"" + key + "\" data-slot-day=\"" + esc(dayStr) + "\" data-slot-time=\"" + time + "\">" + time + "</button>";
     }).join(" ");
-    dayEl.innerHTML=`<div style="font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:7px;">${dayStr.toUpperCase()}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">${slotsHtml}</div>`;
+    dayEl.innerHTML = "<div style=\"font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:7px;\">" + dayStr.toUpperCase() + ""
+                    + "<div style=\"display:flex;gap:6px;flex-wrap:wrap;\">" + slotsHtml + "";
     wrap.appendChild(dayEl);
   }
-}
-window.adminCalPrev=function(){adminWeekOffset--;renderAdminSlots();};
-window.adminCalNext=function(){adminWeekOffset++;renderAdminSlots();};
-window.selectAdminSlot=function(key,dayStr,time){
-  adminSelectedSlot=key; renderAdminSlots();
-  const recap=document.getElementById("admin-rdv-recap");
-  const dateEl=document.getElementById("admin-rdv-date");
-  const detEl=document.getElementById("admin-rdv-detail");
-  if(recap) recap.style.display="block";
-  if(dateEl) dateEl.textContent=dayStr+" à "+time;
-  const rdvMap={planification:"Planification",courrier:"Courrier & démarches",finances:"Suivi financier",autre:"Rendez-vous"};
-  const fmtMap={place:"Sur place",visio:"Visioconférence",tel:"Par téléphone"};
-  if(detEl) detEl.textContent=(rdvMap[adminRdvType]||"Rendez-vous")+" · "+(fmtMap[adminFormat]||"Sur place")+" · 1h";
-};
-window.selectRdvType=function(el,type){
-  document.querySelectorAll(".rdv-type-card").forEach(c=>c.classList.remove("active"));
-  el.classList.add("active"); adminRdvType=type;
-  if(adminSelectedSlot){
-    const rdvMap={planification:"Planification",courrier:"Courrier & démarches",finances:"Suivi financier",autre:"Rendez-vous"};
-    const fmtMap={place:"Sur place",visio:"Visioconférence",tel:"Par téléphone"};
-    const detEl=document.getElementById("admin-rdv-detail");
-    if(detEl) detEl.textContent=(rdvMap[type]||"Rendez-vous")+" · "+(fmtMap[adminFormat]||"Sur place")+" · 1h";
-  }
-};
-window.selectFormat=function(el,fmt){
-  document.querySelectorAll(".rdv-format-btn").forEach(b=>{b.style.borderColor="rgba(255,255,255,0.08)";b.style.background="transparent";b.style.color="var(--gray)";});
-  el.style.borderColor="rgba(201,168,76,0.3)"; el.style.background="rgba(201,168,76,0.08)"; el.style.color="var(--gold)";
-  adminFormat=fmt;
-};
-window.submitAdmin=async function(){
-  if(!adminSelectedSlot){toast("Sélectionnez un créneau","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
-  const btn=document.getElementById("adm-btn"); btn.disabled=true; btn.textContent="CONFIRMATION...";
-  try{
-    const[datePart,timePart]=adminSelectedSlot.split("T");
-    await addDoc(collection(db,"demandes"),{
-      userId:currentUser.uid, type:"Assistance Administrative",
-      rdvDate:datePart,rdvTime:timePart,rdvType:adminRdvType,format:adminFormat,
-      notes:sanitize(document.getElementById("adm-notes")?.value||""),
-      status:"pending",createdAt:serverTimestamp()
+  wrap.querySelectorAll("[data-slot-key]").forEach(function(btn) {
+    btn.addEventListener("click", function(){
+      selectAdminSlot(btn.dataset.slotKey, btn.dataset.slotDay, btn.dataset.slotTime);
     });
-    const dt=new Date(datePart+"T12:00:00");
-    const dateStr=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-    const fmtMap={place:"sur place",visio:"en visioconférence",tel:"par téléphone"};
-    const msg=document.getElementById("adm-confirm-msg");
-    if(msg) msg.textContent=`Rendez-vous confirmé le ${dateStr} à ${timePart} (${fmtMap[adminFormat]||"sur place"}). Votre assistante vous enverra une confirmation par email.`;
-    document.getElementById("adm-success").style.display="block"; btn.style.display="none";
+  });
+}
+window.adminCalPrev = function(){ adminWeekOffset--; renderAdminSlots(); };
+window.adminCalNext = function(){ adminWeekOffset++; renderAdminSlots(); };
+function selectAdminSlot(key, dayStr, time) {
+  adminSelectedSlot = key; renderAdminSlots();
+  var recap  = getEl("admin-rdv-recap"), dateEl = getEl("admin-rdv-date"), detEl = getEl("admin-rdv-detail");
+  if (recap) recap.style.display = "block";
+  if (dateEl) dateEl.textContent = dayStr + " à " + time;
+  var rdvMap = {planification:"Planification",courrier:"Courrier & démarches",finances:"Suivi financier",autre:"Rendez-vous"};
+  var fmtMap = {place:"Sur place",visio:"Visioconférence",tel:"Par téléphone"};
+  if (detEl) detEl.textContent = (rdvMap[adminRdvType]||"Rendez-vous") + " · " + (fmtMap[adminFormat]||"Sur place") + " · 1h";
+}
+window.selectRdvType = function(el, type) {
+  document.querySelectorAll(".rdv-type-card").forEach(function(c){ c.classList.remove("active"); });
+  el.classList.add("active"); adminRdvType = type;
+};
+window.selectFormat = function(el, fmt) {
+  document.querySelectorAll(".rdv-format-btn").forEach(function(b){
+    b.style.borderColor="rgba(255,255,255,0.08)"; b.style.background="transparent"; b.style.color="var(--gray)";
+  });
+  el.style.borderColor="rgba(201,168,76,0.3)"; el.style.background="rgba(201,168,76,0.08)"; el.style.color="var(--gold)";
+  adminFormat = fmt;
+};
+window.submitAdmin = async function() {
+  if (!adminSelectedSlot) { toast("Sélectionnez un créneau","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes","error"); return; }
+  var btn=getEl("adm-btn"); btn.disabled=true; btn.textContent="CONFIRMATION...";
+  try {
+    var parts    = adminSelectedSlot.split("T");
+    var datePart = parts[0], timePart = parts[1];
+    await addDoc(collection(db,"demandes"), {
+      userId:currentUser.uid, type:"Assistance Administrative",
+      rdvDate:datePart, rdvTime:timePart, rdvType:adminRdvType, format:adminFormat,
+      notes:sanitize((getEl("adm-notes")||{}).value||""),
+      status:"pending", createdAt:serverTimestamp()
+    });
+    var dt      = new Date(datePart+"T12:00:00");
+    var dateStr = dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+    var fmtMap  = {place:"sur place",visio:"en visioconférence",tel:"par téléphone"};
+    var msg     = getEl("adm-confirm-msg");
+    if (msg) msg.textContent = "Rendez-vous confirmé le " + dateStr + " à " + timePart + " (" + (fmtMap[adminFormat]||"sur place") + "). Votre assistante vous enverra une confirmation par email.";
+    var s=getEl("adm-success"); if(s) s.style.display="block";
+    btn.style.display="none";
     toast("Rendez-vous confirmé ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},3000);
-  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="CONFIRMER MON RENDEZ-VOUS";}
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 3000);
+  } catch(e) { console.error(e); toast("Erreur","error"); btn.disabled=false; btn.textContent="CONFIRMER MON RENDEZ-VOUS"; }
 };
 
 // ── Générique ─────────────────────────────────────────────────────────────
-window.submitGeneric=async function(){
-  const desc=sanitize(document.getElementById("gen-desc")?.value||"");
-  if(!desc){toast("Décrivez votre besoin","error");return;}
-  if(!checkRateLimit("submit",10,60000)){toast("Trop de demandes","error");return;}
-  const btn=document.getElementById("gen-btn"); btn.disabled=true; btn.textContent="ENVOI...";
-  try{
-    const svc=document.getElementById("form-generic")?.dataset?.svc||"autre";
-    const titles={gestion:"Gestion Locative",evenementiel:"Événementiel Privé",decoration:"Décoration & Scénographie"};
-    await addDoc(collection(db,"demandes"),{
-      userId:currentUser.uid, type:titles[svc]||svc, desc,
-      date:sanitize(document.getElementById("gen-date")?.value||""),
-      address:sanitize(document.getElementById("gen-address")?.value||""),
-      guests:sanitize(document.getElementById("gen-guests")?.value||""),
-      priority:document.getElementById("gen-priority")?.value||"normal",
-      status:"pending",createdAt:serverTimestamp()
+window.submitGeneric = async function() {
+  var desc = sanitize((getEl("gen-desc")||{}).value||"");
+  if (!desc) { toast("Décrivez votre besoin","error"); return; }
+  if (!checkRateLimit("submit",10,60000)) { toast("Trop de demandes","error"); return; }
+  var btn=getEl("gen-btn"); btn.disabled=true; btn.textContent="ENVOI...";
+  try {
+    var fg    = getEl("form-generic");
+    var svc   = fg ? fg.dataset.svc||"autre" : "autre";
+    var titles = {gestion:"Gestion Locative", evenementiel:"Événementiel Privé", decoration:"Décoration & Scénographie"};
+    await addDoc(collection(db,"demandes"), {
+      userId:currentUser.uid, type:titles[svc]||svc, desc:desc,
+      date:     sanitize((getEl("gen-date")||{}).value||""),
+      address:  sanitize((getEl("gen-address")||{}).value||""),
+      guests:   sanitize((getEl("gen-guests")||{}).value||""),
+      priority: (getEl("gen-priority")||{}).value||"normal",
+      status:"pending", createdAt:serverTimestamp()
     });
-    document.getElementById("gen-success").style.display="block"; btn.style.display="none";
+    var s=getEl("gen-success"); if(s) s.style.display="block";
+    btn.style.display="none";
     toast("Demande envoyée ✓","success");
-    setTimeout(()=>{nav("mes-demandes");loadDashboard();},2000);
-  }catch(e){console.error(e);toast("Erreur","error");btn.disabled=false;btn.textContent="ENVOYER MA DEMANDE";}
+    setTimeout(function(){ window.nav("mes-demandes"); loadDashboard(); }, 2000);
+  } catch(e) { console.error(e); toast("Erreur","error"); btn.disabled=false; btn.textContent="ENVOYER MA DEMANDE"; }
 };
 </script>
+</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>
